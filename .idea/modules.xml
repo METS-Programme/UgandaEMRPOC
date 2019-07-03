@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/openmrs-module-ugandaemr-poc.iml" filepath="$PROJECT_DIR$/.idea/openmrs-module-ugandaemr-poc.iml" />
+      <module fileurl="file://$PROJECT_DIR$/api/ugandaemrpoc-api.iml" filepath="$PROJECT_DIR$/api/ugandaemrpoc-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/omod/ugandaemrpoc-omod.iml" filepath="$PROJECT_DIR$/omod/ugandaemrpoc-omod.iml" />
+    </modules>
+  </component>
+</project>

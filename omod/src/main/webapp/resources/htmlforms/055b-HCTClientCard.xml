@@ -1,0 +1,511 @@
+<htmlform formName="HMIS 055B HIV Counseling and Testing Client Card"
+          formDescription="Client HIV Testing Card"
+          formEncounterType="264daIZd-f80e-48fe-nba9-P37f2W1905Pv"
+          formUuid="b5c62a98-84d3-43e8-a9be-972185070dd4"
+          formVersion="1.2"
+          formAddMetadata="yes"
+          formUILocation="patientDashboard.visitActions"
+          formOrder="6"
+          formIcon="icon-medkit"
+          formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false"
+          formDisplayStyle="Standard"
+          formLabel="HCT Client Card">
+
+    <style>
+
+        form label, .form label {
+            float: left;
+            padding: 0px 10px 0 0;
+        }
+
+        form input[type="checkbox"], form input[type="radio"], .form input[type="checkbox"], .form input[type="radio"] {
+            margin: 10px 15px;
+        }
+
+        table td {
+            background: #FFFFFF;
+            color: #404040;
+        }
+
+        form select, .form select {
+            min-width: 0px;
+        }
+
+        form input, form select, form textarea, form ul.select, .form input, .form select, .form textarea, .form
+        ul.select {
+            background-color: #FBFBFB;
+            border: 1px solid #CEC9C9;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            padding: 10px;
+            min-width: 20%;
+        }
+
+        .row {
+            width: 100%;
+            float: left;
+            display: inline-flex;
+            clear: both;
+        }
+
+        .row .row-col2 {
+            float: left;
+            width: 50%;
+        }
+
+        table th, table td {
+            border: 1px solid #AFAFAF;
+        }
+    </style>
+
+
+    <script type="text/javascript">
+        function enable_disable(field, class_name_prefix, conditions, input_type) {
+
+            var class_name = jq(field).attr("class");
+
+            var length = class_name.length;
+
+            var class_id = parseInt(class_name.substring(length - 1, length));
+            var childClass = "Child" + class_id;
+
+            var disable = true;
+            var requires = true;
+
+            var row = '[class^="' + class_name_prefix + '"][class*="' + childClass + '"]';
+
+            var selected_value = null;
+
+            if (input_type == "select") {
+                selected_value = jq(field).find(":selected").text().trim().toLowerCase();
+            }
+            else if (input_type == "hidden") {
+                selected_value = jq(field).find("input[type=hidden]").val().trim().toLowerCase();
+            }
+
+
+            if (eval(conditions)) {
+                disable = false;
+            }
+
+
+            jq(row).each(function () {
+                var group = jq(this);
+
+                if (class_name.indexOf('Child') == -1) {
+                    /*group.find("input").attr("value", ""); */
+                    /* group.find('select').prop("selectedIndex", 0);*/
+                    group.find("input").attr("disabled", disable);
+                    group.find('select').attr("disabled", disable);
+
+                    if (disable) {
+                        /* fade out the fields that are disabled */
+                        group.find("input").fadeTo(250, 0.25);
+                        group.find("select").fadeTo(250, 0.25);
+                    } else {
+                        /* remove the fade on the fields */
+                        group.find("input").fadeTo(250, 1);
+                        group.find("select").fadeTo(250, 1);
+                    }
+                }
+            });
+        }
+
+        if (jQuery) {
+            $(document).ready(function () {
+                if ($.browser.msie) {
+                    $(":checkbox").click(function () {
+                        $(this).change();
+                    });
+                }
+
+                //Block Multiple encounter entry on same date
+                blockEncounterOnSameDateEncounter(jq("#encounterDate").find("input[type=hidden]"),"block");
+
+                jq('[class^="PreTestCounselingEnableDisable"]').change(function () {
+                    enable_disable(jq(this), "PreTestCounseling", 'selected_value == "yes"', "select");
+                });
+
+                jq('[class^="PreTestCounselingEnableDisable"]').each(function () {
+                    enable_disable(jq(this), "PreTestCounseling", 'selected_value == "yes"', "select");
+                });
+
+                jq('[class^="TestedBeforeEnableDisable"]').change(function () {
+                    enable_disable(jq(this), "TestedBefore", 'selected_value == "yes"', "select");
+                });
+
+                jq('[class^="TestedBeforeEnableDisable"]').each(function () {
+                    enable_disable(jq(this), "TestedBefore", 'selected_value == "yes"', "select");
+                });
+
+                jq('[class^="PartnerTestedBeforeEnableDisable"]').change(function () {
+                    enable_disable(jq(this), "PartnerTestedBefore", 'selected_value == "yes"', "select");
+                });
+
+                jq('[class^="PartnerTestedBeforeEnableDisable"]').each(function () {
+                    enable_disable(jq(this), "PartnerTestedBefore", 'selected_value == "yes"', "select");
+                });
+
+                jq('[class^="CounseledAsCoupleEnableDisable"]').change(function () {
+                    enable_disable(jq(this), "CounseledAsCouple", 'selected_value != "individual" &amp; selected_value != ""', "select");
+
+                    enable_disable(jq(".ResultAsCoupleEnableDisable1"), "ResultAsCouple", 'selected_value == "yes"', "select");
+                });
+
+                jq('[class^="CounseledAsCoupleEnableDisable"]').each(function () {
+                    enable_disable(jq(this), "CounseledAsCouple", 'selected_value != "individual" &amp; selected_value != ""', "select");
+                });
+
+                jq('[class^="ResultAsCoupleEnableDisable"]').change(function () {
+                    enable_disable(jq(this), "ResultAsCouple", 'selected_value == "yes"', "select");
+                });
+
+                jq('[class^="ResultAsCoupleEnableDisable"]').each(function () {
+                    enable_disable(jq(this), "ResultAsCouple", 'selected_value == "yes"', "select");
+                });
+
+                jq('[class^="LinkedToCareEnableDisable"]').change(function () {
+                    enable_disable(jq(this), "LinkedToCare", 'selected_value == "yes"', "select");
+                });
+
+                jq('[class^="LinkedToCareEnableDisable"]').each(function () {
+                    enable_disable(jq(this), "LinkedToCare", 'selected_value == "yes"', "select");
+                });
+            });
+        }
+    </script>
+    <div class="ai-page-frame">
+        <div class="headers" style="text-align: center;">
+            <h3 style="background: #FFFF7D; padding: 10px;">HCT Client Card</h3>
+        </div>
+        <section>
+            <h3>Section A:</h3>
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <label>Date:</label>
+                        <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
+                        <span style="display: none;">
+                        <encounterLocation default="629d78e9-93e5-43b0-ad8a-48313fd99117"
+                                           order="629d78e9-93e5-43b0-ad8a-48313fd99117"/>
+                        </span>
+                    </td>
+                    <td>
+                        <label>Is the Center static or an Outreach?:</label>
+                        <obs conceptId="99457" answerConceptIds="99455,99456" answerLabels="1. Static,2. Outreach"/>
+                    </td>
+                    <td>
+                        <label>Reg Number:</label>
+                        <obs conceptId="164985" required="required"/>
+                    </td>
+                    <td>
+                        <label>National ID:</label>
+                        <patient field="identifier" identifierTypeId="f0c16a6d-dc5f-4118-a803-616d0075d282"
+                                 required="false"/>
+                    </td>
+                </tr>
+
+                <includeIf velocityTest="$patient.age &lt; 12">
+                    <tr>
+                        <td colspan="4">
+
+                            <label>Accompanied by:</label>
+                            <obs conceptId="99457" answerConceptIds="970,971,99363"
+                                 answerLabels="Mother,Father, Guardian"/>
+                        </td>
+                    </tr>
+                </includeIf>
+
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h3>Section B:</h3>
+            <table class="section-b">
+                <tbody>
+<!--                    New row for HTS Delivery Model-->
+                    <tr>
+                        <td style="width: 20%">
+                            <label>HTS Delivery Model:</label>
+                        </td>
+                        <td colspan="3">
+                            <span id="checkboxRadio">
+                                <obs conceptId="162925"
+                                     answerConceptIds="99416,162921"
+                                     answerLabels="Facility based,Community"/>
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>HTS Approach:</label>
+
+                        </td>
+                        <td colspan="3">
+                            <obs conceptId="99462" answerConceptIds="162919,99459" answerLabels="CICT, PITC"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label> Entry Point For Health Facility Testing:</label>
+
+                        </td>
+                        <td colspan="3">
+                            <span id="checkboxRadio">
+                                <obs conceptId="162925"
+                                     answerConceptIds="160542,165047,165048,99593,164983,160456,164984,99619"
+                                     answerLabels="OPD,Ward,ART Clinic,TB clinic,Nutrition unit,Young Child Clinic (YCC),ANC,Maternity,PNC,Family Planning,SMC,STI Clinic"/>
+<!--                                 Missing concepts in this list 2.Ward 5. Nutrition Unit, 9PNC, STI Clinic-->
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label> Entry Point For Community Testing:</label>
+
+                        </td>
+                        <td colspan="3">
+                            <span id="checkboxRadio">
+                                <obs conceptId="162925"
+                                     answerConceptIds="99460,165047,162920,99456"
+                                     answerLabels="Home Based,Hotspot,Workplace,Outreach,Drop in Centre (DIC)"/>
+                                <!--                                 Missing concepts in this list 2.Hotspot 5.Drop In Centre,-->
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Reason for Testing</label>
+
+                        </td>
+                        <td colspan="3">
+                            <span id="checkboxRadio">
+                                <obs conceptId="162925"
+                                     answerConceptIds="99056,90012"
+                                     answerLabels="Assisted Partner Notification (APN),Index Client Testing other than APN,PrEP,PEP,HIV Self -Test Positive,Inconclusive HIV result,Self-initiative"/>
+                                <!--                                 Missing concepts in this list 1,2,3,5,6,7 5.Drop In Centre,-->
+
+                            </span>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h3>Consent for testing (Parent/Guardian if child)</h3>
+            <table class="section-b">
+                <tbody>
+                <tr>
+                    <td>
+                        <label>Do you agree to have his/her blood drawn for testing?</label>
+                        <obs id="br" conceptId="99481" answerConceptIds="1065,1066" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <h3>SECTION C: HIV RISK ASSESSMENT</h3>
+            <table class="section-b">
+                <tbody>
+
+                    <tr>
+                        <td>
+                            <label>Special Category</label>
+
+                        </td>
+                        <td colspan="3">
+                            <span id="checkboxRadio">
+                                <obs conceptId="162925"
+                                     answerConceptIds="162277,90012,,160666,165125,165126,162198,159674,90041,5632,165132"
+                                     answerLabels="Prisoners,PWIDs,Uniformed men,Migrant workers,Truckers,Fisher Folks,Refugees,Pregnant,Breastfeeding,AGYW,People with Disabilities (PWD)"/>
+                                <!--                                 Missing concepts in this list 7,11-->
+
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Have you ever tested for HIV before?:</label>
+
+                        </td>
+                        <td colspan="3" class="TestedBeforeEnableDisable1">
+                            <obs id="br" conceptId="99464" answerConceptIds="1065,1066" answerLabels="Yes,No"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Test Result the last time you tested</label>
+
+                        </td>
+                        <td colspan="3" class="TestedBeforeEnableDisable1">
+                            <obs id="br" conceptId="99493" answerConceptIds="90166,90167" answerLabels="Postive,Negative"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Number of times tested in the last 12 months?:</label>
+
+                        </td>
+                        <td colspan="3" class="TestedBeforeEnableDisableChild1">
+                            <obs id="br" conceptId="162965"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <label>Number of sexual partners in the last 12 months:</label>
+                        </td>
+                        <td colspan="3">
+                            <obs conceptId="99463"/>
+                        </td>
+                    </tr>
+
+                    <excludeIf velocityTest="$patient.age &lt; 9">
+                        <tr>
+                            <td>
+                                <label>Has your spouse /partner been tested for HIV before? :</label>
+                            </td>
+                            <td colspan="3" class="PartnerTestedBeforeEnableDisable1">
+                                <obs id="br" conceptId="99472" answerConceptIds="1065,1066,99480"
+                                     answerLabels="Yes,No,Don't Know"/>
+                            </td>
+                        </tr>
+                    </excludeIf>
+
+                    <tr>
+                        <td>
+                            <label style="float:right"><i>If yes What were the Results</i></label>
+                        </td>
+                        <td class="PartnerTestedBeforeEnableDisableChild1">
+                            <obs conceptId="99477" answerConceptIds="90166,90167,90001"
+                                 answerLabels="HIV +ve,HIV -ve,Unknown"/>
+                        </td>
+                    </tr>
+
+
+                    <tr>
+                        <td style="width: 20%">
+                            <label>Pre -Test Counseling done/information given:</label>
+                        </td>
+                        <td colspan="3" class="PreTestCounselingEnableDisable1">
+                            <obs conceptId="162918" answerConceptIds="90003, 90004" answerLabels="Yes, No"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>Counseled as:</label>
+                        </td>
+                        <td colspan="3" class="PreTestCounselingEnableDisableChild1">
+                            <span class="CounseledAsCoupleEnableDisable1">
+                                <obs conceptId="99368" answerConceptIds="99365,99367,99366"
+                                     answerLabels="Individual,Couple,Group"/>
+                            </span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h3>SECTION D:HIV TEST RESULTS</h3>
+
+            <table class="section-b">
+                <tbody>
+
+                    <tr>
+                        <td><label>HIV final test results:</label>
+                            <obs conceptId="99493" answerConceptIds="90167,90166,162926,162927"
+                                 answerLabels="NEG,POS,INC,NT"/>
+                        </td>
+                        <td>
+                            <label>Sent to EQA or Confirmatory Laboratory</label>
+                            <obs conceptId="162928" answerConceptIds="90004,90003" answerLabels="Yes,No"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><label>Result of Recent Infection Testing:</label>
+                            <obs conceptId="99411" answerConceptIds="1065,1066" answerLabels="Long Term,Recent"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><label>Finger Print Captured:</label>
+                            <obs conceptId="99411" answerConceptIds="1065,1066" answerLabels="Yes,No"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2"><label>Results Recieved as Individual:</label>
+                            <obs conceptId="99411" answerConceptIds="1065,1066" answerLabels="Yes,No"/>
+                        </td>
+                    </tr>
+                    <excludeIf velocityTest="$patient.age &lt; 9">
+                        <tr>
+                            <td class="ResultAsCoupleEnableDisable1" colspan="2"><label>Results received as a
+                                couple:</label>
+                                <span class="CounseledAsCoupleEnableDisableChild1">
+                                    <obs conceptId="99494" answerConceptIds="1065,1066" answerLabels="Yes,No"/>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="CounseledAsCoupleEnableDisableChild1" colspan="2"><label>Couple results:</label>
+                                <span class="ResultAsCoupleEnableDisableChild1">
+                                    <obs conceptId="99497" answerConceptIds="6096,99496" answerLabels="Discordant,Concordant"/>
+                                </span>
+                            </td>
+                        </tr>
+                    </excludeIf>
+
+                    <tr>
+                        <td colspan="2"><label>Is there suspision for TB<br/>(Currentcough,fever,weightloss and
+                            nightsweats):</label>
+                            <obs conceptId="99498" answerConceptIds="1065,1066" answerLabels="Yes,No"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                    <td colspan="2"><label>Presumptive TB Case reffered for TB Services:</label>
+                        <obs conceptId="99411" answerConceptIds="1065,1066" answerLabels="Yes,No"/>
+                    </td>
+                </tr>
+
+                    <tr>
+                        <td colspan="2"><label>Prevention Services Recieved:</label>
+                            <obs conceptId="99411" answerConceptIds="90083,99056" answerLabels="Prevention Information,Condoms,STI Screaning, STI treatment,Post-GBV,PEP,PREP,"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                    <td class="LinkedToCareEnableDisable1"><label>Has client been linked to care or any other services?:</label>
+                        <obs conceptId="162982" answerConceptIds="1065,1066" answerLabels="Yes,No"/>
+                    </td>
+                    <td class="LinkedToCareEnableDisableChild1"><label>Where?:
+                        <obs conceptId="90200"/>
+                    </label>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2"><label><span class="required">*</span>Counsellor</label>
+                        <encounterProvider required="true"/>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </section>
+        <section>
+            <submit/>
+        </section>
+    </div>
+</htmlform>
