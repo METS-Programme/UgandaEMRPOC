@@ -29,7 +29,7 @@ public class UgandaEMRPOCActivator extends BaseModuleActivator {
 	
 	private List<Initializer> getInitializers() {
 		List<Initializer> l = new ArrayList<Initializer>();
-		l.add(new HtmlFormsInitializer(UgandaEMRPOCConstants.MODULE_ID));
+		l.add(new HtmlFormsInitializer(UgandaEMRPOCConfig.MODULE_ID));
 		return l;
 	}
 }

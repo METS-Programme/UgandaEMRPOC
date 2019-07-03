@@ -2,7 +2,7 @@ package org.openmrs.module.ugandaemrpoc;
 
 public class UgandaEMRPOCConstants {
 	
-	public static final String MODULE_ID = "ugandaemrpoc";
+
 	
 	public static final String QUEUE_STATUS_COMPLETED = "completed";
 	
