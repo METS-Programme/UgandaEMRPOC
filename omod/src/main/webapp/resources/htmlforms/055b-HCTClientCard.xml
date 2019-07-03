@@ -355,7 +355,7 @@
                             <label>Number of times tested in the last 12 months?:</label>
 
                         </td>
-                        <td colspan="3" class="TestedBeforeEnableDisableChild1">
+                        <td colspan="3">
                             <obs id="br" conceptId="162965"/>
                         </td>
                     </tr>
