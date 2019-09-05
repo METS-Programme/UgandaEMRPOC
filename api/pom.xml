@@ -42,5 +42,10 @@
 			<groupId>org.openmrs.module</groupId>
 			<artifactId>aijar-api</artifactId>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>patientqueueing-api</artifactId>
+            <version>${patientqueueingVersion}</version>
+        </dependency>
+    </dependencies>
 </project>
