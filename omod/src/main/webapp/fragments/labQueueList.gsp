@@ -316,7 +316,7 @@ ${ui.includeFragment("ugandaemrpoc", "lab/diplayResultList")}
         </li>
         <li>
             <a href="#referred-tests-tab">
-                REFEREED TESTS
+                REFERRED TESTS
             </a>
         </li>
         <li>
