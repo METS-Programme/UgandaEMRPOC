@@ -1,6 +1,8 @@
 package org.openmrs.module.ugandaemrpoc.lab.util;
 
-public class ResultModel {
+import java.io.Serializable;
+
+public class ResultModel implements Serializable {
 	
 	private String conceptName;
 	

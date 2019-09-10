@@ -5,6 +5,7 @@ import org.openmrs.api.context.Context;
 import org.openmrs.module.htmlformentry.CustomFormSubmissionAction;
 import org.openmrs.module.htmlformentry.FormEntryContext.Mode;
 import org.openmrs.module.htmlformentry.FormEntrySession;
+import org.openmrs.module.ugandaemrpoc.api.UgandaEMRPOCService;
 
 import java.util.*;
 
@@ -18,6 +19,7 @@ public class DSDSProgramSubmissionAction implements CustomFormSubmissionAction {
 	
 	@Override
 	public void applyAction(FormEntrySession session) {
+		UgandaEMRPOCService ugandaEMRPOCService = Context.getService(UgandaEMRPOCService.class);
 		Mode mode = session.getContext().getMode();
 		if (!(mode.equals(Mode.ENTER) || mode.equals(Mode.EDIT))) {
 			return;
@@ -32,15 +34,7 @@ public class DSDSProgramSubmissionAction implements CustomFormSubmissionAction {
 			return;
 		}
 		
-		LabOrderSubmissionAction labOrderSubmissionAction = new LabOrderSubmissionAction();
-		
-		Set<Order> orders = labOrderSubmissionAction.proccessLabTestOrdersFromObs(session.getEncounter().getObs());
-		Encounter encounter = session.getEncounter();
-		encounter.setOrders(orders);
-		Context.getEncounterService().saveEncounter(encounter);
-		if (session.getEncounter().getOrders().size() > 0) {
-			labOrderSubmissionAction.sendPatientToLab(session);
-		}
+		Encounter encounter = ugandaEMRPOCService.processLabTestOrdersFromEncounterObs(session);
 		
 		Patient patient = session.getPatient();
 		Set<Obs> obsList = session.getEncounter().getAllObs();

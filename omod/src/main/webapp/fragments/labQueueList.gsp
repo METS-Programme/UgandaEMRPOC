@@ -69,8 +69,8 @@
             jq("#clinician-list").hide();
             getPatientLabQueue();
             getOrders();
-
-            getSpecimenSource();
+            getResults();
+            setSpecimenSource();
             jq("#patient-lab-search").change(function () {
                 if (jq("#patient-lab-search").val().length >= 3) {
                     getPatientLabQueue();
@@ -109,36 +109,8 @@
         alert("Handler for .submit() called.");
     });
 
-    /**
-     * Show the container, and enable all elements in it
-     * @param containerId
-     */
-    function showContainer(containerId) {
-        jq(containerId).removeClass('hidden');
-        jq(containerId + ' :input').attr('disabled', false);
-        jq(containerId + ' :input').prop('checked', false);
-    }
-
-    /**
-     * Hide the container, and disables all elements in it
-     * @param containerId
-     */
-    function hideContainer(containerId) {
-        jq(containerId).addClass('hidden');
-        jq(containerId + ' :input').attr('disabled', true);
-        jq(containerId + ' :input').prop('checked', false);
-    }
-
-    function getWaitingTime(queueDate) {
-        var diff = Math.abs(new Date() - new Date(queueDate));
-        var seconds = Math.floor(diff / 1000); //ignore any left over units smaller than a second
-        var minutes = Math.floor(seconds / 60);
-        seconds = seconds % 60;
-        var hours = Math.floor(minutes / 60);
-        minutes = minutes % 60;
-        return hours + ":" + minutes + ":" + seconds
-    }
-
+    //GENERATION OF LISTS IN INTERFACE SUCH AS WORKLIST
+    // Get Patients In Lab Queue
     function getPatientLabQueue() {
         jq("#lab-queue-list-table").html("");
         jq.get('${ ui.actionLink("getPatientQueueList") }', {
@@ -153,21 +125,7 @@
         });
     }
 
-    function getSpecimenSource() {
-        var content = "";
-        content += "<option value=\"\">";
-        content += "${ui.message("Specimen Source")}";
-        content += +"</option>";
-
-        <% if (specimenSource.size() > 0) {
-                      specimenSource.each { %>
-        content += "<option value=\"${it.conceptId}\">";
-        content += "${it.getName().name}";
-        content += +"</option>";
-        <%} }%>
-        return content
-    }
-
+    // Gets Orders of List of WorkList and Refered Tests
     function getOrders() {
         jq.get('${ ui.actionLink("getOrders") }', {
             date: (new Date()).toString()
@@ -179,24 +137,14 @@
         });
     }
 
+    // Gets Orders with results for The List of results
     function getResults() {
-        jq.get('${ ui.actionLink("getResults") }', {
+        jq.get('${ ui.actionLink("getOrderWithResult") }', {
             date: (new Date()).toString()
         }, function (response) {
             if (response) {
-                var responseData = JSON.parse(response.replace("resultsList=", "\"resultsList\":").trim());
-                displayLabOrder(responseData)
-            }
-        });
-    }
-
-    function generateSampleId() {
-        jq.get('${ ui.actionLink("generateSampleID") }', {
-            orderId: jq("#order_id").val().trim().toLowerCase()
-        }, function (response) {
-            if (response) {
-                var responseData = response.replace("{defaultSampleId=\"", "").replace("\"}", "").trim();
-                jq("#sample_id").val(responseData);
+                var responseData = JSON.parse(response.replace("ordersList=", "\"ordersList\":").trim());
+                displayLabResult(responseData)
             }
         });
     }
@@ -206,18 +154,20 @@
         content = "<table><thead><tr><th>Q ID</th><th>Names</th><th>Age</th><th>ORDER FROM</th><th>WAITING TIME</th><th>TEST(S) ORDERED</th></tr></thead><tbody>";
         jq.each(response.patientLabQueueList, function (index, element) {
                 var orders = displayLabOrderData(element, true);
-                var patientQueueListElement = element;
-                var waitingTime = getWaitingTime(patientQueueListElement.dateCreated);
-                content += "<tr>";
-                content += "<td>" + patientQueueListElement.patientQueueId + "</td>";
-                content += "<td>" + patientQueueListElement.patientNames + "</td>";
-                content += "<td>" + patientQueueListElement.age + "</td>";
-                content += "<td>" + patientQueueListElement.providerNames + " - " + patientQueueListElement.locationFrom + "</td>";
-                content += "<td>" + waitingTime + "</td>";
-                content += "<td>";
-                content += orders;
-                content += "</td>";
-                content += "</tr>";
+                if (orders !== null) {
+                    var patientQueueListElement = element;
+                    var waitingTime = getWaitingTime(patientQueueListElement.dateCreated);
+                    content += "<tr>";
+                    content += "<td>" + patientQueueListElement.patientQueueId + "</td>";
+                    content += "<td>" + patientQueueListElement.patientNames + "</td>";
+                    content += "<td>" + patientQueueListElement.age + "</td>";
+                    content += "<td>" + patientQueueListElement.providerNames + " - " + patientQueueListElement.locationFrom + "</td>";
+                    content += "<td>" + waitingTime + "</td>";
+                    content += "<td>";
+                    content += orders;
+                    content += "</td>";
+                    content += "</tr>";
+                }
             }
         );
         content += "</tbody></table>";
@@ -225,28 +175,29 @@
     }
 
     function displayLabOrderData(labQueueList, removeProccesedOrders) {
-        var orderedTests = "";
-        orderedTests = "<table><thead></thead><tbody>";
+        var header = "<table><thead></thead><tbody>";
+        var footer = "</tbody></table>";
+        var orderedTestsRows = "";
         var urlToPatientDashBoard = '${ui.pageLink("coreapps","clinicianfacing/patient",[patientId: "patientIdElement"])}'.replace("patientIdElement", labQueueList.patientId);
-        var noOfOrders = 0;
         jq.each(labQueueList.orderMapper, function (index, element) {
             if (removeProccesedOrders !== false && element.accessionNumber === null && element.status === "active") {
                 var urlTransferPatientToAnotherQueue = 'patientqueue.showAddOrderToLabWorkLIstDialog("patientIdElement")'.replace("patientIdElement", element.orderNumber);
-                orderedTests += "<tr>";
-                orderedTests += "<td>" + element.orderNumber + "</td>";
-                orderedTests += "<td>" + element.conceptName + "</td>";
-                orderedTests += "<td>" + element.urgency + "</td>";
-                orderedTests += "<td>";
-                orderedTests += "<i class=\"icon-dashboard view-action\" title=\"Goto Patient's Dashboard\" onclick=\"location.href = 'urlToPatientDashboard'\"></i>".replace("urlToPatientDashboard", urlToPatientDashBoard);
-                orderedTests += "<i class=\"icon-tags edit-action\" title=\"Transfer To Another Provider\" onclick='urlTransferPatientToAnotherQueue'></i>".replace("urlTransferPatientToAnotherQueue", urlTransferPatientToAnotherQueue);
-                orderedTests += "</td>";
-                orderedTests += "</tr>";
-                noOfOrders = +noOfOrders
+                orderedTestsRows += "<tr>";
+                orderedTestsRows += "<td>" + element.orderNumber + "</td>";
+                orderedTestsRows += "<td>" + element.conceptName + "</td>";
+                orderedTestsRows += "<td>" + element.urgency + "</td>";
+                orderedTestsRows += "<td>";
+                orderedTestsRows += "<i class=\"icon-dashboard view-action\" title=\"Goto Patient's Dashboard\" onclick=\"location.href = 'urlToPatientDashboard'\"></i>".replace("urlToPatientDashboard", urlToPatientDashBoard);
+                orderedTestsRows += "<i class=\"icon-tags edit-action\" title=\"Transfer To Another Provider\" onclick='urlTransferPatientToAnotherQueue'></i>".replace("urlTransferPatientToAnotherQueue", urlTransferPatientToAnotherQueue);
+                orderedTestsRows += "</td>";
+                orderedTestsRows += "</tr>";
             }
         });
-        orderedTests += "</tbody></table>";
-
-        return orderedTests
+        if (orderedTestsRows !== "") {
+            return header + orderedTestsRows + footer;
+        } else {
+            return null;
+        }
     }
 
     function displayLabOrder(labQueueList) {
@@ -275,16 +226,17 @@
             orderedTestsRows += "<td>" + element.conceptName + "</td>";
             orderedTestsRows += "<td>" + element.status + "</td>";
             orderedTestsRows += "<td>" + element.urgency + "</td>";
-            "click: showResultForm, attr: { href : '#' }"
             orderedTestsRows += "<td>";
             orderedTestsRows += "<a title=\"Edit Result\" onclick='showEditResultForm(" + element.orderId + ")'><i class=\"icon-list-ul small\"></i></a>";
             orderedTestsRows += "<i class=\" + actionIron + \" title=\"Transfer To Another Provider\" onclick='urlTransferPatientToAnotherQueue'></i>".replace("urlTransferPatientToAnotherQueue", actionURL);
             orderedTestsRows += "</td>";
             orderedTestsRows += "</tr>";
-            if (instructions != null && instructions.toLowerCase().indexOf("refer to") >= 0) {
-                referedTests += orderedTestsRows;
-            } else {
-                workListTests += orderedTestsRows;
+            if (element.status !== "has results") {
+                if (instructions != null && instructions.toLowerCase().indexOf("refer to") >= 0) {
+                    referedTests += orderedTestsRows;
+                } else {
+                    workListTests += orderedTestsRows;
+                }
             }
         });
 
@@ -303,11 +255,49 @@
             jq("#referred-tests-tab").append("No Data ");
         }
     }
+
+    //SUPPORTIVE FUNCTIONS//
+    //Get Waiting Time For Patient In Queue
+    function getWaitingTime(queueDate) {
+        var diff = Math.abs(new Date() - new Date(queueDate));
+        var seconds = Math.floor(diff / 1000); //ignore any left over units smaller than a second
+        var minutes = Math.floor(seconds / 60);
+        seconds = seconds % 60;
+        var hours = Math.floor(minutes / 60);
+        minutes = minutes % 60;
+        return hours + ":" + minutes + ":" + seconds
+    }
+
+    //Sets the Specimen Source Options in the Select in the scheduleTestDialogue
+    function setSpecimenSource() {
+        jq("#error-specimen-source").html("");
+        jq("#specimen_source_id").html("");
+        var content = "";
+        content += "<option value=\"\">" + "${ui.message("Specimen Source")}" + "</option>";
+        <% if (specimenSource.size() > 0) {
+                      specimenSource.each { %>
+        content += "<option value=\"${it.conceptId}\">" + "${it.getName().name}" + "</option>";
+        <%} }else {%>
+        jq("#error-specimen-source").append(${ui.message("patientqueueing.select.error")});
+        <%}%>
+        jq("#specimen_source_id").append(content);
+    }
+
+    // Generates Sample ID for the Sample ID Field on the scheduleTestDialogue
+    function generateSampleId() {
+        jq.get('${ ui.actionLink("generateSampleID") }', {
+            orderId: jq("#order_id").val().trim().toLowerCase()
+        }, function (response) {
+            if (response) {
+                var responseData = response.replace("{defaultSampleId=\"", "").replace("\"}", "").trim();
+                jq("#sample_id").val(responseData);
+            }
+        });
+    }
 </script>
-
+${ui.includeFragment("ugandaemrpoc", "lab/diplayResultList")}
 <div class="info-header">
-    <i class="icon-diagnosis"></i>
-
+    <i class="icon-beaker"></i>
     <h3 style="width: 50%">${ui.message("ugandaemrpoc.app.lab.patientqueue.title")}</h3> <span
         style="right:auto;width: 40%;font-weight: bold"></span>
 </div>
@@ -330,7 +320,7 @@
             </a>
         </li>
         <li>
-            <a href="#lab-results">
+            <a href="#lab-results-tab">
                 RESULTS
             </a>
         </li>
@@ -339,8 +329,8 @@
         <span>
             <form method="get" id="patient-lab-search-form" onsubmit="return false">
                 <input type="text" id="patient-lab-search" name="patient-lab-search"
-                       placeholder="${ui.message("coreapps.findPatient.search.placeholder")}" autocomplete="off"/><i
-                    id="patient-search-clear-button" class="small icon-remove-sign"></i>
+                       placeholder="${ui.message("coreapps.findPatient.search.placeholder")}" autocomplete="off"/>
+
             </form>
         </span>
 
@@ -356,91 +346,14 @@
     <section sectionTag="section" id="referred-tests-tab" headerTag="h1">
         List of Tests Referred To Other Lab go here
     </section>
-    <section sectionTag="section" id="lab-results" headerTag="h1">
+    <section sectionTag="section" id="lab-results-tab" headerTag="h1">
         Lab Results To Tests Go Here
     </section>
 </div>
 
-<div id="add-order-to-lab-worklist-dialog" class="dialog" style="display: none">
-    <div class="dialog-header">
-        <i class="icon-reorder"></i>
-
-        <h3>${ui.message("SCHEDULE TEST")}</h3>
-    </div>
-
-    <div>
-        <form id="addtesttoworklist">
-            <fieldset style="min-width: 90%">
-                <span id="add_to_queue-container">
-                    <input type="hidden" id="order_id" name="order_id" value="">
-                </span>
-
-                <div class="div-table">
-                    <div class="div-row">
-                        <div class="div-col3">
-                            <label for="sample_id">
-                                <span>${ui.message("SPECIMEN ID/SAMPLE ID")}</span>
-                            </label>
-                            <input type="text" id="sample_id" name="sample_id" value="">
-                            <a onclick="generateSampleId()"><i class=" icon-barcode">Generate Sample Id</i></a>
-                        </div>
-
-                        <div class="div-col3">
-                            <span id="specimen-source-container">
-                                <label for="specimen_source_id">
-                                    <span>${ui.message("SAMPLE TYPE")}</span>
-                                </label>
-                                <select name="specimen_source_id" id="specimen_source_id">
-                                    <option value="">${ui.message("Specimen Source")}</option>
-                                    <% if (specimenSource.size() > 0) {
-                                        specimenSource.each { %>
-                                    <option value="${it.conceptId}">${it.getName().name}</option>
-                                    <% }
-                                    } %>
-                                </select>
-                                <span class="field-error" style="display: none;"></span>
-                                <% if (specimenSource == null) { %>
-                                <div><${ui.message("patientqueueing.select.error")}</div>
-                                <% } %>
-                            </span>
-                        </div>
-                    </div>
-                    <br/><br/>
-
-                    <div class="div-row">
-                        <div class="div-col3">
-                            <label for="refer_test">
-                                <span>${ui.message("REFER TEST")}</span>
-                            </label>
-                            <input type="checkbox" name="refer_test" id="refer_test">
-                        </div>
-
-                        <div class="div-col3">
-                            <span id="reference-lab-container">
-                                <label for="reference_lab">
-                                    <span>${ui.message("REFERENCE LAB")}</span>
-                                </label>
-                                <select name="reference_lab" id="reference_lab">
-                                    <option value="">${ui.message("Select Reference Lab")}</option>
-                                    <option value="cphl">CPHL</option>
-                                    <option value="uvri">UVRI</option>
-                                </select>
-                                <span class="field-error" style="display: none;"></span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dialog-content form">
-                    <button class="cancel" id="">${ui.message("patientqueueing.close.label")}</button>
-                    <button type="submit" class="confirm"
-                            id="submit-schedule">${ui.message("patientqueueing.send.label")}</button>
-                </div>
-            </fieldset>
-        </form>
-    </div>
-</div>
-${ ui.includeFragment("ugandaemrpoc", "resultForm") }
+${ui.includeFragment("ugandaemrpoc", "lab/scheduleTestDialogue")}
+${ui.includeFragment("ugandaemrpoc", "lab/resultForm")}
+${ui.includeFragment("ugandaemrpoc", "printResults")}
 
 
 

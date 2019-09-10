@@ -28,19 +28,10 @@
                                     <span>${ui.message("SAMPLE TYPE")}</span>
                                 </label>
                                 <select name="specimen_source_id" id="specimen_source_id">
-                                    <option value="">${ui.message("Specimen Source")}</option>
-                                    <% if (specimenSource.size() > 0) {
-                                        specimenSource.each { %>
-                                    <option value="${it.conceptId}">${it.getName().name}</option>
-                                    <%
-                                            }
-                                        }
-                                    %>
                                 </select>
                                 <span class="field-error" style="display: none;"></span>
-                                <% if (specimenSource == null) { %>
-                                <div><${ui.message("patientqueueing.select.error")}</div>
-                                <% } %>
+
+                                <div id="error-specimen-source">${ui.message("patientqueueing.select.error")}</div>
                             </span>
                         </div>
                     </div>
