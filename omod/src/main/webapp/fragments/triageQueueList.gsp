@@ -116,7 +116,7 @@
 
 
 <div class="info-header">
-    <i class="icon-beaker"></i>
+    <i class="icon-list-alt"></i>
 
     <h3 style="width: 50%">${ui.message("ugandaemrpoc.app.triage.patientqueue.title")}</h3> <span
         style="right:auto;width: 40%;font-weight: bold"></span>
