@@ -9,7 +9,6 @@ import org.openmrs.module.patientqueueing.api.PatientQueueingService;
 import org.openmrs.module.patientqueueing.mapper.PatientQueueMapper;
 import org.openmrs.module.patientqueueing.model.PatientQueue;
 import org.openmrs.module.patientqueueing.utils.QueueingUtil;
-import org.openmrs.module.ugandaemrpoc.api.UgandaEMRPOCService;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
@@ -54,7 +53,6 @@ public class TriageQueueListFragmentController {
 	        @RequestParam(value = "triageSearchFilter", required = false) String searchfilter,
 	        UiSessionContext uiSessionContext) throws IOException, ParseException {
 		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
-		UgandaEMRPOCService ugandaEMRPOCService = Context.getService(UgandaEMRPOCService.class);
 		ObjectMapper objectMapper = new ObjectMapper();
 		SimpleObject simpleObject = new SimpleObject();
 		List<PatientQueue> patientQueueList = new ArrayList();
