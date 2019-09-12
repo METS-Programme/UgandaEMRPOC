@@ -45,6 +45,8 @@ public class LabQueueListFragmentController {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String dateStr = sdf.format(new Date());
 		pageModel.addAttribute("currentDate", dateStr);
+		pageModel.addAttribute("locationSession", uiSessionContext.getSessionLocation().getUuid());
+		pageModel.addAttribute("labLocation", "ba158c33-dc43-4306-9a4a-b4075751d36c");
 	}
 	
 	/**

@@ -9,8 +9,6 @@ import org.openmrs.module.ugandaemrpoc.lab.util.TestResultModel;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.fragment.FragmentModel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
@@ -23,8 +21,6 @@ import java.util.Set;
  * Created by Francis on 2/3/2016.
  */
 public class PrintResultsFragmentController {
-	
-	private static Logger logger = LoggerFactory.getLogger(PrintResultsFragmentController.class);
 	
 	public void controller(UiSessionContext sessionContext, FragmentModel model) {
 		

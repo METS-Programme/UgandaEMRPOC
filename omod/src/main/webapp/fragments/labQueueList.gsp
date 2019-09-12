@@ -1,7 +1,8 @@
+<% if (locationSession.equals(labLocation)) { %>
 <%
-    ui.includeCss("coreapps", "patientsearch/patientSearchWidget.css")
-    ui.includeJavascript("patientqueueing", "patientqueue.js")
-    ui.includeJavascript("aijar", "js/aijar.js")
+        ui.includeCss("coreapps", "patientsearch/patientSearchWidget.css")
+        ui.includeJavascript("patientqueueing", "patientqueue.js")
+        ui.includeJavascript("aijar", "js/aijar.js")
 %>
 <style>
 .div-table {
@@ -58,6 +59,12 @@
 
 .dialog {
     width: 550px;
+}
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 7 1 auto;
+    padding: 1.0rem;
+    background-color: #eee;
 }
 </style>
 <script>
@@ -298,6 +305,7 @@
 ${ui.includeFragment("ugandaemrpoc", "lab/diplayResultList")}
 <div class="info-header">
     <i class="icon-beaker"></i>
+
     <h3 style="width: 50%">${ui.message("ugandaemrpoc.app.lab.patientqueue.title")}</h3> <span
         style="right:auto;width: 40%;font-weight: bold"></span>
 </div>
@@ -326,13 +334,16 @@ ${ui.includeFragment("ugandaemrpoc", "lab/diplayResultList")}
         </li>
     </ul>
     <section sectionTag="section" id="queue-lab-tab" headerTag="h1">
-        <span>
-            <form method="get" id="patient-lab-search-form" onsubmit="return false">
-                <input type="text" id="patient-lab-search" name="patient-lab-search"
-                       placeholder="${ui.message("coreapps.findPatient.search.placeholder")}" autocomplete="off"/>
+        <div class="card">
+            <div class="card-body">
+                <form method="get" id="patient-lab-search-form" onsubmit="return false">
+                    <input type="text" id="patient-lab-search" name="patient-lab-search"
+                           placeholder="${ui.message ( "coreapps.findPatient.search.placeholder" )}"
+                           autocomplete="off"/>
 
-            </form>
-        </span>
+                </form>
+            </div>
+        </div>
 
         <div class="info-body">
             <div id="lab-queue-list-table">
@@ -351,11 +362,10 @@ ${ui.includeFragment("ugandaemrpoc", "lab/diplayResultList")}
     </section>
 </div>
 
-${ui.includeFragment("ugandaemrpoc", "lab/scheduleTestDialogue")}
-${ui.includeFragment("ugandaemrpoc", "lab/resultForm")}
-${ui.includeFragment("ugandaemrpoc", "printResults")}
-
-
+${ui.includeFragment ( "ugandaemrpoc", "lab/scheduleTestDialogue" )}
+${ui.includeFragment ( "ugandaemrpoc", "lab/resultForm" )}
+${ui.includeFragment ( "ugandaemrpoc", "printResults" )}
+<% } %>
 
 
 
