@@ -21,6 +21,7 @@ import java.util.Set;
  * Created by Francis on 2/3/2016.
  */
 public class PrintResultsFragmentController {
+	
 	public void controller(UiSessionContext sessionContext, FragmentModel model) {
 		
 		sessionContext.requireAuthentication();
