@@ -48,13 +48,14 @@
             }
         });
     }
+
     function displayTriageData(response) {
         jq("#triage-queue-list-table").html("");
         var stillInQueueDataRows = "";
         var completedDataRows = "";
         stillInQueue = 0;
         completedQueue = 0;
-        var header = "<table><thead><tr><th>ID</th><th>NAMES</th><th>GENDER</th><th>DOB</th><th>VISIT STATUS</th><th>VISIT NO</th><th>ENTRY POINT</th><th>WAITING TIME</th></tr></thead><tbody>";
+        var header = "<table><thead><tr><th>ID</th><th>NAMES</th><th>GENDER</th><th>AGE</th><th>VISIT STATUS</th><th>VISIT NO</th><th>ENTRY POINT</th><th>WAITING TIME</th><th>ACTION</th></tr></thead><tbody>";
         var footer = "</tbody></table>";
         jq.each(response.patientTriageQueueList, function (index, element) {
 
@@ -66,12 +67,17 @@
                 dataRowTable += "<tr>";
                 dataRowTable += "<td><a href=''> " + patientQueueListElement.patientQueueId + "</a></td>";
                 dataRowTable += "<td>" + patientQueueListElement.patientNames + "</td>";
+                dataRowTable += "<td>" + patientQueueListElement.gender + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.age + "</td>";
-                dataRowTable += "<td></td>";
-                dataRowTable += "<td></td>";
-                dataRowTable += "<td></td>";
-                dataRowTable += "<td>" + patientQueueListElement.locationFrom + "</td>";
+                if (patientQueueListElement.priorityComment != null) {
+                    dataRowTable += "<td>" + patientQueueListElement.priorityComment + "</td>";
+                } else {
+                    dataRowTable += "<td></td>";
+                }
+                dataRowTable += "<td>" + patientQueueListElement.queueNumber.substring(11) + "</td>";
+                dataRowTable += "<td>" + patientQueueListElement.locationFrom.substring(0, 3) + "</td>";
                 dataRowTable += "<td>" + waitingTime + "</td>";
+                dataRowTable += "<td>" + "" + "</td>";
                 dataRowTable += "</tr>";
                 if (element.status === "pending") {
                     stillInQueue += 1;
@@ -112,13 +118,17 @@
         return hours + ":" + minutes + ":" + seconds
     }
 </script>
+<br/>
+<div class="card">
+    <div class="card-body">
+        <div><h1><i class="icon-list-alt"> ${ui.message("ugandaemrpoc.app.triage.patientqueue.title")}</i></h1></div>
 
-
-<div class="info-header">
-    <i class="icon-list-alt"></i>
-
-    <h3 style="width: 50%">${ui.message("ugandaemrpoc.app.triage.patientqueue.title")}</h3> <span
-        style="right:auto;width: 40%;font-weight: bold"></span>
+        <form method="get" id="patient-triage-search-form" onsubmit="return false">
+            <input type="text" id="patient-triage-search" name="patient-triage-search"
+                   placeholder="${ui.message("coreapps.findPatient.search.placeholder")}"
+                   autocomplete="off"/>
+        </form>
+    </div>
 </div>
 
 <div id="tabs">
@@ -135,16 +145,6 @@
         </li>
     </ul>
     <section sectionTag="section" id="queue-triage-tab" headerTag="h1">
-        <div class="card">
-            <div class="card-body">
-                <form method="get" id="patient-triage-search-form" onsubmit="return false">
-                    <input type="text" id="patient-triage-search" name="patient-triage-search"
-                           placeholder="${ui.message ( "coreapps.findPatient.search.placeholder" )}"
-                           autocomplete="off"/>
-                </form>
-            </div>
-        </div>
-
         <div class="info-body">
             <div id="triage-queue-list-table">
             </div>
