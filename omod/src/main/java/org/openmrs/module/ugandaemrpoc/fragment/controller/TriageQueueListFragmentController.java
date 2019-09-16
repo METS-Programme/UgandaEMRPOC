@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.openmrs.module.ugandaemrpoc.UgandaEMRPOCConfig.TRIAGE_LOCATION_UUID;
+
 public class TriageQueueListFragmentController {
 	
 	protected final Log log = LogFactory.getLog(TriageQueueListFragmentController.class);
@@ -36,7 +38,7 @@ public class TriageQueueListFragmentController {
 		String dateStr = sdf.format(new Date());
 		pageModel.addAttribute("currentDate", dateStr);
 		pageModel.addAttribute("locationSession", uiSessionContext.getSessionLocation().getUuid());
-		pageModel.addAttribute("triageLocation", "86863db4-6101-4ecf-9a86-5e716d6504e4");
+		pageModel.addAttribute("triageLocation", TRIAGE_LOCATION_UUID);
 		
 	}
 	

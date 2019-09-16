@@ -74,7 +74,7 @@
                 } else {
                     dataRowTable += "<td></td>";
                 }
-                dataRowTable += "<td>" + patientQueueListElement.queueNumber.substring(11) + "</td>";
+                dataRowTable += "<td>" + patientQueueListElement.queueNumber.substring(15) + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.locationFrom.substring(0, 3) + "</td>";
                 dataRowTable += "<td>" + waitingTime + "</td>";
                 dataRowTable += "<td>" + "" + "</td>";
