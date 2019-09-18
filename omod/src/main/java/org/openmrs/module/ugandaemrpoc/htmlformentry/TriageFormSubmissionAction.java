@@ -15,27 +15,27 @@ import java.util.List;
  * Enrolls patients into DSDM programs
  */
 public class TriageFormSubmissionAction implements CustomFormSubmissionAction {
-
-    private static final Log log = LogFactory.getLog(TriageFormSubmissionAction.class);
-
-    @Override
-    public void applyAction(FormEntrySession session) {
-        Mode mode = session.getContext().getMode();
-        if (!(mode.equals(Mode.ENTER) || mode.equals(Mode.EDIT))) {
-            return;
-        }
-
-        PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
-
-        PatientQueue patientQueue = new PatientQueue();
-
-        List<PatientQueue> patientQueueList = patientQueueingService.getPatientInQueueList(null, null, null, null,
-                session.getPatient());
-        if (patientQueueList.size() > 0) {
-            patientQueue = patientQueueList.get(0);
-            patientQueue.setEncounter(session.getEncounter());
-            patientQueueingService.savePatientQue(patientQueue);
-        }
-
-    }
+	
+	private static final Log log = LogFactory.getLog(TriageFormSubmissionAction.class);
+	
+	@Override
+	public void applyAction(FormEntrySession session) {
+		Mode mode = session.getContext().getMode();
+		if (!(mode.equals(Mode.ENTER) || mode.equals(Mode.EDIT))) {
+			return;
+		}
+		
+		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
+		
+		PatientQueue patientQueue = new PatientQueue();
+		
+		List<PatientQueue> patientQueueList = patientQueueingService.getPatientInQueueList(null, null, null, null,
+		    session.getPatient());
+		if (patientQueueList.size() > 0) {
+			patientQueue = patientQueueList.get(0);
+			patientQueue.setEncounter(session.getEncounter());
+			patientQueueingService.savePatientQue(patientQueue);
+		}
+		
+	}
 }
