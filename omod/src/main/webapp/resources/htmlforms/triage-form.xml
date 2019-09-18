@@ -502,16 +502,19 @@
                 </div>-->
             </div>
             <div class="col-4">
-                <div class="card" style="margin-top:10px">
-                    <div class="card-header">
-                        <label>Refer To</label>
-                    </div>
-                    <div class="card-body">
-                        <ifMode mode="ENTER">
+                <ifMode mode="ENTER">
+                    <div class="card" style="margin-top:10px">
+                        <div class="card-header">
+                            <label>Refer To</label>
+                        </div>
+                        <div class="card-body">
+
                             <uiInclude provider="ugandaemrpoc" fragment="referToNextProvider"/>
-                        </ifMode>
+
+                        </div>
+
                     </div>
-                </div>
+                </ifMode>
                 <div style="margin-top:30px; text-align: center">
                     <ifMode mode="ENTER">
                         <postSubmissionAction
