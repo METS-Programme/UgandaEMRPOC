@@ -21,7 +21,9 @@
     <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) > 5">
 
         <script type="text/javascript">
-            var patientId="<lookup expression="patient.patientId"/>";
+            var patientId = "<lookup expression="
+            patient.patientId
+            "/>";
             var calculateBmi = function (wt, ht) {
                 var bmi = null
                 if (wt &amp;&amp; ht) {
@@ -505,12 +507,17 @@
                         <label>Refer To</label>
                     </div>
                     <div class="card-body">
-                        <uiInclude provider="ugandaemrpoc" fragment="referToNextProvider"/>
+                        <ifMode mode="ENTER">
+                            <uiInclude provider="ugandaemrpoc" fragment="referToNextProvider"/>
+                        </ifMode>
                     </div>
                 </div>
                 <div style="margin-top:30px; text-align: center">
+                    <ifMode mode="ENTER">
+                        <postSubmissionAction
+                                class="org.openmrs.module.ugandaemrpoc.htmlformentry.TriageFormSubmissionAction"/>
+                    </ifMode>
                     <submit class="confirm" submitLabel="SAVE"/>
-                    <postSubmissionAction class="org.openmrs.module.ugandaemrpoc.htmlformentry.TriageFormSubmissionAction"/>
                 </div>
             </div>
         </div>
