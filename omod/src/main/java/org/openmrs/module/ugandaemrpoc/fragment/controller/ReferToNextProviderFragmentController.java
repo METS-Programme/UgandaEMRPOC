@@ -135,7 +135,8 @@ public class ReferToNextProviderFragmentController {
 	private PatientQueue completePreviousQueue(Patient patient) {
 		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
 		PatientQueue previousQueue = new PatientQueue();
-		List<PatientQueue> patientQueueList = patientQueueingService.getPatientInQueueList(null, null, null, null, patient);
+		List<PatientQueue> patientQueueList = patientQueueingService.getPatientInQueueList(null, null, null, null, patient,
+		    "pending");
 		if (patientQueueList.size() > 0) {
 			previousQueue = patientQueueList.get(0);
 			patientQueueingService.savePatientQue(previousQueue);
