@@ -1,0 +1,518 @@
+<htmlform formUuid="d514be1d-8a95-4f46-b8d8-9b8485679f47"
+          formName="Triage Vitals"
+          formEncounterType="68a71486-1a54-468f-ac3e-7091a9a79584"
+          formVersion="3.0"
+          formDescription="Vitals Form"
+          formAddMetadata="yes"
+          formUILocation="patientDashboard.visitActions"
+          formOrder="8"
+          formIcon="icon-medkit"
+          formShowIf="(visit.active) &amp;&amp; patient.person.dead==false"
+          formDisplayStyle="Standard"
+          formLabel="Triage Vitals Form">
+
+    <script>
+        if (window.location.href.indexOf('editHtmlFormWithStandardUi') !== -1) {
+            window.location.href = window.location.href.replace('editHtmlFormWithStandardUi', 'editHtmlFormWithSimpleUi');
+        }
+    </script>
+
+    <!-- only show BMI if patient is more than 5 years old (on the encounterDate) -->
+    <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) > 5">
+
+        <script type="text/javascript">
+            var patientId="<lookup expression="patient.patientId"/>";
+            var calculateBmi = function (wt, ht) {
+                var bmi = null
+                if (wt &amp;&amp; ht) {
+                    bmi = wt / ((ht / 100) * (ht / 100));
+                }
+                return bmi;
+            }
+        </script>
+        <style>
+            .container {
+                max-width: 100%;
+            }
+
+            form .lablex2 span {
+                min-width: 50%;
+                float: left;
+                margin: 1px 0px;
+            }
+
+            form .lablex3 span {
+                min-width: 30%;
+                float: left;
+                margin: 1px 0px;
+            }
+        </style>
+
+        <ifMode mode="ENTER">
+            <script type="text/javascript">
+
+                // functions to handle updating the bmi when in ENTER mode
+                var updateBmi = function () {
+                    var wt = htmlForm.getValueIfLegal('weight.value');
+                    var ht = htmlForm.getValueIfLegal('height.value');
+
+                    var bmi = calculateBmi(wt, ht);
+
+                    if (bmi == null || isNaN(bmi)) {
+                        jq('#calculated-bmi-wrapper').hide();
+                    } else {
+                        jq('#no-calculated-bmi').hide();
+                        jq('#calculated-bmi-wrapper').show();
+                        jq('#calculated-bmi').html(bmi.toFixed(1));
+                        jq('#hidden-calculated-bmi').val(bmi.toFixed(1));
+                    }
+                };
+
+                jq(function () {
+                    jq('#calculated-bmi-wrapper').hide();
+
+                    getField('weight.value').change(updateBmi)
+                    getField('height.value').change(updateBmi);
+
+                    updateBmi();
+                });
+
+                jq(function () {
+                    jq('#bp_systolic input[type=text]').attr('min', '50');
+                });
+
+                jq(function () {
+                    jq('#bp_diastolic input[type=text]').attr('min', '30');
+                });
+
+            </script>
+        </ifMode>
+
+        <script>
+            // set the blood pressure fields as "expected"
+            jq(function () {
+                jq('#bp_systolic > input').addClass('expected');
+                jq('#bp_diastolic > input').addClass('expected');
+            });
+
+        </script>
+
+        <ifMode mode="VIEW">
+            <script type="text/javascript">
+
+                // handle displaying the bmi when in VIEW mode
+                jq(function () {
+
+                    // we have to iterate through in case there are multiple vitals forms
+                    // displayed on a single page
+
+                    jq('htmlform').each(function (index, form) {
+                        jq(form).find('#calculated-bmi-continue').hide();
+                        jq(form).find('#no-calculated-bmi').hide();
+
+                        var wt = jq(form).find('#weight').find('.value').text();
+                        var ht = jq(form).find('#height').find('.value').text();
+
+                        var bmi = calculateBmi(wt, ht);
+
+                        if (bmi != null &amp;&amp; !isNaN(bmi)) {
+                            jq(form).find('#calculated-bmi-wrapper').show();
+                            jq(form).find('#calculated-bmi').html(bmi.toFixed(1));
+                            jq(form).find('#hidden-calculated-bmi').val(bmi.toFixed(1));
+                        }
+                    });
+
+                });
+
+            </script>
+        </ifMode>
+
+    </includeIf>
+    <div class="container">
+        <span style="display: none">
+            <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
+            <encounterLocation default="ba158c33-dc43-4306-9a4a-b4075751d36c"
+                               order="ba158c33-dc43-4306-9a4a-b4075751d36c"/>
+        </span>
+        <div class="row">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                        <label>Vitals</label>
+                    </div>
+                    <div class="card-body">
+                        <div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <lookup expression="fn.getConcept('CIEL:5088').name"/>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="CIEL:5088" id="temperature"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <uimessage code="referenceapplication.vitals.bloodPressure.title"/>
+                                </div>
+                                <div class="col-7">
+                                    <div class="left">
+                                        <label style="font-size:15px">Systolic</label>
+                                        <obs conceptId="CIEL:5085" id="bp_systolic"/>
+                                    </div>
+                                    <div class="left" style="margin-left:20px">
+                                        <label style="font-size:15px">Diastolic</label>
+                                        <obs conceptId="CIEL:5086" id="bp_diastolic"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <lookup expression="fn.getConcept('CIEL:5242').name"/>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="CIEL:5242" id="respiratory_rate"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    Hear Rate
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="CIEL:5087" id="heart_rate"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="margin-top:10px">
+                    <div class="card-header">
+                        <label>B-G</label>
+                    </div>
+                    <div class="card-body">
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>Blood Group</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs id="300" conceptId="300"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>Rhesus factor</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs id="1429" conceptId="1429"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="card" style="margin-top:10px">
+                    <div class="card-header">
+                        <label>Nutrition Assessment</label>
+                    </div>
+                    <div class="card-body">
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>
+                                        <lookup expression="fn.getConcept('CIEL:5090').name"/>
+                                    </label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="CIEL:5090" id="height"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>
+                                        <lookup expression="fn.getConcept('CIEL:5089').name"/>
+                                    </label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="CIEL:5089" id="weight"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>
+                                        <uimessage code="referenceapplication.vitals.bmi.title"/>
+                                    </label>
+                                </div>
+                                <div class="col-7">
+                                    <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) > 5">
+                                        <span id="no-calculated-bmi">
+                                            <uimessage code="referenceapplication.vitals.bmi.instructions"/>
+                                        </span>
+                                        <span id="calculated-bmi-wrapper">
+                                            <ifMode mode="VIEW" include="false">
+                                                <uimessage code="referenceapplication.vitals.bmi.display"/>
+                                            </ifMode>
+                                            <span id='calculated-bmi'></span>
+                                        </span>
+                                        <span id="calculated-bmi-continue">
+                                            <input type="hidden" name="focus-in-bmi-question"
+                                                   id="hidden-calculated-bmi"/>
+                                            <uimessage code="referenceapplication.vitals.calculatedField.continue"/>
+                                        </span>
+                                    </includeIf>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>MUAC Code</label>
+                                </div>
+                                <div class="col-7">
+                                    <includeIf velocityTest="$patient.age &lt; 5">
+                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027"
+                                             answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;=12.5cm"/>
+                                    </includeIf>
+                                    <includeIf velocityTest="$patient.age &lt; 10 &amp;&amp; $patient.age &gt;=5">
+                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027"
+                                             answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm"/>
+                                    </includeIf>
+                                    <includeIf velocityTest="$patient.age &lt; 18 &amp;&amp; $patient.age &gt;=10">
+                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027"
+                                             answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm"/>
+                                    </includeIf>
+                                    <includeIf velocityTest="$patient.age &gt;=18">
+                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027"
+                                             answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm"/>
+                                    </includeIf>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>MUAC Score</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="CIEL:1343" id="muac_size"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>Z-Scores</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="99800" answerConceptIds="99803,99804,99805,99806,99807"
+                                         answerLabels="&#60;-3,-3_&#60;-1,-1_1,&#62;1_3,&#62;3"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>Nutrition Assesment</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="68" answerConceptIds="99271,99272,99273,99274"
+                                         answerLabels="MAM, SAM, SAMO, PWG/PA"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>Nutrition Support</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs id="lablex3" conceptId="99054"
+                                         answerConceptIds="99053,99050,99051,99052" answerLabels="TF,SF,IYCS,NC"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="card" style="margin-top:10px">
+                    <div class="card-header">
+                        <label>Person and Social</label>
+                    </div>
+                    <div class="card-body">
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>Are you pregnant?</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="90041" style="checkbox" answerConceptIds="1065,1066"
+                                         answerLabels="Yes,No"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>EDD</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="5596" allowFutureDates="true"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>HIV status</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="90253" allowFutureDates="true"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>Are you using any FP Method</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs id="br" conceptId="90238" answerConceptIds="90082,90081"
+                                         answerLabels="Yes,No"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>FP Method</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs id="br" conceptId="374" answerConceptId="190" answerLabel="Condoms"/>
+                                    <excludeIf velocityTest="$patient.gender =='M' ">
+
+                                        <obs id="br" conceptId="374" answerConceptId="780"
+                                             answerLabel="Oral Contraceptive pills"/>
+                                        <obs id="br" conceptId="374" answerConceptId="5279"
+                                             answerLabel="Injectable/Implantable hormonies"/>
+                                        <obs id="br" conceptId="374" answerConceptId="5278"
+                                             answerLabel="Diaphram/Cervical Cap"/>
+                                        <obs id="br" conceptId="374" answerConceptId="5275"
+                                             answerLabel="Intra uterine device (IUD)"/>
+
+                                    </excludeIf>
+                                    <obs id="br" conceptId="374" answerConceptId="99265"
+                                         answerLabel="Vasectomy/Tubal ligation"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>Any intention to conceive in next 3 months</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="165260"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>TB Status</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="90216"
+                                         answerConceptIds="90079,90073,90078,90071"
+                                         answerLabels="1. No signs,2. Suspect,3. Diagnosed with Tb,4. Tb Rx"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>TPT Status</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="165261"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>TPT date initiated</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="165226"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>TPT date completed</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="165227"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
+                                    <label>Do you have the following Conditions</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="90251" answerConceptId="119481" answerLabel="Diabetes"
+                                         style="checkbox"/>
+                                    <obs conceptId="90251" answerConceptId="117399" answerLabel="Hypertention"
+                                         style="checkbox"/>
+                                    <obs conceptId="90251" answerConceptId="27" answerLabel="Hepatitis B"
+                                         style="checkbox"/>
+                                    <obs conceptId="90251" answerConceptId="77" answerLabel="Mental Illness"
+                                         style="checkbox"/>
+                                    <obs conceptId="90251" answerConceptId="139071" answerLabel="Vascular Diseases"
+                                         style="checkbox"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+            <div class="col-4">
+                <div class="card" style="margin-top:10px">
+                    <div class="card-header">
+                        <label>Refer To</label>
+                    </div>
+                    <div class="card-body">
+                        <uiInclude provider="ugandaemrpoc" fragment="referToNextProvider"/>
+                    </div>
+                </div>
+                <div style="margin-top:30px; text-align: center">
+                    <submit class="confirm" submitLabel="SAVE"/>
+                    <postSubmissionAction class="org.openmrs.module.ugandaemrpoc.htmlformentry.TriageFormSubmissionAction"/>
+                </div>
+            </div>
+        </div>
+    </div>
+</htmlform>
