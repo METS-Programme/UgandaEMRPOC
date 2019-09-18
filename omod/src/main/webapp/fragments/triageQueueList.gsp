@@ -55,32 +55,38 @@
         var completedDataRows = "";
         stillInQueue = 0;
         completedQueue = 0;
-        var headerPending = "<table><thead><tr><th>ID</th><th>NAMES</th><th>GENDER</th><th>AGE</th><th>VISIT STATUS</th><th>VISIT NO</th><th>ENTRY POINT</th><th>WAITING TIME</th><th>ACTION</th></tr></thead><tbody>";
-        var headerCompleted = "<table><thead><tr><th>ID</th><th>NAMES</th><th>GENDER</th><th>AGE</th><th>VISIT STATUS</th><th>VISIT NO</th><th>ENTRY POINT</th><th>WAITING TIME</th></tr></thead><tbody>";
+        var headerPending = "<table><thead><tr><th>VISIT ID</th><th>NAMES</th><th>GENDER</th><th>AGE</th><th>VISIT STATUS</th><th>ENTRY POINT</th><th>WAITING TIME</th><th>ACTION</th></tr></thead><tbody>";
+        var headerCompleted = "<table><thead><tr><th>VISIT ID</th><th>NAMES</th><th>GENDER</th><th>AGE</th><th>ENTRY POINT</th><th>COMPLETED TIME</th><th>ACTION</th></tr></thead><tbody>";
         var footer = "</tbody></table>";
         jq.each(response.patientTriageQueueList, function (index, element) {
                 var patientQueueListElement = element;
                 var dataRowTable = "";
-                var vitalsPageLocation = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId=" + patientQueueListElement.patientId + "&formUuid=d514be1d-8a95-4f46-b8d8-9b8485679f47&returnUrl=/openmrs/patientqueueing/clinicianDashboard.page";
+                var vitalsPageLocation = "";
+                if (element.status !== "completed") {
+                    vitalsPageLocation = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId=" + patientQueueListElement.patientId + "&formUuid=d514be1d-8a95-4f46-b8d8-9b8485679f47&returnUrl=/openmrs/patientqueueing/clinicianDashboard.page";
+                }else {
+                    vitalsPageLocation = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId=" + patientQueueListElement.patientId + "&formUuid=d514be1d-8a95-4f46-b8d8-9b8485679f47&encounterId="+patientQueueListElement.encounterId+"&returnUrl=/openmrs/patientqueueing/clinicianDashboard.page";
+                }
+
                 var action = "<i style=\"font-size: 25px;\" class=\"icon-edit edit-action\" title=\"Goto Patient Dashboard\" onclick=\" location.href = '" + vitalsPageLocation + "'\"></i>";
 
                 var waitingTime = getWaitingTime(patientQueueListElement.dateCreated);
                 dataRowTable += "<tr>";
-                dataRowTable += "<td><a href=''> " + patientQueueListElement.patientQueueId + "</a></td>";
+                dataRowTable += "<td>" + patientQueueListElement.queueNumber.substring(15) + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.patientNames + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.gender + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.age + "</td>";
-                if (patientQueueListElement.priorityComment != null) {
-                    dataRowTable += "<td>" + patientQueueListElement.priorityComment + "</td>";
-                } else {
-                    dataRowTable += "<td></td>";
+                if (element.status !== "completed") {
+
+                    if (patientQueueListElement.priorityComment != null) {
+                        dataRowTable += "<td>" + patientQueueListElement.priorityComment + "</td>";
+                    } else {
+                        dataRowTable += "<td></td>";
+                    }
                 }
-                dataRowTable += "<td>" + patientQueueListElement.queueNumber.substring(15) + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.locationFrom.substring(0, 3) + "</td>";
                 dataRowTable += "<td>" + waitingTime + "</td>";
-                if (element.status !== "completed") {
-                    dataRowTable += "<td>" + action + "</td>";
-                }
+                dataRowTable += "<td>" + action + "</td>";
                 dataRowTable += "</tr>";
                 if (element.status === "pending") {
                     stillInQueue += 1;
@@ -91,7 +97,8 @@
                     completedDataRows += dataRowTable;
                 }
             }
-        );
+        )
+        ;
 
         if (stillInQueueDataRows !== "") {
             jq("#triage-queue-list-table").html("");

@@ -30,7 +30,7 @@ public class TriageFormSubmissionAction implements CustomFormSubmissionAction {
 		PatientQueue patientQueue = new PatientQueue();
 		
 		List<PatientQueue> patientQueueList = patientQueueingService.getPatientInQueueList(null, null, null, null,
-		    session.getPatient());
+		    session.getPatient(), "completed");
 		if (patientQueueList.size() > 0) {
 			patientQueue = patientQueueList.get(0);
 			patientQueue.setEncounter(session.getEncounter());

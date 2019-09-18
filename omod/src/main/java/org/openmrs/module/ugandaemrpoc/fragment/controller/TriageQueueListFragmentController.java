@@ -94,6 +94,10 @@ public class TriageQueueListFragmentController {
 				patientQueueMapper.setCreatorNames(patientQueue.getCreator().getDisplayString());
 			}
 			
+			if (patientQueue.getEncounter() != null) {
+				patientQueueMapper.setEncounterId(patientQueue.getEncounter().getEncounterId().toString());
+			}
+
 			patientQueueMapper.setStatus(patientQueue.getStatus());
 			patientQueueMapper.setAge(patientQueue.getPatient().getAge().toString());
 			patientQueueMapper.setGender(patientQueue.getPatient().getGender());
