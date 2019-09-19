@@ -6,9 +6,9 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.patientqueueing.api.PatientQueueingService;
-import org.openmrs.module.patientqueueing.mapper.PatientQueueMapper;
 import org.openmrs.module.patientqueueing.model.PatientQueue;
 import org.openmrs.module.patientqueueing.utils.QueueingUtil;
+import org.openmrs.module.ugandaemrpoc.api.UgandaEMRPOCService;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.fragment.FragmentModel;
@@ -39,6 +39,7 @@ public class TriageQueueListFragmentController {
 		pageModel.addAttribute("currentDate", dateStr);
 		pageModel.addAttribute("locationSession", uiSessionContext.getSessionLocation().getUuid());
 		pageModel.addAttribute("triageLocation", TRIAGE_LOCATION_UUID);
+		pageModel.put("currentProvider", Context.getAuthenticatedUser());
 		
 	}
 	
@@ -54,6 +55,7 @@ public class TriageQueueListFragmentController {
 	public SimpleObject getPatientQueueList(
 	        @RequestParam(value = "triageSearchFilter", required = false) String searchfilter,
 	        UiSessionContext uiSessionContext) throws IOException, ParseException {
+		UgandaEMRPOCService ugandaEMRPOCService = Context.getService(UgandaEMRPOCService.class);
 		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
 		ObjectMapper objectMapper = new ObjectMapper();
 		SimpleObject simpleObject = new SimpleObject();
@@ -68,42 +70,7 @@ public class TriageQueueListFragmentController {
 			    QueueingUtil.dateFormtterDate(new Date(), "23:59:59"), uiSessionContext.getSessionLocation());
 		}
 		simpleObject.put("patientTriageQueueList",
-		    objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueueList)));
+		    objectMapper.writeValueAsString(ugandaEMRPOCService.mapPatientQueueToMapper(patientQueueList)));
 		return simpleObject;
-	}
-	
-	public List<PatientQueueMapper> mapPatientQueueToMapper(List<PatientQueue> patientQueueList) {
-		List<PatientQueueMapper> patientQueueMappers = new ArrayList<PatientQueueMapper>();
-		
-		for (PatientQueue patientQueue : patientQueueList) {
-			String names = patientQueue.getPatient().getFamilyName() + " " + patientQueue.getPatient().getGivenName() + " "
-			        + patientQueue.getPatient().getMiddleName();
-			PatientQueueMapper patientQueueMapper = new PatientQueueMapper();
-			patientQueueMapper.setId(patientQueue.getId());
-			patientQueueMapper.setPatientNames(names.replace("null", ""));
-			patientQueueMapper.setPatientId(patientQueue.getPatient().getPatientId());
-			patientQueueMapper.setLocationFrom(patientQueue.getLocationFrom().getName());
-			patientQueueMapper.setLocationTo(patientQueue.getLocationTo().getName());
-			patientQueueMapper.setQueueNumber(patientQueue.getQueueNumber());
-			
-			if (patientQueue.getProvider() != null) {
-				patientQueueMapper.setProviderNames(patientQueue.getProvider().getName());
-			}
-			
-			if (patientQueue.getCreator() != null) {
-				patientQueueMapper.setCreatorNames(patientQueue.getCreator().getDisplayString());
-			}
-			
-			if (patientQueue.getEncounter() != null) {
-				patientQueueMapper.setEncounterId(patientQueue.getEncounter().getEncounterId().toString());
-			}
-			
-			patientQueueMapper.setStatus(patientQueue.getStatus());
-			patientQueueMapper.setAge(patientQueue.getPatient().getAge().toString());
-			patientQueueMapper.setGender(patientQueue.getPatient().getGender());
-			patientQueueMapper.setDateCreated(patientQueue.getDateCreated().toString());
-			patientQueueMappers.add(patientQueueMapper);
-		}
-		return patientQueueMappers;
 	}
 }

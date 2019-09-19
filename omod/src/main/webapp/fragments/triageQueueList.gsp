@@ -11,6 +11,23 @@
     padding: 1.0rem;
     background-color: #eee;
 }
+.vertical {
+    border-left: 1px solid #c7c5c5;
+    height: 79px;
+    position: absolute;
+    left: 99%;
+    top: 11%;
+}
+#patient-triage-search {
+    min-width: 96%;
+    color: #363463;
+    display: block;
+    padding: 5px 10px;
+    height: 45px;
+    margin-top: 27px;
+    background-color: #FFF;
+    border: 1px solid #dddddd;
+}
 </style>
 <script>
     var stillInQueue = 0;
@@ -19,6 +36,10 @@
         jq("#tabs").tabs();
     })
     if (jQuery) {
+        setInterval(function () {
+            console.log("Checking IF Reloading works");
+            getPatientQueue();
+        }, 3000);
         jq(document).ready(function () {
             jq("#clinician-list").hide();
             getPatientQueue();
@@ -64,8 +85,8 @@
                 var vitalsPageLocation = "";
                 if (element.status !== "completed") {
                     vitalsPageLocation = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId=" + patientQueueListElement.patientId + "&formUuid=d514be1d-8a95-4f46-b8d8-9b8485679f47&returnUrl=/openmrs/patientqueueing/clinicianDashboard.page";
-                }else {
-                    vitalsPageLocation = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId=" + patientQueueListElement.patientId + "&formUuid=d514be1d-8a95-4f46-b8d8-9b8485679f47&encounterId="+patientQueueListElement.encounterId+"&returnUrl=/openmrs/patientqueueing/clinicianDashboard.page";
+                } else {
+                    vitalsPageLocation = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId=" + patientQueueListElement.patientId + "&formUuid=d514be1d-8a95-4f46-b8d8-9b8485679f47&encounterId=" + patientQueueListElement.encounterId + "&returnUrl=/openmrs/patientqueueing/clinicianDashboard.page";
                 }
 
                 var action = "<i style=\"font-size: 25px;\" class=\"icon-edit edit-action\" title=\"Goto Patient Dashboard\" onclick=\" location.href = '" + vitalsPageLocation + "'\"></i>";
@@ -106,8 +127,8 @@
 
         }
         if (completedDataRows !== "") {
-            jq("#triage-completed-list-tab").html("");
-            jq("#triage-completed-list-tab").append(headerCompleted + completedDataRows + footer);
+            jq("#triage-completed-list-table").html("");
+            jq("#triage-completed-list-table").append(headerCompleted + completedDataRows + footer);
 
         }
         jq("#triage-pending-number").html("");
@@ -122,49 +143,80 @@
         var diff = Math.abs(new Date() - new Date(queueDate));
         var seconds = Math.floor(diff / 1000); //ignore any left over units smaller than a second
         var minutes = Math.floor(seconds / 60);
+        var waitingTime = "";
         seconds = seconds % 60;
         var hours = Math.floor(minutes / 60);
         minutes = minutes % 60;
-        return hours + ":" + minutes + ":" + seconds
+
+        if (hours > 0 || minutes > 60) {
+            waitingTime = "<span style='background-color: red; color: white; width: 100%; text-align: center;'>" + hours + ":" + minutes + ":" + seconds + "</span>";
+        } else {
+            waitingTime = "<span style='background-color:green; color: white; width: 100%; text-align: center;'>" + hours + ":" + minutes + ":" + seconds + "</span>";
+        }
+        return waitingTime;
     }
 </script>
 <br/>
 
-<div class="card">
-    <div class="card-body">
-        <div><h1><i class="icon-list-alt">${ui.message("ugandaemrpoc.app.triage.patientqueue.title")}</i></h1></div>
 
-        <form method="get" id="patient-triage-search-form" onsubmit="return false">
-            <input type="text" id="patient-triage-search" name="patient-triage-search"
-                   placeholder="${ui.message("coreapps.findPatient.search.placeholder")}"
-                   autocomplete="off"/>
-        </form>
+
+<div class="card">
+    <div class="card-header">
+        <div class="">
+            <div class="row">
+                <div class="col-3">
+                    <div>
+                        <h1 style="color: maroon">${ui.message("Triage Queue")}</i></h1>
+                    </div>
+                    <div>
+                        <h2>${currentProvider?.personName?.fullName}</h2>
+                    </div>
+                    <div class="vertical"></div>
+                </div>
+                <div class="col-8">
+                    <form method="get" id="patient-triage-search-form" onsubmit="return false">
+                        <input id="patient-triage-search" name="patient-triage-search"
+                               placeholder="${ui.message("coreapps.findPatient.search.placeholder")}" autocomplete="off"/><i
+                            id="patient-search-clear-button" class="small icon-remove-sign"></i>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body">
+        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-item nav-link active" id="home-tab" data-toggle="tab" href="#queue-triage" role="tab"
+                   aria-controls="queue-triage-tab" aria-selected="true">Pending Patients <span style="color:red" id="triage-pending-number"> 0 </span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#triage-completed-list" role="tab"
+                   aria-controls="triage-completed-list-tab" aria-selected="false">Completed Patients <span style="color:red" id="triage-completed-number"> 0 </span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="queue-triage" role="tabpanel"
+                 aria-labelledby="queue-triage-tab">
+                <div class="info-body">
+                    <div id="triage-queue-list-table">
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="triage-completed-list" role="tabpanel" aria-labelledby="triage-completed-list-tab">
+                <div class="info-body">
+                    <div id="triage-completed-list-table">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div id="tabs">
-    <ul>
-        <li>
-            <a href="#queue-triage-tab">
-                WAITING QUEUE <span style="color:red" id="triage-pending-number">5</span>
-            </a>
-        </li>
-        <li>
-            <a href="#triage-completed-list-tab">
-                COMPLETED <span style="color:red" id="triage-completed-number">5</span>
-            </a>
-        </li>
-    </ul>
-    <section sectionTag="section" id="queue-triage-tab" headerTag="h1">
-        <div class="info-body">
-            <div id="triage-queue-list-table">
-            </div>
-        </div>
-    </section>
-    <section sectionTag="section" id="triage-completed-list-tab" headerTag="h1">
-        List of Completed Patients
-    </section>
-</div>
 <% } %>
 
 
