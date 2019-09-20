@@ -35,7 +35,6 @@ public class VitalsFragmentController {
 		jsonNodes.put("encounterTypeUuid", "67a71486-1a54-468f-ac3e-7091a9a79584");
 		jsonNodes.put("encounterDateLabel", "Vitals");
 		appDescriptor.setConfig(jsonNodes);
-		String config = "\"config\": {\"encounterTypeUuid\": \"67a71486-1a54-468f-ac3e-7091a9a79584\",\"encounterDateLabel\": \"coreapps.clinicianfacing.lastVitalsDateLabel\"}";
 		
 		fragmentModel.put("app", appDescriptor);
 		fragmentModel.put("patientId", patient.getPatientId());
