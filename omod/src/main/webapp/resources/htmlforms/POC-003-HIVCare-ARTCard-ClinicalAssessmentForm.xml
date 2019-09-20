@@ -78,6 +78,13 @@
         jq(xx).each(function () {
         var group = jq(this);
 
+        $('.nav a:first').tab('show');
+
+        $('.nav a').click(function (e) {
+        e.preventDefault()
+        $(this).tab('show')
+        });
+
         if (class_name.indexOf('Child') == -1) {
         /* group.find("input").attr("value", ""); */
         group.find("input").attr("required", requires);
@@ -507,6 +514,19 @@
         float: left;
         margin: 1px 0px;
         }
+        a {
+        color: #f9f9f9;
+        text-decoration: none;
+        }
+        .nav-tabs .nav-link {
+        border: 1px solid #02aec3;
+        border-top-left-radius: .25rem;
+        border-top-right-radius: .25rem;
+        color:blue
+        }
+        #final-out-come{
+        margin-top:26px;
+        }
     </style>
 
     <!-- This section contains lookup tags that pick data from other forms-->
@@ -571,10 +591,34 @@
                 <a class="nav-link nav-link-1" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages"
                    role="tab" aria-controls="v-pills-messages" aria-selected="false">Diagnosis
                 </a>
+                <a class="nav-link nav-link-1" id="v-pills-messages-tab" data-toggle="pill" href="#v-prescriptions"
+                   role="tab" aria-controls="v-pills-messages" aria-selected="false">Prescriptions
+                </a>
                 <a class="nav-link nav-link-1" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings"
                    role="tab" aria-controls="v-pills-settings" aria-selected="false">Final outcome
                 </a>
+                <div class="encounter-details" style="margin-top:50px">
+                    <div style="text-align:center;display:none">
+                        <label>Encounter Date</label>
+                        <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
+                        <encounterLocation default="629d78e9-93e5-43b0-ad8a-48313fd99117"
+                                           order="629d78e9-93e5-43b0-ad8a-48313fd99117"/>
+                    </div>
+                    <restrictByRole include="Data Manager">
+                        <div>
+                            <encounterProvider role="Provider" style="autocomplete"/>
+                        </div>
+                    </restrictByRole>
+
+                    <div class="submission-section" style="align:center">
+                        <submit class="confirm" submitLabel="SAVE" style="width:200px; align:center"/>
+                        <postSubmissionAction class="org.openmrs.module.aijar.htmlformentry.DSDSProgramSubmissionAction"/>
+                    </div>
+                </div>
+
             </div>
+
+
         </div>
         <div class="col-9">
             <div class="tab-content" id="v-pills-tabContent">
@@ -582,7 +626,7 @@
                      aria-labelledby="v-pills-home-tab">
                     <div class="card">
                         <div class="card-header">
-                            Triage Information: Vitals and Nutrition Assessment
+                            Clinical Encounter. Information On the Encounter with the Patient Must Be filed Here
                         </div>
                         <div class="card-body">
                             <nav>
@@ -599,6 +643,12 @@
                                        href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">
                                         Examination
                                     </a>
+
+                                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab"
+                                       href="#nav-investigations" role="tab" aria-controls="nav-contact"
+                                       aria-selected="false">
+                                        Investigations
+                                    </a>
                                 </div>
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
@@ -610,73 +660,75 @@
                                      aria-labelledby="nav-profile-tab">
                                     <div class="">
                                         <div class="row">
-                                            <div class="col-6">
-                                                <div class="card" style="margin-top:10px">
-                                                    <div class="card-header">
-                                                        <label>Pregnancy and EmTCT</label>
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div style="margin-top:10px">
-                                                            <div class="row">
-                                                                <div class="col-5">
-                                                                    <label>Are you pregnant?</label>
-                                                                </div>
-                                                                <div class="col-7">
-                                                                    <obs conceptId="90041" style="checkbox"
-                                                                         answerConceptIds="1065,1066"
-                                                                         answerLabels="Yes,No"/>
+                                            <excludeIf velocityTest="$patient.gender =='M' || $patient.age &lt; 9">
+                                                <div class="col-6">
+                                                    <div class="card" style="margin-top:10px">
+                                                        <div class="card-header">
+                                                            <label>Pregnancy and EmTCT</label>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <div style="margin-top:10px">
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>Are you pregnant?</label>
+                                                                    </div>
+                                                                    <div class="col-7">
+                                                                        <obs conceptId="90041" style="checkbox"
+                                                                             answerConceptIds="1065,1066"
+                                                                             answerLabels="Yes,No"/>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div style="margin-top:10px">
-                                                            <div class="row">
-                                                                <div class="col-5">
-                                                                    <label>EDD</label>
-                                                                </div>
-                                                                <div class="col-7">
-                                                                    <obs conceptId="5596" allowFutureDates="true"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div style="margin-top:10px">
-                                                            <div class="row">
-                                                                <div class="col-5">
-                                                                    <label>In EMTCT</label>
-                                                                </div>
-                                                                <div class="col-7">
-                                                                    <obs conceptId="90012"
-                                                                         answerConceptIds="90003,90004"
-                                                                         answerLabels="Yes,No"/>
+                                                            <div style="margin-top:10px">
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>EDD</label>
+                                                                    </div>
+                                                                    <div class="col-7">
+                                                                        <obs conceptId="5596" allowFutureDates="true"/>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                        <div style="margin-top:10px">
-                                                            <div class="row">
-                                                                <div class="col-5">
-                                                                    <label>Gestation in Weeks</label>
-                                                                </div>
-                                                                <div class="col-7">
-                                                                    <obs conceptId="162983"/>
+                                                            <div style="margin-top:10px">
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>In EMTCT</label>
+                                                                    </div>
+                                                                    <div class="col-7">
+                                                                        <obs conceptId="90012"
+                                                                             answerConceptIds="90003,90004"
+                                                                             answerLabels="Yes,No"/>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                            <div style="margin-top:10px">
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>Gestation in Weeks</label>
+                                                                    </div>
+                                                                    <div class="col-7">
+                                                                        <obs conceptId="162983"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
 
 
-                                                        <div style="margin-top:10px">
-                                                            <div class="row">
-                                                                <div class="col-5">
-                                                                    <label>ANC NO.</label>
-                                                                </div>
-                                                                <div class="col-7">
-                                                                    <patient field="identifier"
-                                                                             identifierTypeId="b0cc255e-ef57-4266-839e-0df7f5099eb9"
-                                                                             required="false"/>
+                                                            <div style="margin-top:10px">
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>ANC NO.</label>
+                                                                    </div>
+                                                                    <div class="col-7">
+                                                                        <patient field="identifier"
+                                                                                 identifierTypeId="b0cc255e-ef57-4266-839e-0df7f5099eb9"
+                                                                                 required="false"/>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </excludeIf>
                                             <div class="col-6">
                                                 <div class="card" style="margin-top:10px">
                                                     <div class="card-header">
@@ -724,29 +776,32 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div style="margin-top:10px">
-                                                            <div class="row">
-                                                                <div class="col-5">
-                                                                    <label>Any intention to conceive in next 3 months
-                                                                    </label>
-                                                                </div>
-                                                                <div class="col-7">
-                                                                    <obs conceptId="165260"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div style="margin-top:10px">
-                                                            <div class="row">
-                                                                <div class="col-5">
-                                                                    <label>CaCx screening</label>
-                                                                </div>
-                                                                <div class="col-7">
-                                                                    <obs conceptId="90012"
-                                                                         answerConceptIds="90003,90004"
-                                                                         answerLabels="Yes,No"/>
+                                                        <excludeIf velocityTest="$patient.gender =='M' ">
+                                                            <div style="margin-top:10px">
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>Any intention to conceive in next 3
+                                                                            months
+                                                                        </label>
+                                                                    </div>
+                                                                    <div class="col-7">
+                                                                        <obs conceptId="165260"/>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                            <div style="margin-top:10px">
+                                                                <div class="row">
+                                                                    <div class="col-5">
+                                                                        <label>CaCx screening</label>
+                                                                    </div>
+                                                                    <div class="col-7">
+                                                                        <obs conceptId="90012"
+                                                                             answerConceptIds="90003,90004"
+                                                                             answerLabels="Yes,No"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </excludeIf>
                                                     </div>
                                                 </div>
                                             </div>
@@ -777,22 +832,6 @@
 
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="card" style="margin-top: 10px;">
-                                                    <div class="card-header">Diagnosis</div>
-                                                    <div class="card-body">
-                                                        <encounterDiagnoses required="true"
-                                                                            selectedDiagnosesTarget="#encounter-diagnoses-target"
-                                                                            preferredCodingSource="ICD-10-WHO"
-                                                                            diagnosisConceptClasses="Diagnosis"/>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
                                                 <div class="card" style="margin-top: 10px;">
                                                     <div class="card-header">Side Effects Of ART</div>
                                                     <div class="card-body">
@@ -812,43 +851,6 @@
 
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-6">
-                                                <div class="card" style="margin-top: 10px;">
-                                                    <div class="card-header">Advanced Disease and WHO Clinical Stage
-                                                    </div>
-                                                    <div class="card-body">
-                                                        <div style="margin-top:10px">
-                                                            <div class="row">
-                                                                <div class="col-5">
-                                                                    <label>Advanced Disease Status</label>
-                                                                </div>
-                                                                <div class="col-7">
-                                                                    <obs conceptId="165272"/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div style="margin-top:10px">
-                                                            <div class="row">
-                                                                <div class="col-5">
-                                                                    <lable>WHO Clinical stage</lable>
-                                                                </div>
-                                                                <div class="col-7">
-                                                                    <obs id="90203" conceptId="90203"
-                                                                         answerConceptIds="90033,90034,90035,90036,90293,90294,90295,90296"
-                                                                         answerLabels="1,2,3,4,T1,T2,T3,T4"
-                                                                         labelText=""/>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-6">
                                                 <div class="card" style="margin-top: 10px;">
                                                     <div class="card-header">Syphilis status</div>
                                                     <div class="card-body">
@@ -891,6 +893,37 @@
                                                 </div>
                                             </div>
                                             <div class="col-6">
+                                                <div class="card" style="margin-top: 10px;">
+                                                    <div class="card-header">Advanced Disease and WHO Clinical Stage
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div style="margin-top:10px">
+                                                            <div class="row">
+                                                                <div class="col-5">
+                                                                    <label>Advanced Disease Status</label>
+                                                                </div>
+                                                                <div class="col-7">
+                                                                    <obs conceptId="165272"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="margin-top:10px">
+                                                            <div class="row">
+                                                                <div class="col-5">
+                                                                    <lable>WHO Clinical stage</lable>
+                                                                </div>
+                                                                <div class="col-7">
+                                                                    <obs id="90203" conceptId="90203"
+                                                                         answerConceptIds="90033,90034,90035,90036,90293,90294,90295,90296"
+                                                                         answerLabels="1,2,3,4,T1,T2,T3,T4"
+                                                                         labelText=""/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
                                                 <div class="card" style="margin-top: 10px;">
                                                     <div class="card-header">TB AND TPT</div>
                                                     <div class="card-body">
@@ -945,6 +978,62 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="tab-pane fade" id="nav-investigations" role="tabpanel"
+                                     aria-labelledby="nav-contact-tab">
+
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="card" style="margin-top:10px">
+                                                <div class="card-header">
+                                                    <label>Laboratory Tests</label>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="investigations">
+                                                        <span class="lablex2">
+                                                            <repeat with="['1019','CBC'],['99152','RPR'],['21','Hgb'],['657','Cd4'],['856','VL'],['307','Sputums'],['99149','Infant Ab/PCR']">
+                                                                <obs id="{0}" conceptId="1271" answerConceptId="{0}"
+                                                                     answerLabel="{1}" style="checkbox"/>
+                                                            </repeat>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="card" style="margin-top:10px">
+                                                <div class="card-header">
+                                                    <label>Radiology</label>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="investigations">
+                                                        <span class="lablex2">
+                                                            <repeat with="['12','CXR']">
+                                                                <obs id="{0}" conceptId="1271" answerConceptId="{0}"
+                                                                     answerLabel="{1}" style="checkbox"/>
+                                                            </repeat>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                            <div class="card" style="margin-top:10px">
+                                                <div class="card-header">
+                                                    <label>Theater</label>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="investigations">
+                                                        <span class="lablex2">
+
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -953,10 +1042,93 @@
                     Investigation Reports Go Here
                 </div>
                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                    Prescriptions Go Here
+                    <div class="card" style="margin-top: 10px;">
+                        <div class="card-header">Diagnosis</div>
+                        <div class="card-body">
+                            <encounterDiagnoses required="true"
+                                                selectedDiagnosesTarget="#encounter-diagnoses-target"
+                                                preferredCodingSource="ICD-10-WHO"
+                                                diagnosisConceptClasses="Diagnosis"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="v-prescriptions" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    Prescriptions Go here
                 </div>
                 <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
-                    Final Outcome Go Here
+                    <div class="card" style="margin-top:10px">
+                        <div class="card-header">
+                            <label>Final Out Come</label>
+                        </div>
+                        <div class="card-body">
+                            <div class="final-out-come">
+                                <obsgroup groupingConceptId="99166">
+                                    <div class="row">
+                                        <div class="col-4" id="final-out-come">
+                                            <obs id="90306" conceptId="90306" answerConceptId="90003"
+                                                 answerLabel="Transfer out"/>
+                                        </div>
+                                        <div class="col-4" id="disabled">
+                                            <obs id="99165" conceptId="99165" labelText="Date of Transfer"/>
+                                        </div>
+                                        <div class="col-4" id="disabled">
+                                            <obs conceptId="90211" labelText="Where"/>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-top:30px">
+                                        <div class="col-4">
+                                            <excludeIf velocityTest="$patient.person.dead ==true">
+                                                <lookup complexExpression="#set($transfer_out_date = '')"/>
+                                                <ifMode mode="ENTER">
+                                                    <span id="transfer_out_date_id" style="display: none">
+                                                        <lookup
+                                                                complexExpression="#set($transfer_out_date=($fn.latestObs('99165').valueDatetime)) #set($lost_to_follow_date=$fn.latestObs('99165').valueDatetime) #set($transfer_out=$fn.latestObs('90306').valueCoded.name) $transfer_out_date"/>
+                                                    </span>
+                                                    <includeIf velocityTest="$transfer_out=='YES'">
+                                                        <obs id="returndate" conceptId="5096" allowFutureDates="true"
+                                                             labelText="Return date:"/>
+                                                    </includeIf>
+
+                                                    <includeIf velocityTest="$transfer_out!='YES'">
+                                                        <obs id="returndate" conceptId="5096" required="required"
+                                                             allowFutureDates="true"
+                                                             labelText="Return date:"/>
+                                                    </includeIf>
+                                                </ifMode>
+
+                                                <ifMode mode="EDIT">
+                                                    <span id="transfer_out_date_id" style="display: none">
+                                                        <lookup
+                                                                complexExpression="#set($transfer_out_date=($fn.latestObs('99165').valueDatetime)) #set($lost_to_follow_date=$fn.latestObs('99165').valueDatetime) #set($transfer_out=$fn.latestObs('90306').valueCoded.name) $transfer_out_date"/>
+                                                    </span>
+                                                    <includeIf velocityTest="$transfer_out=='YES'">
+                                                        <obs id="returndate" conceptId="5096" allowFutureDates="true"
+                                                             labelText="Return date:"/>
+                                                    </includeIf>
+
+
+                                                    <includeIf velocityTest="$transfer_out!='YES'">
+                                                        <obs id="returndate" conceptId="5096" required="required"
+                                                             allowFutureDates="true"
+                                                             labelText="Return date:"/>
+                                                    </includeIf>
+                                                </ifMode>
+                                            </excludeIf>
+                                        </div>
+                                        <div class="col-4" id="disabled">
+                                            <obs id="reason_for_appointment" conceptId="160288"
+                                                 labelText="Reasons for next appointment:"
+                                                 answerConceptIds="164968,164972,164970,856,5497,163153,164971,164973,99324,164974,90012,903,5484,90002"
+                                                 answerLabels="1. ART Initiation, 2. ART Refill, 3. ART Regimen Switch/ Substitution, 4. Viral Load, 5. CD4, 6. IAC, 7. T.B Drug Refill,8. T.B Follow up, 9. ANC,10. EID,11. PMTCT, 12. Hypertension/ Diabetes, 13. Nutrition,14. Other Specify"/>
+                                        </div>
+                                        <div class="col-4" id="disabled">
+                                            <obs conceptId="164975" labelText="Other Reason for next appointment"/>
+                                        </div>
+                                    </div>
+                                </obsgroup>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
