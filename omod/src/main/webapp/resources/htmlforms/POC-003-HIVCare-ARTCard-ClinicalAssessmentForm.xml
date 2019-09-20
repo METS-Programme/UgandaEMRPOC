@@ -551,7 +551,7 @@
                             </nav>
                             <div class="tab-content" id="nav-tabContent">
                                 <div class="tab-pane fade show active" id="patient-vitals" role="tabpanel" aria-labelledby="nav-home-tab">
-                                    Triage Information Go Here
+                                    <uiInclude provider="ugandaemrpoc" fragment="vitals"/>
                                 </div>
                                 <div class="tab-pane fade" id="nav-family-planning" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
                                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
