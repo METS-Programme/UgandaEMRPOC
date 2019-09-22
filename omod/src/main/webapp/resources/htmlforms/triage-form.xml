@@ -1,6 +1,6 @@
 <htmlform formUuid="d514be1d-8a95-4f46-b8d8-9b8485679f47"
           formName="Triage Vitals"
-          formEncounterType="68a71486-1a54-468f-ac3e-7091a9a79584"
+          formEncounterType="0f1ec66d-61db-4575-8248-94e10a88178f"
           formVersion="3.0"
           formDescription="Vitals Form"
           formAddMetadata="yes"
@@ -21,9 +21,7 @@
     <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) > 5">
 
         <script type="text/javascript">
-            var patientId = "<lookup expression="
-            patient.patientId
-            "/>";
+            var patientId = '<lookup expression="patient.patientId"/>';
             var calculateBmi = function (wt, ht) {
                 var bmi = null
                 if (wt &amp;&amp; ht) {

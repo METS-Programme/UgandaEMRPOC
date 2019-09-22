@@ -1,6 +1,6 @@
 <%
-    ui.includeCss("coreapps", "patientsearch/patientSearchWidget.css")
     if (clinicianLocation?.contains(currentLocation?.uuid)) {
+        ui.includeCss("coreapps", "patientsearch/patientSearchWidget.css")
 %>
 <style>
 .card-body {
@@ -13,6 +13,7 @@
 .my-tab .tab-pane {
     border: solid 1px blue;
 }
+
 .vertical {
     border-left: 1px solid #c7c5c5;
     height: 79px;
@@ -20,6 +21,7 @@
     left: 99%;
     top: 11%;
 }
+
 #patient-search {
     min-width: 96%;
     color: #363463;
@@ -139,7 +141,9 @@
 
                 var waitingTime = getWaitingTime(patientQueueListElement.dateCreated);
                 dataRowTable += "<tr>";
-                dataRowTable += "<td>" + patientQueueListElement.queueNumber.substring(15) + "</td>";
+                if (patientQueueListElement.queueNumber !== null) {
+                    dataRowTable += "<td>" + patientQueueListElement.queueNumber.substring(15) + "</td>";
+                }
                 dataRowTable += "<td>" + patientQueueListElement.patientNames + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.gender + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.age + "</td>";
@@ -170,7 +174,7 @@
                 } else if (element.status === "completed") {
                     completedQueue += 1;
                     completedDataRows += dataRowTable;
-                } else if (element.status === "fromlab") {
+                } else if (element.status === "from lab") {
                     fromLabQueue += 1;
                     fromLabDataRows += dataRowTable;
                 }
@@ -213,15 +217,19 @@
                     <div>
                         <h1 style="color: maroon">${ui.message("Doctor's Queue:")}</i></h1>
                     </div>
+
                     <div>
                         <h2>${currentProvider?.personName?.fullName}</h2>
                     </div>
+
                     <div class="vertical"></div>
                 </div>
+
                 <div class="col-8">
                     <form method="get" id="patient-search-form" onsubmit="return false">
                         <input type="text" id="patient-search"
-                               placeholder="${ui.message("coreapps.findPatient.search.placeholder")}" autocomplete="off"/><i
+                               placeholder="${ui.message("coreapps.findPatient.search.placeholder")}"
+                               autocomplete="off"/><i
                             id="patient-search-clear-button" class="small icon-remove-sign"></i>
                     </form>
                 </div>

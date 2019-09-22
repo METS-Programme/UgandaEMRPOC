@@ -65,9 +65,10 @@ public class ClinicianQueueListFragmentController {
 			}
 		} else {
 			try {
-				patientQueueList = patientQueueingService.getPatientInQueueList(null,
-				    QueueingUtil.dateFormtterDate(new Date(), "00:00:00"),
-				    QueueingUtil.dateFormtterDate(new Date(), "23:59:59"), uiSessionContext.getSessionLocation());
+				patientQueueList = patientQueueingService
+				        .getPatientInQueueList(null, QueueingUtil.dateFormtterDate(new Date(), "00:00:00"),
+				            QueueingUtil.dateFormtterDate(new Date(), "23:59:59"), uiSessionContext.getSessionLocation(),
+				            null, null);
 			}
 			catch (ParseException e) {
 				log.error(e);

@@ -598,21 +598,21 @@
                    role="tab" aria-controls="v-pills-settings" aria-selected="false">Final outcome
                 </a>
                 <div class="encounter-details" style="margin-top:50px">
-                    <div style="text-align:center;display:none">
+                    <div>
                         <label>Encounter Date</label>
                         <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
                         <encounterLocation default="629d78e9-93e5-43b0-ad8a-48313fd99117"
                                            order="629d78e9-93e5-43b0-ad8a-48313fd99117"/>
                     </div>
-                    <restrictByRole include="Data Manager">
-                        <div>
-                            <encounterProvider role="Provider" style="autocomplete"/>
-                        </div>
-                    </restrictByRole>
+                    <div>
+                        <encounterProviderAndRole encounterRole="240b26f9-dd88-4172-823d-4a8bfeb7841f"
+                                                  required="required"/>
+                    </div>
 
                     <div class="submission-section" style="align:center">
                         <submit class="confirm" submitLabel="SAVE" style="width:200px; align:center"/>
-                        <postSubmissionAction class="org.openmrs.module.aijar.htmlformentry.DSDSProgramSubmissionAction"/>
+                        <postSubmissionAction
+                                class="org.openmrs.module.ugandaemrpoc.htmlformentry.LabOrderSubmissionAction"/>
                     </div>
                 </div>
 
@@ -1045,10 +1045,8 @@
                     <div class="card" style="margin-top: 10px;">
                         <div class="card-header">Diagnosis</div>
                         <div class="card-body">
-                            <encounterDiagnoses required="true"
-                                                selectedDiagnosesTarget="#encounter-diagnoses-target"
-                                                preferredCodingSource="ICD-10-WHO"
-                                                diagnosisConceptClasses="Diagnosis"/>
+                            <encounterDiagnoses selectedDiagnosesTarget="#encounter-diagnoses-target"
+                                                preferredCodingSource="ICD-10-WHO" diagnosisConceptClasses="Diagnosis"/>
                         </div>
                     </div>
                 </div>
@@ -1075,57 +1073,28 @@
                                             <obs conceptId="90211" labelText="Where"/>
                                         </div>
                                     </div>
-                                    <div class="row" style="margin-top:30px">
-                                        <div class="col-4">
-                                            <excludeIf velocityTest="$patient.person.dead ==true">
-                                                <lookup complexExpression="#set($transfer_out_date = '')"/>
-                                                <ifMode mode="ENTER">
-                                                    <span id="transfer_out_date_id" style="display: none">
-                                                        <lookup
-                                                                complexExpression="#set($transfer_out_date=($fn.latestObs('99165').valueDatetime)) #set($lost_to_follow_date=$fn.latestObs('99165').valueDatetime) #set($transfer_out=$fn.latestObs('90306').valueCoded.name) $transfer_out_date"/>
-                                                    </span>
-                                                    <includeIf velocityTest="$transfer_out=='YES'">
-                                                        <obs id="returndate" conceptId="5096" allowFutureDates="true"
-                                                             labelText="Return date:"/>
-                                                    </includeIf>
-
-                                                    <includeIf velocityTest="$transfer_out!='YES'">
-                                                        <obs id="returndate" conceptId="5096" required="required"
-                                                             allowFutureDates="true"
-                                                             labelText="Return date:"/>
-                                                    </includeIf>
-                                                </ifMode>
-
-                                                <ifMode mode="EDIT">
-                                                    <span id="transfer_out_date_id" style="display: none">
-                                                        <lookup
-                                                                complexExpression="#set($transfer_out_date=($fn.latestObs('99165').valueDatetime)) #set($lost_to_follow_date=$fn.latestObs('99165').valueDatetime) #set($transfer_out=$fn.latestObs('90306').valueCoded.name) $transfer_out_date"/>
-                                                    </span>
-                                                    <includeIf velocityTest="$transfer_out=='YES'">
-                                                        <obs id="returndate" conceptId="5096" allowFutureDates="true"
-                                                             labelText="Return date:"/>
-                                                    </includeIf>
-
-
-                                                    <includeIf velocityTest="$transfer_out!='YES'">
-                                                        <obs id="returndate" conceptId="5096" required="required"
-                                                             allowFutureDates="true"
-                                                             labelText="Return date:"/>
-                                                    </includeIf>
-                                                </ifMode>
-                                            </excludeIf>
-                                        </div>
-                                        <div class="col-4" id="disabled">
-                                            <obs id="reason_for_appointment" conceptId="160288"
-                                                 labelText="Reasons for next appointment:"
-                                                 answerConceptIds="164968,164972,164970,856,5497,163153,164971,164973,99324,164974,90012,903,5484,90002"
-                                                 answerLabels="1. ART Initiation, 2. ART Refill, 3. ART Regimen Switch/ Substitution, 4. Viral Load, 5. CD4, 6. IAC, 7. T.B Drug Refill,8. T.B Follow up, 9. ANC,10. EID,11. PMTCT, 12. Hypertension/ Diabetes, 13. Nutrition,14. Other Specify"/>
-                                        </div>
-                                        <div class="col-4" id="disabled">
-                                            <obs conceptId="164975" labelText="Other Reason for next appointment"/>
-                                        </div>
-                                    </div>
                                 </obsgroup>
+                                <div class="row" style="margin-top:30px">
+                                    <div class="col-4">
+                                        <excludeIf velocityTest="$patient.person.dead ==true">
+                                            <lookup complexExpression="#set($transfer_out_date = '')"/>
+                                                <span id="transfer_out_date_id" style="display: none">
+                                                    <lookup
+                                                            complexExpression="#set($transfer_out_date=($fn.latestObs('99165').valueDatetime)) #set($lost_to_follow_date=$fn.latestObs('99165').valueDatetime) #set($transfer_out=$fn.latestObs('90306').valueCoded.name) $transfer_out_date"/>
+                                                </span>
+                                                <includeIf velocityTest="$transfer_out=='YES'">
+                                                    <obs id="returndate" conceptId="5096" allowFutureDates="true"
+                                                         labelText="Return date:"/>
+                                                </includeIf>
+
+                                                <includeIf velocityTest="$transfer_out!='YES'">
+                                                    <obs id="returndate" conceptId="5096" required="required"
+                                                         allowFutureDates="true"
+                                                         labelText="Return date:"/>
+                                                </includeIf>
+                                        </excludeIf>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

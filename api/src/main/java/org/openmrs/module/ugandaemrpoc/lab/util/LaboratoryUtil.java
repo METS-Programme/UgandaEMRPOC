@@ -28,10 +28,10 @@ import java.util.List;
 import java.util.Locale;
 
 public class LaboratoryUtil {
-
+	
 	/**
 	 * Generate parameter models
-	 *
+	 * 
 	 * @param parameters
 	 * @param concept
 	 */
@@ -47,9 +47,9 @@ public class LaboratoryUtil {
 			parameters.add(parameter);
 		}
 	}
-
+	
 	private static List<Concept> getParameterConcepts(Concept concept) {
-
+		
 		List<Concept> concepts = new ArrayList<Concept>();
 		for (ConceptSet cs : concept.getConceptSets()) {
 			Concept c = cs.getConcept();
@@ -57,7 +57,7 @@ public class LaboratoryUtil {
 		}
 		return concepts;
 	}
-
+	
 	private static ParameterModel generateParameterModel(Concept concept, Concept parentConcept, Order order) {
 		ParameterModel parameter = new ParameterModel();
 		parameter.setId(concept.getConceptId().toString());
@@ -73,7 +73,7 @@ public class LaboratoryUtil {
 			parameter.setUnit(getUnit(concept));
 		} else if (concept.getDatatype().getName().equalsIgnoreCase("Coded")) {
 			parameter.setType("select");
-
+			
 			for (ConceptAnswer ca : concept.getAnswers()) {
 				Concept c = ca.getAnswerConcept();
 				parameter.addOption(new ParameterOption(c.getName().getName(), c.getId().toString()));
@@ -83,21 +83,21 @@ public class LaboratoryUtil {
 		parameter.setTitle(concept.getName().getName());
 		return parameter;
 	}
-
+	
 	/**
 	 * Generate list of test models using tests
-	 *
+	 * 
 	 * @param tests
 	 * @return
 	 */
 	public static List<TestModel> generateModelsFromTests(Order tests) {
-
+		
 		List<TestModel> models = new ArrayList<TestModel>();
 		TestModel tm = generateModel(tests);
 		models.add(tm);
 		return models;
 	}
-
+	
 	private static void setDefaultParameterValue(Concept concept, Concept parentConcept, Encounter encounter,
 	        ParameterModel parameter) {
 		if (encounter != null) {
@@ -113,7 +113,7 @@ public class LaboratoryUtil {
 			}
 		}
 	}
-
+	
 	private static TestModel generateModel(Order order) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		TestModel tm = new TestModel();
@@ -125,9 +125,9 @@ public class LaboratoryUtil {
 		tm.setAge(order.getPatient().getAge());
 		tm.setTest(order.getConcept());
 		tm.setOrderId(order.getOrderId());
-
+		
 		if (order != null) {
-
+			
 			tm.setTestId(order.getOrderId());
 			tm.setAcceptedDate(sdf.format(order.getDateActivated()));
 			tm.setConceptId(order.getConcept().getConceptId());
@@ -137,17 +137,17 @@ public class LaboratoryUtil {
 		} else {
 			tm.setStatus(null);
 		}
-
+		
 		// get investigation from test tree map
-
+		
 		tm.setInvestigation(order.getConcept().getName().getName());
-
+		
 		return tm;
 	}
-
+	
 	/**
 	 * Search for concept using name
-	 *
+	 * 
 	 * @param name
 	 * @return
 	 */
@@ -163,7 +163,7 @@ public class LaboratoryUtil {
 		}
 		return null;
 	}
-
+	
 	private static String getUnit(Concept concept) {
 		ConceptNumeric cn = Context.getConceptService().getConceptNumeric(concept.getConceptId());
 		return cn.getUnits();

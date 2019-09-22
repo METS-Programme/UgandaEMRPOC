@@ -32,7 +32,7 @@ public class VitalsFragmentController {
 		
 		AppDescriptor appDescriptor = new AppDescriptor();
 		ObjectNode jsonNodes = JsonNodeFactory.instance.objectNode();
-		jsonNodes.put("encounterTypeUuid", "67a71486-1a54-468f-ac3e-7091a9a79584");
+		jsonNodes.put("encounterTypeUuid", "0f1ec66d-61db-4575-8248-94e10a88178f");
 		jsonNodes.put("encounterDateLabel", "Vitals");
 		appDescriptor.setConfig(jsonNodes);
 		

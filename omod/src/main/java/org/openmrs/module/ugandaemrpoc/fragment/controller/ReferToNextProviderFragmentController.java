@@ -16,6 +16,7 @@ import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.patientqueueing.api.PatientQueueingService;
 import org.openmrs.module.patientqueueing.mapper.PatientQueueMapper;
 import org.openmrs.module.patientqueueing.model.PatientQueue;
+import org.openmrs.module.ugandaemrpoc.api.UgandaEMRPOCService;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.UiUtils;
 import org.openmrs.ui.framework.annotation.SpringBean;
@@ -26,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.List;
 
 public class ReferToNextProviderFragmentController {
 	
@@ -58,6 +58,7 @@ public class ReferToNextProviderFragmentController {
 	        UiUtils uiUtils, HttpServletRequest request) throws IOException, ParseException {
 		PatientQueue patientQueue = new PatientQueue();
 		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
+		UgandaEMRPOCService ugandaEMRPOCService = Context.getService(UgandaEMRPOCService.class);
 		ObjectMapper objectMapper = new ObjectMapper();
 		SimpleObject simpleObject = new SimpleObject();
 		Location currentLocation = new Location();
@@ -78,7 +79,7 @@ public class ReferToNextProviderFragmentController {
 			patientQueue.setComment(visitComment);
 		}
 		
-		completePreviousQueue(patient);
+		ugandaEMRPOCService.completePreviousQueue(patient, currentLocation);
 		
 		patientQueue.setLocationFrom(currentLocation);
 		patientQueue.setPatient(patient);
@@ -132,16 +133,4 @@ public class ReferToNextProviderFragmentController {
 		return patientQueueMapper;
 	}
 	
-	private PatientQueue completePreviousQueue(Patient patient) {
-		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
-		PatientQueue previousQueue = new PatientQueue();
-		List<PatientQueue> patientQueueList = patientQueueingService.getPatientInQueueList(null, null, null, null, patient,
-		    "pending");
-		if (patientQueueList.size() > 0) {
-			previousQueue = patientQueueList.get(0);
-			patientQueueingService.savePatientQue(previousQueue);
-			patientQueueingService.completeQueue(previousQueue);
-		}
-		return previousQueue;
-	}
 }

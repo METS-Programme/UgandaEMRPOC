@@ -24,97 +24,97 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ParameterModel implements Comparable<ParameterModel> {
-
+	
 	public String id;
-
+	
 	public String type;
-
+	
 	public String title;
-
+	
 	public String container;
-
+	
 	public Integer containerId;
-
+	
 	public List<ParameterOption> options = new ArrayList<ParameterOption>();
-
+	
 	public String defaultValue;
-
+	
 	public String unit;
-
+	
 	public String validator;
-
+	
 	public String getId() {
 		return id;
 	}
-
+	
 	public void setId(String id) {
 		this.id = id;
 	}
-
+	
 	public String getType() {
 		return type;
 	}
-
+	
 	public void setType(String type) {
 		this.type = type;
 	}
-
+	
 	public List<ParameterOption> getOptions() {
 		return options;
 	}
-
+	
 	public void addOption(ParameterOption option) {
 		this.options.add(option);
 	}
-
+	
 	public String getDefaultValue() {
 		return this.defaultValue;
 	}
-
+	
 	public void setDefaultValue(String value) {
 		this.defaultValue = value;
 	}
-
+	
 	public String getTitle() {
 		return title;
 	}
-
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
-
+	
 	public String getContainer() {
 		return container;
 	}
-
+	
 	public void setContainer(String container) {
 		this.container = container;
 	}
-
+	
 	public Integer getContainerId() {
 		return containerId;
 	}
-
+	
 	public void setContainerId(Integer containerId) {
 		this.containerId = containerId;
 	}
-
+	
 	public String getUnit() {
 		return unit;
 	}
-
+	
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}
-
+	
 	public String getValidator() {
 		return validator;
 	}
-
+	
 	public void setValidator(String validator) {
 		this.validator = validator;
 	}
-
+	
 	public int compareTo(ParameterModel otherParameterModel) {
 		if (otherParameterModel.getContainerId() == null)
 			return 1;
@@ -124,7 +124,7 @@ public class ParameterModel implements Comparable<ParameterModel> {
 		Integer otherContainerId = otherParameterModel.getContainerId();
 		return thisContainerId.compareTo(otherContainerId);
 	}
-
+	
 	public String toString() {
 		return "ParameterModel [id=" + id + "]";
 	}
