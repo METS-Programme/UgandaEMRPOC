@@ -102,7 +102,7 @@ public abstract interface UgandaEMRPOCService extends OpenmrsService {
 	 * @param patient
 	 * @return
 	 */
-	public PatientQueue completePreviousQueue(Patient patient, Location location);
+	public PatientQueue completePreviousQueue(Patient patient, Location location, String status);
 	
 	/**
 	 * @param encounter
@@ -116,4 +116,15 @@ public abstract interface UgandaEMRPOCService extends OpenmrsService {
 	 * @return
 	 */
 	public PatientQueue getPreviousQueue(Patient patient, Location location);
+	
+	/**
+	 * @param query
+	 * @param encounterId
+	 * @param includeProccesed
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	public SimpleObject getOrderResultsOnEncounter(String query, int encounterId, boolean includeProccesed)
+	        throws ParseException, IOException;
 }

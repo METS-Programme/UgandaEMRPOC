@@ -3,6 +3,9 @@ package org.openmrs.module.ugandaemrpoc.fragment.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.openmrs.Patient;
+import org.openmrs.Visit;
+import org.openmrs.api.VisitService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.patientqueueing.api.PatientQueueingService;
@@ -11,6 +14,7 @@ import org.openmrs.module.patientqueueing.utils.QueueingUtil;
 import org.openmrs.module.ugandaemrpoc.api.UgandaEMRPOCService;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.annotation.SpringBean;
+import org.openmrs.ui.framework.fragment.FragmentConfiguration;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,17 +34,16 @@ public class TriageQueueListFragmentController {
 	public TriageQueueListFragmentController() {
 	}
 	
-	public void controller(@SpringBean FragmentModel pageModel, UiSessionContext uiSessionContext) {
+	public void controller(FragmentConfiguration config, @SpringBean FragmentModel pageModel,
+	        UiSessionContext uiSessionContext) {
 		
 		pageModel.put("specimenSource", Context.getOrderService().getTestSpecimenSources());
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String dateStr = sdf.format(new Date());
 		pageModel.addAttribute("currentDate", dateStr);
 		pageModel.addAttribute("locationSession", uiSessionContext.getSessionLocation().getUuid());
 		pageModel.addAttribute("triageLocation", TRIAGE_LOCATION_UUID);
 		pageModel.put("currentProvider", Context.getAuthenticatedUser());
-		
 	}
 	
 	/**
@@ -72,5 +75,18 @@ public class TriageQueueListFragmentController {
 		simpleObject.put("patientTriageQueueList",
 		    objectMapper.writeValueAsString(ugandaEMRPOCService.mapPatientQueueToMapper(patientQueueList)));
 		return simpleObject;
+	}
+	
+	public SimpleObject getActiveVisit(@RequestParam(value = "patientId", required = false) Patient patient)
+	        throws ParseException, IOException {
+		VisitService visitService = Context.getVisitService();
+		List<Visit> visits = visitService.getActiveVisitsByPatient(patient);
+		ObjectMapper objectMapper = new ObjectMapper();
+		String visitId = null;
+		
+		if (visits.size() > 0) {
+			visitId = visits.get(0).getUuid();
+		}
+		return SimpleObject.create("visitId", objectMapper.writeValueAsString(visitId));
 	}
 }

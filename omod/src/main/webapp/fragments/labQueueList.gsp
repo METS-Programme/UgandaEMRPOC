@@ -67,6 +67,9 @@
     })
     if (jQuery) {
         jq(document).ready(function () {
+            jq(document).on('sessionLocationChanged', function() {
+                window.location.reload();
+            });
             jq("#clinician-list").hide();
             getPatientLabQueue();
             getOrders();

@@ -45,7 +45,7 @@
 		<ugandaemrVersion>3.0.0-SNAPSHOT</ugandaemrVersion>
 		<uiframeworkVersion>3.13.0</uiframeworkVersion>
 		<patientqueueingVersion>1.0.0-SNAPSHOT</patientqueueingVersion>
-        <ugandaemrSyncVersion>1.0.0-SNAPSHOT</ugandaemrSyncVersion>
+        <ugandaemrSyncVersion>1.0.1-SNAPSHOT</ugandaemrSyncVersion>
 	</properties>
 
 	<dependencyManagement>

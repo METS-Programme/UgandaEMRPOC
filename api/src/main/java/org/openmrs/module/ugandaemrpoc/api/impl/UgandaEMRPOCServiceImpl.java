@@ -131,6 +131,47 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 	}
 	
 	/**
+	 * Process Lab Orders
+	 * 
+	 * @param query
+	 * @param encounterId
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	public SimpleObject getOrderResultsOnEncounter(String query, int encounterId, boolean includeProccesed)
+	        throws ParseException, IOException {
+		Date date;
+		SimpleObject simpleObject = new SimpleObject();
+		ObjectMapper objectMapper = new ObjectMapper();
+		OrderService orderService = Context.getOrderService();
+		
+		query = String.format(query, encounterId);
+		
+		List list = Context.getAdministrationService().executeSQL(query, true);
+		Set<Order> unProcesedOrderList = new HashSet<Order>();
+		
+		Set<Order> proccesedOrderList = new HashSet<Order>();
+		
+		if (list.size() > 0) {
+			for (Object o : list) {
+				Order order = orderService.getOrder(Integer.parseUnsignedInt(((ArrayList) o).get(0).toString()));
+				if (order.getAccessionNumber() == null) {
+					unProcesedOrderList.add(order);
+				}
+				proccesedOrderList.add(order);
+			}
+		}
+		
+		if (includeProccesed && !proccesedOrderList.isEmpty()) {
+			simpleObject.put("ordersList", objectMapper.writeValueAsString(processOrders(proccesedOrderList, true)));
+		} else if (!unProcesedOrderList.isEmpty() && !includeProccesed) {
+			simpleObject.put("ordersList", objectMapper.writeValueAsString(processOrders(unProcesedOrderList, true)));
+		}
+		return simpleObject;
+	}
+	
+	/**
 	 * Processes Orders from Encounter to Order Mapper
 	 * 
 	 * @param orders
@@ -383,7 +424,7 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 		Provider provider = getProviderFromEncounter(session.getEncounter());
 		
 		if (completePreviousQueue) {
-			completePreviousQueue(session.getPatient(), session.getEncounter().getLocation());
+			completePreviousQueue(session.getPatient(), session.getEncounter().getLocation(), "sent to lab");
 		}
 		
 		patientQueue.setLocationFrom(session.getEncounter().getLocation());
@@ -440,10 +481,10 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 		return null;
 	}
 	
-	public PatientQueue completePreviousQueue(Patient patient, Location location) {
+	public PatientQueue completePreviousQueue(Patient patient, Location location, String status) {
 		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
 		PatientQueue patientQueue = getPreviousQueue(patient, location);
-		patientQueueingService.completeQueue(patientQueue);
+		patientQueueingService.completeQueue(patientQueue, status);
 		return patientQueue;
 	}
 	

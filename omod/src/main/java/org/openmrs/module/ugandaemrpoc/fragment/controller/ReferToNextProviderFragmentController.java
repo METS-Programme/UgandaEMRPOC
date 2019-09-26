@@ -6,13 +6,10 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.openmrs.Location;
 import org.openmrs.Patient;
 import org.openmrs.Provider;
-import org.openmrs.VisitType;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
-import org.openmrs.module.coreapps.fragment.controller.visit.QuickVisitFragmentController;
-import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.patientqueueing.api.PatientQueueingService;
 import org.openmrs.module.patientqueueing.mapper.PatientQueueMapper;
 import org.openmrs.module.patientqueueing.model.PatientQueue;
@@ -56,6 +53,7 @@ public class ReferToNextProviderFragmentController {
 	        @RequestParam(value = "visitComment", required = false) String visitComment,
 	        @RequestParam(value = "returnUrl", required = false) String returnUrl, UiSessionContext uiSessionContext,
 	        UiUtils uiUtils, HttpServletRequest request) throws IOException, ParseException {
+		
 		PatientQueue patientQueue = new PatientQueue();
 		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
 		UgandaEMRPOCService ugandaEMRPOCService = Context.getService(UgandaEMRPOCService.class);
@@ -79,31 +77,19 @@ public class ReferToNextProviderFragmentController {
 			patientQueue.setComment(visitComment);
 		}
 		
-		ugandaEMRPOCService.completePreviousQueue(patient, currentLocation);
+		PatientQueue previousQueue = ugandaEMRPOCService.completePreviousQueue(patient, currentLocation, "completed");
 		
 		patientQueue.setLocationFrom(currentLocation);
 		patientQueue.setPatient(patient);
 		patientQueue.setLocationTo(location);
 		patientQueue.setProvider(provider);
-		patientQueue.setQueueNumber(patientQueueingService.generateQueueNumber(currentLocation));
+		patientQueue.setQueueNumber(previousQueue.getQueueNumber());
 		patientQueue.setStatus("pending");
 		patientQueue.setCreator(uiSessionContext.getCurrentUser());
 		patientQueue.setDateCreated(new Date());
 		patientQueueingService.savePatientQue(patientQueue);
-		
-		if (Context.getVisitService().getActiveVisitsByPatient(patient).size() <= 0) {
-			QuickVisitFragmentController quickVisitFragmentController = new QuickVisitFragmentController();
-			quickVisitFragmentController.create((AdtService) Context.getService(AdtService.class),
-			    Context.getVisitService(), patient, location, uiUtils, getFacilityVisitType(), uiSessionContext, request);
-		}
 		simpleObject.put("patientTriageQueue", objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueue)));
 		return simpleObject;
-	}
-	
-	private VisitType getFacilityVisitType() {
-		String visitTypeUUID = Context.getAdministrationService().getGlobalProperty(
-		    "patientqueueing.defaultFacilityVisitTypeUUID");
-		return Context.getVisitService().getVisitTypeByUuid(visitTypeUUID);
 	}
 	
 	private PatientQueueMapper mapPatientQueueToMapper(PatientQueue patientQueue) {

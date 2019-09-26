@@ -98,29 +98,6 @@
         </div>
     </div>
 
-    <div class="row" id="provider_id_container">
-        <div class="col-5">Provider:</div>
-
-        <div class="col-7">
-            <div class="form-group">
-                <select class="form-control" id="provider_id" name="provider_id">
-                    <option value="">Select Provider</option>
-                    <% if (providerList != null) {
-                        providerList.each { %>
-                    <option value="${it.providerId}">${it.name}</option>
-                    <%
-                            }
-                        }
-                    %>
-                </select>
-                <span class="field-error" style="display: none;"></span>
-                <% if (providerList == null) { %>
-                <div><${ui.message("patientqueueing.select.error")}</div>
-                <% } %>
-            </div>
-        </div>
-    </div>
-
     <div class="row" id="patient_status_container">
         <div class="col-4">Patient Status:</div>
 

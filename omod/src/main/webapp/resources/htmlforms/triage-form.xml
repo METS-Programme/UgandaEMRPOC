@@ -10,13 +10,6 @@
           formShowIf="(visit.active) &amp;&amp; patient.person.dead==false"
           formDisplayStyle="Standard"
           formLabel="Triage Vitals Form">
-
-    <script>
-        if (window.location.href.indexOf('editHtmlFormWithStandardUi') !== -1) {
-            window.location.href = window.location.href.replace('editHtmlFormWithStandardUi', 'editHtmlFormWithSimpleUi');
-        }
-    </script>
-
     <!-- only show BMI if patient is more than 5 years old (on the encounterDate) -->
     <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) > 5">
 

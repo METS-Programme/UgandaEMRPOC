@@ -19,6 +19,7 @@
             actions: {
                 confirm: function () {
                     saveEditResult();
+                    ('#modal').modal('toggle');
                     editResultsDialog.close();
                 },
                 cancel: function () {
@@ -263,8 +264,7 @@ form input {
                             </div>
 
                             <!--Test for radio or checkbox-->
-                            <div class="div-col3"
-                                 data-bind="if:(type && type.toLowerCase() === 'radio') || (type && type.toLowerCase() === 'checkbox')">
+                            <div data-bind="if:(type && type.toLowerCase() === 'radio') || (type && type.toLowerCase() === 'checkbox')">
                                 <p>
 
                                 <div class="dialog-data"></div>

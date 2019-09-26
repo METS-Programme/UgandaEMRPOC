@@ -302,7 +302,7 @@ public class LabQueueListFragmentController {
         }
         SimpleObject orders = (SimpleObject) simpleObject.get("ordersList");
         if (orders == null && !currentLabQueue.getStatus().equals("pending")) {
-            ugandaEMRPOCService.completePreviousQueue(encounter.getPatient(), location);
+            ugandaEMRPOCService.completePreviousQueue(encounter.getPatient(), location,"completed");
         }
         List<PatientQueue> patientQueueList = patientQueueingService.getPatientInQueueList(null, QueueingUtil.dateFormtterDate(new Date(), "00:00:00"), QueueingUtil.dateFormtterDate(new Date(), "23:59:59"), null, encounter.getPatient(), null);
 
