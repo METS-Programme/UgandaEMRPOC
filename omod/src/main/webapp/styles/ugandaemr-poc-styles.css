@@ -41,3 +41,13 @@ ul.select {
 table th, table td {
     border: 1px solid #AFAFAF;
 }
+
+.error {
+    color: red;
+}
+
+table th, table td {
+    /*border: 1px solid #BDBDBD;*/
+    text-align: left;
+    vertical-align: top;
+}
