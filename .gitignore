@@ -1,5 +1,6 @@
-/omod/target
+status/omod/target
 /api/target
+omod/target/
 
 # Created by .ignore support plugin (hsz.mobi)
 .DS_Store
@@ -151,3 +152,4 @@ fabric.properties
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
