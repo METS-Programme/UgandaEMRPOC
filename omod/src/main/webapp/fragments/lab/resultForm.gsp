@@ -19,6 +19,7 @@
             actions: {
                 confirm: function () {
                     saveEditResult();
+                    ('#modal').modal('toggle');
                     editResultsDialog.close();
                 },
                 cancel: function () {
@@ -195,113 +196,125 @@ form input {
 .dialog {
     width: 70%;
 }
+
 .dialog .dialog-content {
     padding: 0px 19px 0 19px;
 }
+
 .dialog .dialog-header {
     background: #151414;
 }
 </style>
 
-<div id="edit-result-form" title="Results" class="dialog" style="">
-    <div class="dialog-header">
-        <i class="icon-edit"></i>
-
-        <h3>Edit Results</h3>
-    </div>
-
-    <div class="dialog-content">
-        <form>
-            <input type="hidden" name="wrap.testId" id="edit-result-id"/>
-
-            <div data-bind="if: editResultsParameterOptions()[0]">
-                <p>
-
-                <div class="dialog-data">Patient Name:</div>
-
-                <div class="inline" data-bind="text: editResultsParameterOptions()[0].patientName"></div>
-            </p>
-
-                <p>
-
-                <div class="dialog-data">Test Name:</div>
-
-                <div class="inline" data-bind="text: editResultsParameterOptions()[0].testName"></div>
-            </p>
-
-                <p>
-
-                <div class="dialog-data">Patient Name:</div>
-
-                <div class="inline" data-bind="text: editResultsParameterOptions()[0].startDate"></div>
-            </p>
+<div id="edit-result-form" title="Results" class="modal fade bd-order-modal-lg" style="">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>${ui.message("Edit Results")}</h3>
             </div>
 
-            <div class="box" data-bind="foreach: editResultsParameterOptions">
-                <div class="div-col3">
-                    <input type="hidden"
-                           data-bind="attr: { 'name' : 'wrap.results[' + \$index() + '].conceptName' }, value: containerId?containerId+'.'+id:id">
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" name="wrap.testId" id="edit-result-id"/>
 
-                    <div data-bind="if:type && type.toLowerCase() === 'select'">
-                        <p>
-                            <span data-bind="if:title && title.toUpperCase() === 'TEST RESULT VALUE'">
-                                <label data-bind="text: container"></label>
-                            </span>
-
-                            <span data-bind="if:title && title.toUpperCase() !== 'TEST RESULT VALUE'">
-                                <label data-bind="text: title"></label>
-                            </span>
-
-                            <select id="result-option"
-                                    data-bind="attr : { 'name' : 'wrap.results[' + \$index() + '].selectedOption' },
-								foreach: options" style="width: 50%;">
-                                <option data-bind="attr: { value : value, selected : (\$parent.defaultValue === label) }, text: label"></option>
-                            </select>
-                        </p>
-                    </div>
-
-                    <!--Test for radio or checkbox-->
-                    <div class="div-col3"
-                         data-bind="if:(type && type.toLowerCase() === 'radio') || (type && type.toLowerCase() === 'checkbox')">
+                    <div data-bind="if: editResultsParameterOptions()[0]">
                         <p>
 
-                        <div class="dialog-data"></div>
-                        <label for="result-text">
-                            <input id="result-text" class="result-text"
-                                   data-bind="attr : { 'type' : type, 'name' : 'wrap.results[' + \$index() + '].value', value : defaultValue }">
-                            <span data-bind="text: title"></span>
-                        </label>
+                        <div class="dialog-data">Patient Name:</div>
+
+                        <div class="inline" data-bind="text: editResultsParameterOptions()[0].patientName"></div>
+                    </p>
+
+                        <p>
+
+                        <div class="dialog-data">Test Name:</div>
+
+                        <div class="inline" data-bind="text: editResultsParameterOptions()[0].testName"></div>
+                    </p>
+
+                        <p>
+
+                        <div class="dialog-data">Patient Name:</div>
+
+                        <div class="inline" data-bind="text: editResultsParameterOptions()[0].startDate"></div>
                     </p>
                     </div>
 
-                    <!--Other Input Types-->
-                    <div data-bind="if:(type && type.toLowerCase() !== 'select') && (type && type.toLowerCase() !== 'radio') && (type && type.toLowerCase() !== 'checkbox')">
-                        <p id="data">
-                            <span data-bind="if:title && title.toUpperCase() === 'WRITE COMMENT'">
-                                <label data-bind="text: title + ' (' + container+')'"></label>
-                            </span>
+                    <div class="box" data-bind="foreach: editResultsParameterOptions">
+                        <div class="div-col3">
+                            <input type="hidden"
+                                   data-bind="attr: { 'name' : 'wrap.results[' + \$index() + '].conceptName' }, value: containerId?containerId+'.'+id:id">
 
-                            <span data-bind="if:title && title.toUpperCase() !== 'WRITE COMMENT'">
-                                <label data-bind="text: title"></label>
-                            </span>
+                            <div data-bind="if:type && type.toLowerCase() === 'select'">
+                                <p>
+                                    <span data-bind="if:title && title.toUpperCase() === 'TEST RESULT VALUE'">
+                                        <label data-bind="text: container"></label>
+                                    </span>
 
-                            <input class="result-text"
-                                   data-bind="attr : { 'type' : type, 'name' : 'wrap.results[' + \$index() + '].value', value : defaultValue }">
-                        </p>
+                                    <span data-bind="if:title && title.toUpperCase() !== 'TEST RESULT VALUE'">
+                                        <label data-bind="text: title"></label>
+                                    </span>
+
+                                    <select id="result-option"
+                                            data-bind="attr : { 'name' : 'wrap.results[' + \$index() + '].selectedOption' },
+								foreach: options" style="width: 50%;">
+                                        <option data-bind="attr: { value : value, selected : (\$parent.defaultValue === label) }, text: label"></option>
+                                    </select>
+                                </p>
+                            </div>
+
+                            <!--Test for radio or checkbox-->
+                            <div data-bind="if:(type && type.toLowerCase() === 'radio') || (type && type.toLowerCase() === 'checkbox')">
+                                <p>
+
+                                <div class="dialog-data"></div>
+                                <label for="result-text">
+                                    <input id="result-text" class="result-text"
+                                           data-bind="attr : { 'type' : type, 'name' : 'wrap.results[' + \$index() + '].value', value : defaultValue }">
+                                    <span data-bind="text: title"></span>
+                                </label>
+                            </p>
+                            </div>
+
+                            <!--Other Input Types-->
+                            <div data-bind="if:(type && type.toLowerCase() !== 'select') && (type && type.toLowerCase() !== 'radio') && (type && type.toLowerCase() !== 'checkbox')">
+                                <p id="data">
+                                    <span data-bind="if:title && title.toUpperCase() === 'WRITE COMMENT'">
+                                        <label data-bind="text: title + ' (' + container+')'"></label>
+                                    </span>
+
+                                    <span data-bind="if:title && title.toUpperCase() !== 'WRITE COMMENT'">
+                                        <label data-bind="text: title"></label>
+                                    </span>
+
+                                    <input class="result-text"
+                                           data-bind="attr : { 'type' : type, 'name' : 'wrap.results[' + \$index() + '].value', value : defaultValue }">
+                                </p>
+                            </div>
+
+                            <div data-bind="if: !type">
+                                <p>
+                                    <label for="result-text" data-bind="text: title"></label>
+                                    <input class="result-text" type="text"
+                                           data-bind="attr : {'name' : 'wrap.results[' + \$index() + '].value', value : defaultValue }">
+                                </p>
+                            </div>
+                        </div>
                     </div>
-
-                    <div data-bind="if: !type">
-                        <p>
-                            <label for="result-text" data-bind="text: title"></label>
-                            <input class="result-text" type="text"
-                                   data-bind="attr : {'name' : 'wrap.results[' + \$index() + '].value', value : defaultValue }">
-                        </p>
-                    </div>
-                </div>
+                </form>
             </div>
-        </form>
 
-        <span class="button confirm right">Save Results</span>
-        <span class="button cancel">Cancel</span>
+            <div class="modal-footer">
+                <button class="cancel" data-dismiss="modal"
+                        id="">${ui.message("patientqueueing.close.label")}</button>
+                <span class="button confirm right">Save Results</span>
+            </div>
+        </div>
     </div>
 </div>
+
+
+
+
+
+

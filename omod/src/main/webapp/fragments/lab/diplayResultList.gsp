@@ -26,6 +26,7 @@
             orderedTestsRows += "<td>" + element.status + "</td>";
             orderedTestsRows += "<td>" + element.urgency + "</td>";
             orderedTestsRows += "<td>";
+            orderedTestsRows += "<a title=\"Edit Result\" onclick='showEditResultForm(" + element.orderId + ")'><i class=\"icon-list-ul small\"></i></a>";
             orderedTestsRows += "<a title=\"Print Results\" onclick='printresult(" + element.orderId + "," + element.patientId + ")'><i class=\"icon-print small\"></i></a>";
             orderedTestsRows += "</td>";
             orderedTestsRows += "</tr>";

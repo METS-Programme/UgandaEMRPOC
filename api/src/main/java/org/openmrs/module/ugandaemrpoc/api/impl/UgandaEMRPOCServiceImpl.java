@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.*;
 
+import static org.openmrs.module.patientqueueing.PatientQueueingConfig.QUEUE_STATUS_PENDING;
 import static org.openmrs.module.ugandaemrpoc.lab.util.LabConfig.*;
 
 public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements UgandaEMRPOCService {
@@ -91,7 +92,7 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 	 * @throws ParseException
 	 * @throws IOException
 	 */
-	public SimpleObject getProcessedOrders(String query, String asOfDate, boolean includeProccesed) throws ParseException,
+	public SimpleObject getProcessedOrders(String query, Date asOfDate, boolean includeProccesed) throws ParseException,
 	        IOException {
 		Date date;
 		SimpleObject simpleObject = new SimpleObject();
@@ -99,7 +100,7 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 		OrderService orderService = Context.getOrderService();
 		
 		if (!asOfDate.equals("")) {
-			date = new Date(asOfDate);
+			date = asOfDate;
 		} else {
 			date = new Date();
 		}
@@ -129,6 +130,47 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 		return simpleObject;
 	}
 	
+	/**
+	 * Process Lab Orders
+	 *
+	 * @param query
+	 * @param encounterId
+	 * @return
+	 * @throws ParseException
+	 * @throws IOException
+	 */
+	public SimpleObject getOrderResultsOnEncounter(String query, int encounterId, boolean includeProccesed)
+	        throws ParseException, IOException {
+		Date date;
+		SimpleObject simpleObject = new SimpleObject();
+		ObjectMapper objectMapper = new ObjectMapper();
+		OrderService orderService = Context.getOrderService();
+
+		query = String.format(query, encounterId);
+
+		List list = Context.getAdministrationService().executeSQL(query, true);
+		Set<Order> unProcesedOrderList = new HashSet<Order>();
+
+		Set<Order> proccesedOrderList = new HashSet<Order>();
+
+		if (list.size() > 0) {
+			for (Object o : list) {
+				Order order = orderService.getOrder(Integer.parseUnsignedInt(((ArrayList) o).get(0).toString()));
+				if (order.getAccessionNumber() == null) {
+					unProcesedOrderList.add(order);
+				}
+				proccesedOrderList.add(order);
+			}
+		}
+
+		if (includeProccesed && !proccesedOrderList.isEmpty()) {
+			simpleObject.put("ordersList", objectMapper.writeValueAsString(processOrders(proccesedOrderList, true)));
+		} else if (!unProcesedOrderList.isEmpty() && !includeProccesed) {
+			simpleObject.put("ordersList", objectMapper.writeValueAsString(processOrders(unProcesedOrderList, true)));
+		}
+		return simpleObject;
+	}
+
 	/**
 	 * Processes Orders from Encounter to Order Mapper
 	 * 
@@ -273,7 +315,7 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 	 * @param patientQueueList
 	 * @return
 	 */
-	public List<PatientQueueMapper> mapPatientQueueToMapper(List<PatientQueue> patientQueueList) {
+	public List<PatientQueueMapper> mapPatientQueueToMapperWithOrders(List<PatientQueue> patientQueueList) {
 		List<PatientQueueMapper> patientQueueMappers = new ArrayList<PatientQueueMapper>();
 		
 		for (PatientQueue patientQueue : patientQueueList) {
@@ -290,7 +332,7 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 				labQueueMapper.setStatus(patientQueue.getStatus());
 				labQueueMapper.setAge(patientQueue.getPatient().getAge().toString());
 				labQueueMapper.setDateCreated(patientQueue.getDateCreated().toString());
-				labQueueMapper.setEncounterId(patientQueue.getEncounter().getEncounterId());
+				labQueueMapper.setEncounterId(patientQueue.getEncounter().getEncounterId().toString());
 				if (patientQueue.getEncounter() != null) {
 					labQueueMapper.setOrderMapper(Context.getService(UgandaEMRPOCService.class).processOrders(
 					    patientQueue.getEncounter().getOrders(), true));
@@ -301,6 +343,41 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 		return patientQueueMappers;
 	}
 	
+	public List<PatientQueueMapper> mapPatientQueueToMapper(List<PatientQueue> patientQueueList) {
+		List<PatientQueueMapper> patientQueueMappers = new ArrayList<PatientQueueMapper>();
+
+		for (PatientQueue patientQueue : patientQueueList) {
+			String names = patientQueue.getPatient().getFamilyName() + " " + patientQueue.getPatient().getGivenName() + " "
+			        + patientQueue.getPatient().getMiddleName();
+			PatientQueueMapper patientQueueMapper = new PatientQueueMapper();
+			patientQueueMapper.setId(patientQueue.getId());
+			patientQueueMapper.setPatientNames(names.replace("null", ""));
+			patientQueueMapper.setPatientId(patientQueue.getPatient().getPatientId());
+			patientQueueMapper.setLocationFrom(patientQueue.getLocationFrom().getName());
+			patientQueueMapper.setLocationTo(patientQueue.getLocationTo().getName());
+			patientQueueMapper.setQueueNumber(patientQueue.getQueueNumber());
+
+			if (patientQueue.getProvider() != null) {
+				patientQueueMapper.setProviderNames(patientQueue.getProvider().getName());
+			}
+
+			if (patientQueue.getCreator() != null) {
+				patientQueueMapper.setCreatorNames(patientQueue.getCreator().getDisplayString());
+			}
+
+			if (patientQueue.getEncounter() != null) {
+				patientQueueMapper.setEncounterId(patientQueue.getEncounter().getEncounterId().toString());
+			}
+
+			patientQueueMapper.setStatus(patientQueue.getStatus());
+			patientQueueMapper.setAge(patientQueue.getPatient().getAge().toString());
+			patientQueueMapper.setGender(patientQueue.getPatient().getGender());
+			patientQueueMapper.setDateCreated(patientQueue.getDateCreated().toString());
+			patientQueueMappers.add(patientQueueMapper);
+		}
+		return patientQueueMappers;
+	}
+
 	/**
 	 * Set Attributes for Observation
 	 * 
@@ -340,11 +417,16 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 		return new Obs();
 	}
 	
-	public void sendPatientToLab(FormEntrySession session) {
+	public void sendPatientToLab(FormEntrySession session, boolean completePreviousQueue) {
 		PatientQueue patientQueue = new PatientQueue();
 		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
 		Location location = Context.getLocationService().getLocationByUuid(LAB_LOCATION_UUID);
-		Provider provider = getProvider(session.getEncounter());
+		Provider provider = getProviderFromEncounter(session.getEncounter());
+
+		if (completePreviousQueue) {
+			completePreviousQueue(session.getPatient(), session.getEncounter().getLocation(), "sent to lab");
+		}
+
 		patientQueue.setLocationFrom(session.getEncounter().getLocation());
 		patientQueue.setPatient(session.getEncounter().getPatient());
 		patientQueue.setLocationTo(location);
@@ -356,7 +438,7 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 		patientQueueingService.savePatientQue(patientQueue);
 	}
 	
-	public Encounter processLabTestOrdersFromEncounterObs(FormEntrySession session) {
+	public Encounter processLabTestOrdersFromEncounterObs(FormEntrySession session, boolean completePreviousQueue) {
 		EncounterService encounterService = Context.getEncounterService();
 		Set<Order> orders = new HashSet<Order>();
 		Encounter encounter = session.getEncounter();
@@ -370,7 +452,7 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 				TestOrder testOrder = new TestOrder();
 				testOrder.setConcept(obs.getValueCoded());
 				testOrder.setEncounter(obs.getEncounter());
-				testOrder.setOrderer(getProvider(obs.getEncounter()));
+				testOrder.setOrderer(getProviderFromEncounter(obs.getEncounter()));
 				testOrder.setPatient(obs.getEncounter().getPatient());
 				testOrder.setUrgency(Order.Urgency.STAT);
 				testOrder.setCareSetting(careSetting);
@@ -383,13 +465,13 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 			encounter.setOrders(orders);
 			encounterService.saveEncounter(encounter);
 			if (session.getEncounter().getOrders().size() > 0) {
-				sendPatientToLab(session);
+				sendPatientToLab(session, completePreviousQueue);
 			}
 		}
 		return encounter;
 	}
 	
-	public Provider getProvider(Encounter encounter) {
+	public Provider getProviderFromEncounter(Encounter encounter) {
 		EncounterRole encounterRole = Context.getEncounterService().getEncounterRoleByUuid(ENCOUNTER_ROLE);
 		
 		Set<Provider> providers = encounter.getProvidersByRole(encounterRole);
@@ -397,5 +479,23 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 			return provider;
 		}
 		return null;
+	}
+
+	public PatientQueue completePreviousQueue(Patient patient, Location location, String status) {
+		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
+		PatientQueue patientQueue = getPreviousQueue(patient, location);
+		patientQueueingService.completeQueue(patientQueue, status);
+		return patientQueue;
+	}
+
+	public PatientQueue getPreviousQueue(Patient patient, Location location) {
+		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
+		PatientQueue previousQueue = new PatientQueue();
+		List<PatientQueue> patientQueueList = patientQueueingService.getPatientInQueueList(null, null, null, location,
+		    patient, "pending");
+		if (patientQueueList.size() > 0) {
+			previousQueue = patientQueueList.get(0);
+		}
+		return previousQueue;
 	}
 }

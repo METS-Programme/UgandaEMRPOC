@@ -25,23 +25,23 @@ import java.util.List;
 
 public class ParameterModel implements Comparable<ParameterModel> {
 	
-	private String id;
+	public String id;
 	
-	private String type;
+	public String type;
 	
-	private String title;
+	public String title;
 	
-	private String container;
+	public String container;
 	
-	private Integer containerId;
+	public Integer containerId;
 	
-	private List<ParameterOption> options = new ArrayList<ParameterOption>();
+	public List<ParameterOption> options = new ArrayList<ParameterOption>();
 	
-	private String defaultValue;
+	public String defaultValue;
 	
-	private String unit;
+	public String unit;
 	
-	private String validator;
+	public String validator;
 	
 	public String getId() {
 		return id;

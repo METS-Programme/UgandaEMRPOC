@@ -1,8 +1,8 @@
-<% if (currentLocation?.uuid?.equals(labLocation)) { %>
+<% if (clinicianLocation?.contains(currentLocation?.uuid)) { %>
 <%
-    ui.includeCss("coreapps", "patientsearch/patientSearchWidget.css")
-    ui.includeJavascript("patientqueueing", "patientqueue.js")
-    ui.includeJavascript("aijar", "js/aijar.js")
+        ui.includeCss("coreapps", "patientsearch/patientSearchWidget.css")
+        ui.includeJavascript("patientqueueing", "patientqueue.js")
+        ui.includeJavascript("aijar", "js/aijar.js")
 %>
 <style>
 .div-table {
@@ -67,6 +67,9 @@
     })
     if (jQuery) {
         jq(document).ready(function () {
+            jq(document).on('sessionLocationChanged', function() {
+                window.location.reload();
+            });
             jq("#clinician-list").hide();
             getPatientLabQueue();
             getOrders();
@@ -90,7 +93,7 @@
 
             jq("#submit-schedule").click(function () {
                 jq.get('${ ui.actionLink("scheduleTest") }', {
-                    orderId: jq("#order_id").val().trim().toLowerCase(),
+                    orderNumber: jq("#order_id").val().trim().toLowerCase(),
                     sampleId: jq("#sample_id").val().trim().toLowerCase(),
                     referTest: jq("#refer_test").val().trim().toLowerCase(),
                     referenceLab: jq("#reference_lab").val().trim().toLowerCase(),
@@ -102,6 +105,18 @@
                 });
             });
 
+            jq('#add-order-to-lab-worklist-dialog').on('show.bs.modal', function (event) {
+                var button = jq(event.relatedTarget);
+                var orderNumber = button.data('order-number');
+                var modal = jq(this)
+                modal.find("#order_id").val(orderNumber);
+                modal.find("#sample_id").val("");
+                modal.find("#sample_generator").html("");
+                modal.find("#sample_generator").append("<a onclick=\"generateSampleId('" + orderNumber + "')\"><i class=\" icon-barcode\">Generate Sample Id</i></a>");
+                modal.find("#reference_lab").prop('selectedIndex', 0);
+                modal.find("#specimen_source_id").prop('selectedIndex', 0);
+                modal.find("#refer_test input[type=checkbox]").prop('checked', false);
+            });
 
         });
     }
@@ -188,8 +203,7 @@
                 orderedTestsRows += "<td>" + element.conceptName + "</td>";
                 orderedTestsRows += "<td>" + element.urgency + "</td>";
                 orderedTestsRows += "<td>";
-                orderedTestsRows += "<i class=\"icon-dashboard view-action\" title=\"Goto Patient's Dashboard\" onclick=\"location.href = 'urlToPatientDashboard'\"></i>".replace("urlToPatientDashboard", urlToPatientDashBoard);
-                orderedTestsRows += "<i class=\"icon-tags edit-action\" title=\"Transfer To Another Provider\" onclick='urlTransferPatientToAnotherQueue'></i>".replace("urlTransferPatientToAnotherQueue", urlTransferPatientToAnotherQueue);
+                orderedTestsRows += "<a  data-toggle=\"modal\" data-target=\"#add-order-to-lab-worklist-dialog\" data-order-number=\"orderNumber\" data-order-id=\"orderId\"><i style=\"font-size: 25px;\" class=\"icon-share\" title=\"Check In\"></i></a>".replace("orderNumber",element.orderNumber).replace("orderId",element.orderId);
                 orderedTestsRows += "</td>";
                 orderedTestsRows += "</tr>";
             }
@@ -279,15 +293,15 @@
                       specimenSource.each { %>
         content += "<option value=\"${it.conceptId}\">" + "${it.getName().name}" + "</option>";
         <%} }else {%>
-        jq("#error-specimen-source").append(${ui.message("patientqueueing.select.error")});
+        jq("#error-specimen-source").append("${ui.message("patientqueueing.select.error")}");
         <%}%>
         jq("#specimen_source_id").append(content);
     }
 
     // Generates Sample ID for the Sample ID Field on the scheduleTestDialogue
-    function generateSampleId() {
+    function generateSampleId(orderId) {
         jq.get('${ ui.actionLink("generateSampleID") }', {
-            orderId: jq("#order_id").val().trim().toLowerCase()
+            orderId: orderId
         }, function (response) {
             if (response) {
                 var responseData = response.replace("{defaultSampleId=\"", "").replace("\"}", "").trim();
@@ -352,9 +366,11 @@ ${ui.includeFragment("ugandaemrpoc", "lab/diplayResultList")}
     </section>
 </div>
 
-${ui.includeFragment("ugandaemrpoc", "lab/scheduleTestDialogue")}
+
 ${ui.includeFragment("ugandaemrpoc", "lab/resultForm")}
 ${ui.includeFragment("ugandaemrpoc", "printResults")}
+</div>
+${ui.includeFragment("ugandaemrpoc", "lab/scheduleTestDialogue")}
 <% } %>
 
 

@@ -25,6 +25,6 @@ public class LabOrderSubmissionAction implements CustomFormSubmissionAction {
 		if (mode.equals(Mode.EDIT)) {
 			
 		}
-		Encounter encounter = ugandaEMRPOCService.processLabTestOrdersFromEncounterObs(session);
+		Encounter encounter = ugandaEMRPOCService.processLabTestOrdersFromEncounterObs(session, true);
 	}
 }

@@ -34,7 +34,7 @@ public class DSDSProgramSubmissionAction implements CustomFormSubmissionAction {
 			return;
 		}
 		
-		Encounter encounter = ugandaEMRPOCService.processLabTestOrdersFromEncounterObs(session);
+		Encounter encounter = ugandaEMRPOCService.processLabTestOrdersFromEncounterObs(session, true);
 		
 		Patient patient = session.getPatient();
 		Set<Obs> obsList = session.getEncounter().getAllObs();
