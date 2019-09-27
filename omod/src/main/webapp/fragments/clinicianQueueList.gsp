@@ -1,6 +1,6 @@
 <%
-    ui.includeCss("coreapps", "patientsearch/patientSearchWidget.css")
     if (clinicianLocation?.contains(currentLocation?.uuid)) {
+        ui.includeCss("coreapps", "patientsearch/patientSearchWidget.css")
 %>
 <style>
 .card-body {
@@ -13,6 +13,7 @@
 .my-tab .tab-pane {
     border: solid 1px blue;
 }
+
 .vertical {
     border-left: 1px solid #c7c5c5;
     height: 79px;
@@ -20,6 +21,7 @@
     left: 99%;
     top: 11%;
 }
+
 #patient-search {
     min-width: 96%;
     color: #363463;
@@ -38,6 +40,10 @@
             getPatientQueue();
         }, 3000);
         jq(document).ready(function () {
+
+            jq(document).on('sessionLocationChanged', function() {
+                window.location.reload();
+            });
 
             jq('#add_patient_to_other_queue_dialog').on('show.bs.modal', function (event) {
                 var button = jq(event.relatedTarget);
@@ -135,11 +141,13 @@
                 var patientQueueListElement = element;
                 var dataRowTable = "";
                 var urlToPatientDashBoard = '${ui.pageLink("coreapps","clinicianfacing/patient",[patientId: "patientIdElement"])}'.replace("patientIdElement", element.patientId);
-                var encounterUrl = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId=" + element.patientId + "&formUuid=d514be1d-8a95-4f46-b8d8-9b8485679f47&encounterId=" + element.encounterId + "&returnUrl=/openmrs/patientqueueing/clinicianDashboard.page";
+                var encounterUrl = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId=" + element.patientId + "&formUuid=12de5bc5-352e-4faf-9961-a2125085a75c&encounterId=" + element.encounterId + "&returnUrl=/openmrs/patientqueueing/clinicianDashboard.page";
 
                 var waitingTime = getWaitingTime(patientQueueListElement.dateCreated);
                 dataRowTable += "<tr>";
-                dataRowTable += "<td>" + patientQueueListElement.queueNumber.substring(15) + "</td>";
+                if (patientQueueListElement.queueNumber !== null) {
+                    dataRowTable += "<td>" + patientQueueListElement.queueNumber.substring(15) + "</td>";
+                }
                 dataRowTable += "<td>" + patientQueueListElement.patientNames + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.gender + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.age + "</td>";
@@ -155,10 +163,11 @@
                 dataRowTable += "<td>" + "" + "</td>";
                 dataRowTable += "<td>" + waitingTime + "</td>";
                 dataRowTable += "<td>";
-                dataRowTable += "<i style=\"font-size: 25px;\" class=\"icon-dashboard view-action\" title=\"Goto Patient's Dashboard\" onclick=\"location.href = '" + urlToPatientDashBoard + "'\"></i>";
-                dataRowTable += "<i  style=\"font-size: 25px;\" class=\"icon-external-link edit-action\" title=\"Send Patient To Another Location\" data-toggle=\"modal\" data-target=\"#add_patient_to_other_queue_dialog\" data-id=\"\" data-patient-id=\"%s\"></i>".replace("%s", element.patientId);
-                if (element.status === "fromlab" || element.status === "completed") {
-                    dataRowTable += "<i  style=\"font-size: 25px;\" class=\"icon-dashboard view-action\" title=\"Edit Patient Encounter\" onclick=\"location.href = '" + encounterUrl + "'\"></i>";
+                if (element.status === "pending") {
+                    dataRowTable += "<i style=\"font-size: 25px;\" class=\"icon-dashboard view-action\" title=\"Goto Patient's Dashboard\" onclick=\"location.href = '" + urlToPatientDashBoard + "'\"></i>";
+                    dataRowTable += "<i  style=\"font-size: 25px;\" class=\"icon-external-link edit-action\" title=\"Send Patient To Another Location\" data-toggle=\"modal\" data-target=\"#add_patient_to_other_queue_dialog\" data-id=\"\" data-patient-id=\"%s\"></i>".replace("%s", element.patientId);
+                } else if (element.status === "from lab" || element.status === "completed") {
+                    dataRowTable += "<i  style=\"font-size: 25px;\" class=\"icon-edit edit-action\" title=\"Edit Patient Encounter\" onclick=\"location.href = '" + encounterUrl + "'\"></i>";
                 }
 
                 dataRowTable += "</td></tr>";
@@ -170,7 +179,7 @@
                 } else if (element.status === "completed") {
                     completedQueue += 1;
                     completedDataRows += dataRowTable;
-                } else if (element.status === "fromlab") {
+                } else if (element.status === "from lab") {
                     fromLabQueue += 1;
                     fromLabDataRows += dataRowTable;
                 }
@@ -184,12 +193,12 @@
 
         }
 
-        if (fromLabDataRows !== "") {
+        if (completedDataRows!== "") {
             jq("#clinician-completed-list-table").html("");
             jq("#clinician-completed-list-table").append(headerCompleted + completedDataRows + footer);
         }
 
-        if (completedDataRows !== "") {
+        if (fromLabDataRows !== "") {
             jq("#from-lab-list-table").html("");
             jq("#from-lab-list-table").append(headerFromLab + fromLabDataRows + footer);
         }
@@ -211,17 +220,21 @@
             <div class="row">
                 <div class="col-3">
                     <div>
-                        <h1 style="color: maroon">${ui.message("Doctor's Queue:")}</i></h1>
+                        <h2 style="color: maroon">${currentLocation.name} - ${ui.message("Doctor's Queue")}</i></h2>
                     </div>
+
                     <div>
                         <h2>${currentProvider?.personName?.fullName}</h2>
                     </div>
+
                     <div class="vertical"></div>
                 </div>
+
                 <div class="col-8">
                     <form method="get" id="patient-search-form" onsubmit="return false">
                         <input type="text" id="patient-search"
-                               placeholder="${ui.message("coreapps.findPatient.search.placeholder")}" autocomplete="off"/><i
+                               placeholder="${ui.message("coreapps.findPatient.search.placeholder")}"
+                               autocomplete="off"/><i
                             id="patient-search-clear-button" class="small icon-remove-sign"></i>
                     </form>
                 </div>
