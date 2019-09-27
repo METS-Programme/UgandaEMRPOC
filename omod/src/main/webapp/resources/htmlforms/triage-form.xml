@@ -1,6 +1,6 @@
 <htmlform formUuid="d514be1d-8a95-4f46-b8d8-9b8485679f47"
           formName="Triage Vitals"
-          formEncounterType="68a71486-1a54-468f-ac3e-7091a9a79584"
+          formEncounterType="0f1ec66d-61db-4575-8248-94e10a88178f"
           formVersion="3.0"
           formDescription="Vitals Form"
           formAddMetadata="yes"
@@ -10,20 +10,11 @@
           formShowIf="(visit.active) &amp;&amp; patient.person.dead==false"
           formDisplayStyle="Standard"
           formLabel="Triage Vitals Form">
-
-    <script>
-        if (window.location.href.indexOf('editHtmlFormWithStandardUi') !== -1) {
-            window.location.href = window.location.href.replace('editHtmlFormWithStandardUi', 'editHtmlFormWithSimpleUi');
-        }
-    </script>
-
     <!-- only show BMI if patient is more than 5 years old (on the encounterDate) -->
     <includeIf velocityTest="$patient.getAge($encounter.getEncounterDatetime()) > 5">
 
         <script type="text/javascript">
-            var patientId = "<lookup expression="
-            patient.patientId
-            "/>";
+            var patientId = '<lookup expression="patient.patientId"/>';
             var calculateBmi = function (wt, ht) {
                 var bmi = null
                 if (wt &amp;&amp; ht) {
@@ -223,7 +214,7 @@
                 </div>
             </div>
             <div class="col-4">
-                <div class="card" style="margin-top:10px">
+                <div class="card">
                     <div class="card-header">
                         <label>Nutrition Assessment</label>
                     </div>
@@ -353,174 +344,25 @@
                         </div>
                     </div>
                 </div>
-                <!--<div class="card" style="margin-top:10px">
-                    <div class="card-header">
-                        <label>Person and Social</label>
-                    </div>
-                    <div class="card-body">
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>Are you pregnant?</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs conceptId="90041" style="checkbox" answerConceptIds="1065,1066"
-                                         answerLabels="Yes,No"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>EDD</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs conceptId="5596" allowFutureDates="true"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>HIV status</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs conceptId="90253" allowFutureDates="true"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>Are you using any FP Method</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs id="br" conceptId="90238" answerConceptIds="90082,90081"
-                                         answerLabels="Yes,No"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>FP Method</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs id="br" conceptId="374" answerConceptId="190" answerLabel="Condoms"/>
-                                    <excludeIf velocityTest="$patient.gender =='M' ">
-
-                                        <obs id="br" conceptId="374" answerConceptId="780"
-                                             answerLabel="Oral Contraceptive pills"/>
-                                        <obs id="br" conceptId="374" answerConceptId="5279"
-                                             answerLabel="Injectable/Implantable hormonies"/>
-                                        <obs id="br" conceptId="374" answerConceptId="5278"
-                                             answerLabel="Diaphram/Cervical Cap"/>
-                                        <obs id="br" conceptId="374" answerConceptId="5275"
-                                             answerLabel="Intra uterine device (IUD)"/>
-
-                                    </excludeIf>
-                                    <obs id="br" conceptId="374" answerConceptId="99265"
-                                         answerLabel="Vasectomy/Tubal ligation"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>Any intention to conceive in next 3 months</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs conceptId="165260"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>TB Status</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs conceptId="90216"
-                                         answerConceptIds="90079,90073,90078,90071"
-                                         answerLabels="1. No signs,2. Suspect,3. Diagnosed with Tb,4. Tb Rx"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>TPT Status</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs conceptId="165261"/>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>TPT date initiated</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs conceptId="165226"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>TPT date completed</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs conceptId="165227"/>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>Do you have the following Conditions</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs conceptId="90251" answerConceptId="119481" answerLabel="Diabetes"
-                                         style="checkbox"/>
-                                    <obs conceptId="90251" answerConceptId="117399" answerLabel="Hypertention"
-                                         style="checkbox"/>
-                                    <obs conceptId="90251" answerConceptId="27" answerLabel="Hepatitis B"
-                                         style="checkbox"/>
-                                    <obs conceptId="90251" answerConceptId="77" answerLabel="Mental Illness"
-                                         style="checkbox"/>
-                                    <obs conceptId="90251" answerConceptId="139071" answerLabel="Vascular Diseases"
-                                         style="checkbox"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
             </div>
+
             <div class="col-4">
                 <ifMode mode="ENTER">
-                    <div class="card" style="margin-top:10px">
+                    <div class="card">
                         <div class="card-header">
                             <label>Refer To</label>
                         </div>
                         <div class="card-body">
-
                             <uiInclude provider="ugandaemrpoc" fragment="referToNextProvider"/>
-
                         </div>
-
                     </div>
                 </ifMode>
                 <div style="margin-top:30px; text-align: center">
+                    <submit class="confirm" submitLabel="SAVE"/>
                     <ifMode mode="ENTER">
                         <postSubmissionAction
                                 class="org.openmrs.module.ugandaemrpoc.htmlformentry.TriageFormSubmissionAction"/>
                     </ifMode>
-                    <submit class="confirm" submitLabel="SAVE"/>
                 </div>
             </div>
         </div>

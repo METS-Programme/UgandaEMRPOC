@@ -3,14 +3,18 @@ package org.openmrs.module.ugandaemrpoc.fragment.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.openmrs.Patient;
+import org.openmrs.Visit;
+import org.openmrs.api.VisitService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.patientqueueing.api.PatientQueueingService;
-import org.openmrs.module.patientqueueing.mapper.PatientQueueMapper;
 import org.openmrs.module.patientqueueing.model.PatientQueue;
 import org.openmrs.module.patientqueueing.utils.QueueingUtil;
+import org.openmrs.module.ugandaemrpoc.api.UgandaEMRPOCService;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.ui.framework.annotation.SpringBean;
+import org.openmrs.ui.framework.fragment.FragmentConfiguration;
 import org.openmrs.ui.framework.fragment.FragmentModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -30,16 +34,16 @@ public class TriageQueueListFragmentController {
 	public TriageQueueListFragmentController() {
 	}
 	
-	public void controller(@SpringBean FragmentModel pageModel, UiSessionContext uiSessionContext) {
+	public void controller(FragmentConfiguration config, @SpringBean FragmentModel pageModel,
+	        UiSessionContext uiSessionContext) {
 		
 		pageModel.put("specimenSource", Context.getOrderService().getTestSpecimenSources());
-		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		String dateStr = sdf.format(new Date());
 		pageModel.addAttribute("currentDate", dateStr);
 		pageModel.addAttribute("locationSession", uiSessionContext.getSessionLocation().getUuid());
 		pageModel.addAttribute("triageLocation", TRIAGE_LOCATION_UUID);
-		
+		pageModel.put("currentProvider", Context.getAuthenticatedUser());
 	}
 	
 	/**
@@ -54,6 +58,7 @@ public class TriageQueueListFragmentController {
 	public SimpleObject getPatientQueueList(
 	        @RequestParam(value = "triageSearchFilter", required = false) String searchfilter,
 	        UiSessionContext uiSessionContext) throws IOException, ParseException {
+		UgandaEMRPOCService ugandaEMRPOCService = Context.getService(UgandaEMRPOCService.class);
 		PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
 		ObjectMapper objectMapper = new ObjectMapper();
 		SimpleObject simpleObject = new SimpleObject();
@@ -68,42 +73,20 @@ public class TriageQueueListFragmentController {
 			    QueueingUtil.dateFormtterDate(new Date(), "23:59:59"), uiSessionContext.getSessionLocation());
 		}
 		simpleObject.put("patientTriageQueueList",
-		    objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueueList)));
+		    objectMapper.writeValueAsString(ugandaEMRPOCService.mapPatientQueueToMapper(patientQueueList)));
 		return simpleObject;
 	}
 	
-	public List<PatientQueueMapper> mapPatientQueueToMapper(List<PatientQueue> patientQueueList) {
-		List<PatientQueueMapper> patientQueueMappers = new ArrayList<PatientQueueMapper>();
+	public SimpleObject getActiveVisit(@RequestParam(value = "patientId", required = false) Patient patient)
+	        throws ParseException, IOException {
+		VisitService visitService = Context.getVisitService();
+		List<Visit> visits = visitService.getActiveVisitsByPatient(patient);
+		ObjectMapper objectMapper = new ObjectMapper();
+		String visitId = null;
 		
-		for (PatientQueue patientQueue : patientQueueList) {
-			String names = patientQueue.getPatient().getFamilyName() + " " + patientQueue.getPatient().getGivenName() + " "
-			        + patientQueue.getPatient().getMiddleName();
-			PatientQueueMapper patientQueueMapper = new PatientQueueMapper();
-			patientQueueMapper.setId(patientQueue.getId());
-			patientQueueMapper.setPatientNames(names.replace("null", ""));
-			patientQueueMapper.setPatientId(patientQueue.getPatient().getPatientId());
-			patientQueueMapper.setLocationFrom(patientQueue.getLocationFrom().getName());
-			patientQueueMapper.setLocationTo(patientQueue.getLocationTo().getName());
-			patientQueueMapper.setQueueNumber(patientQueue.getQueueNumber());
-			
-			if (patientQueue.getProvider() != null) {
-				patientQueueMapper.setProviderNames(patientQueue.getProvider().getName());
-			}
-			
-			if (patientQueue.getCreator() != null) {
-				patientQueueMapper.setCreatorNames(patientQueue.getCreator().getDisplayString());
-			}
-			
-			if (patientQueue.getEncounter() != null) {
-				patientQueueMapper.setEncounterId(patientQueue.getEncounter().getEncounterId().toString());
-			}
-			
-			patientQueueMapper.setStatus(patientQueue.getStatus());
-			patientQueueMapper.setAge(patientQueue.getPatient().getAge().toString());
-			patientQueueMapper.setGender(patientQueue.getPatient().getGender());
-			patientQueueMapper.setDateCreated(patientQueue.getDateCreated().toString());
-			patientQueueMappers.add(patientQueueMapper);
+		if (visits.size() > 0) {
+			visitId = visits.get(0).getUuid();
 		}
-		return patientQueueMappers;
+		return SimpleObject.create("visitId", objectMapper.writeValueAsString(visitId));
 	}
 }

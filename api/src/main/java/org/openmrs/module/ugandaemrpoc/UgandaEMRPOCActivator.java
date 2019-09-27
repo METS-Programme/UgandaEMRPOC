@@ -29,6 +29,9 @@ public class UgandaEMRPOCActivator extends BaseModuleActivator {
 		dataImporter.importData("metadata/Locations.xml");
 		log.info("System Locations imported");
 		
+		dataImporter.importData("metadata/EncounterTypes.xml");
+		log.info("System EncounterTypes imported");
+
 		log.info("Started UgandaEMRPOC");
 		
 	}
