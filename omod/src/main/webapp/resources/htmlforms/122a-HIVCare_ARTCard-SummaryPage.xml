@@ -538,13 +538,13 @@
                     enable_disable_hiv_care(jq(this));
                 });
 
-                jq('[class^="ARTCareEntryPointEnableDisable"]').change(function () {
+                /*jq('[class^="ARTCareEntryPointEnableDisable"]').change(function () {
                     enable_disable(jq(this), "ARTCareEntryPoint", 'selected_value == "other"', "select");
                 });
 
                 jq('[class^="ARTCareEntryPointEnableDisable"]').each(function () {
                     enable_disable(jq(this), "ARTCareEntryPoint", 'selected_value == "other"', "select");
-                });
+                });*/
 
                 jq('#165169').change(function () {
                     if(!jq('#165169').find(':checkbox').prop('checked')){
@@ -603,13 +603,13 @@
                     enable_disable_ati(jq(this))
                 });
 
-                jq('[class^="PriorYesNoEnableDisable"]').change(function () {
+                /*jq('[class^="PriorYesNoEnableDisable"]').change(function () {
                     enable_disable(jq(this), "PriorYesNo", 'selected_value == "yes"', "select");
                 });
 
                 jq('[class^="PriorYesNoEnableDisable"]').each(function () {
                     enable_disable(jq(this), "PriorYesNo", 'selected_value == "yes"', "select");
-                });
+                });*/
 
                 jq("#165143").addClass('hidden');
 
