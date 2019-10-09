@@ -83,14 +83,6 @@
 </style>
 
 <div id="printSection" class="print-only">
-    <div>
-        <b/><br/>
-        Name: <span id="patientName"></span><br/>
-        File No: <span id="fileNumber"></span><br/>
-        Age: <span id="age"></span><br/>
-        Sample date: <span id="sampleDate"></span><br/>
-        Ordered by Dr. <span id="orderedBy"></span><br/><br/>
-    </div>
     <center>
         <table style="table-layout: fixed; margin-top: 5px;">
             <thead>

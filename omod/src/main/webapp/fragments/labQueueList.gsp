@@ -60,14 +60,45 @@
 .dialog {
     width: 550px;
 }
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 7 1 auto;
+    padding: 1.0rem;
+    background-color: #eee;
+}
+
+.my-tab .tab-pane {
+    border: solid 1px blue;
+}
+
+.vertical {
+    border-left: 1px solid #c7c5c5;
+    height: 79px;
+    position: absolute;
+    left: 99%;
+    top: 11%;
+}
+
+#patient-search {
+    min-width: 96%;
+    color: #363463;
+    display: block;
+    padding: 5px 10px;
+    height: 45px;
+    margin-top: 27px;
+    background-color: #FFF;
+    border: 1px solid #dddddd;
+}
 </style>
+
 <script>
     jq(document).ready(function () {
         jq("#tabs").tabs();
     })
     if (jQuery) {
         jq(document).ready(function () {
-            jq(document).on('sessionLocationChanged', function() {
+            jq(document).on('sessionLocationChanged', function () {
                 window.location.reload();
             });
             jq("#clinician-list").hide();
@@ -128,7 +159,7 @@
     //GENERATION OF LISTS IN INTERFACE SUCH AS WORKLIST
     // Get Patients In Lab Queue
     function getPatientLabQueue() {
-        jq("#lab-queue-list-table").html("");
+        jq("#pending-queue-lab-table").html("");
         jq.get('${ ui.actionLink("getPatientQueueList") }', {
             labSearchFilter: jq("#patient-lab-search").val().trim().toLowerCase()
         }, function (response) {
@@ -136,7 +167,7 @@
                 var responseData = JSON.parse(response.replace("patientLabQueueList=", "\"patientLabQueueList\":").trim());
                 displayLabData(responseData);
             } else if (!response) {
-                jq("#lab-queue-list-table").append(${ ui.message("coreapps.none ") });
+                jq("#pending-queue-lab-table").append(${ ui.message("coreapps.none ") });
             }
         });
     }
@@ -167,7 +198,7 @@
 
     function displayLabData(response) {
         var content = "";
-        content = "<table><thead><tr><th>Q ID</th><th>Names</th><th>Age</th><th>ORDER FROM</th><th>WAITING TIME</th><th>TEST(S) ORDERED</th></tr></thead><tbody>";
+        content = "<table><thead><tr><th>Q ID</th><th>NAMES</th><th>AGE</th><th>ORDER FROM</th><th>WAITING TIME</th><th>TEST(S) ORDERED</th></tr></thead><tbody>";
         jq.each(response.patientLabQueueList, function (index, element) {
                 var orders = displayLabOrderData(element, true);
                 if (orders !== null) {
@@ -179,15 +210,15 @@
                     content += "<td>" + patientQueueListElement.age + "</td>";
                     content += "<td>" + patientQueueListElement.providerNames + " - " + patientQueueListElement.locationFrom + "</td>";
                     content += "<td>" + waitingTime + "</td>";
-                    content += "<td>";
-                    content += orders;
+                    content += "<td><a class=\"icon-list-alt\" data-toggle=\"collapse\" href=\"#collapse-tab\" role=\"button\" aria-expanded=\"false\" aria-controls=\"collapseExample\"> <span style=\"color: red;\">TestNo</span> Tests Unproccessed</a>".replace("#collapse-tab", "#collapse-tab" + patientQueueListElement.patientQueueId).replace("TestNo", noOfTests(element));
+                    content += "<div class=\"collapse\" id=\"collapse-tab" + patientQueueListElement.patientQueueId + "\"><div class=\"card card-body\">" + orders + "</div></div>";
                     content += "</td>";
                     content += "</tr>";
                 }
             }
         );
         content += "</tbody></table>";
-        jq("#lab-queue-list-table").append(content);
+        jq("#pending-queue-lab-table").append(content);
     }
 
     function displayLabOrderData(labQueueList, removeProccesedOrders) {
@@ -199,11 +230,9 @@
             if (removeProccesedOrders !== false && element.accessionNumber === null && element.status === "active") {
                 var urlTransferPatientToAnotherQueue = 'patientqueue.showAddOrderToLabWorkLIstDialog("patientIdElement")'.replace("patientIdElement", element.orderNumber);
                 orderedTestsRows += "<tr>";
-                orderedTestsRows += "<td>" + element.orderNumber + "</td>";
                 orderedTestsRows += "<td>" + element.conceptName + "</td>";
-                orderedTestsRows += "<td>" + element.urgency + "</td>";
                 orderedTestsRows += "<td>";
-                orderedTestsRows += "<a  data-toggle=\"modal\" data-target=\"#add-order-to-lab-worklist-dialog\" data-order-number=\"orderNumber\" data-order-id=\"orderId\"><i style=\"font-size: 25px;\" class=\"icon-share\" title=\"Check In\"></i></a>".replace("orderNumber",element.orderNumber).replace("orderId",element.orderId);
+                orderedTestsRows += "<a  data-toggle=\"modal\" data-target=\"#add-order-to-lab-worklist-dialog\" data-order-number=\"orderNumber\" data-order-id=\"orderId\"><i style=\"font-size: 25px;\" class=\"icon-share\" title=\"Check In\"></i></a>".replace("orderNumber", element.orderNumber).replace("orderId", element.orderId);
                 orderedTestsRows += "</td>";
                 orderedTestsRows += "</tr>";
             }
@@ -215,11 +244,21 @@
         }
     }
 
+    function noOfTests(labQueueList) {
+        var orderCount = 0;
+        jq.each(labQueueList.orderMapper, function (index, element) {
+            if (element.accessionNumber === null && element.status === "active") {
+                orderCount += 1;
+            }
+        });
+        return orderCount;
+    }
+
     function displayLabOrder(labQueueList) {
         var referedTests = "";
         var workListTests = "";
 
-        var tableHeader = "<table><thead><tr><th>ORDER NO</th><th>PATIENT NAME</th><th>TEST</th><th>STATUS</th><th>URGENCY</th><th>ACTION</th></tr></thead><tbody>";
+        var tableHeader = "<table><thead><tr><th>SAMPLE ID</th><th>PATIENT NAME</th><th>TEST</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>";
 
         var tableFooter = "</tbody></table>";
 
@@ -236,11 +275,10 @@
                 actionURL = 'patientqueue.showAddOrderToLabWorkLIstDialog("patientIdElement")'.replace("patientIdElement", element.orderId);
             }
             orderedTestsRows += "<tr>";
-            orderedTestsRows += "<td>" + element.orderNumber + "</td>";
+            orderedTestsRows += "<td>" + element.accessionNumber + "</td>";
             orderedTestsRows += "<td>" + element.patient + "</td>";
             orderedTestsRows += "<td>" + element.conceptName + "</td>";
             orderedTestsRows += "<td>" + element.status + "</td>";
-            orderedTestsRows += "<td>" + element.urgency + "</td>";
             orderedTestsRows += "<td>";
             orderedTestsRows += "<a title=\"Edit Result\" onclick='showEditResultForm(" + element.orderId + ")'><i class=\"icon-list-ul small\"></i></a>";
             orderedTestsRows += "<i class=\" + actionIron + \" title=\"Transfer To Another Provider\" onclick='urlTransferPatientToAnotherQueue'></i>".replace("urlTransferPatientToAnotherQueue", actionURL);
@@ -255,19 +293,19 @@
             }
         });
 
-        jq("#lab-work-list-tab").html("");
-        jq("#referred-tests-tab").html("");
+        jq("#lab-work-list-table").html("");
+        jq("#referred-tests-list-table").html("");
 
         if (workListTests.length > 0) {
-            jq("#lab-work-list-tab").append(tableHeader + workListTests + tableFooter);
+            jq("#lab-work-list-table").append(tableHeader + workListTests + tableFooter);
         } else {
-            jq("#lab-work-list-tab").append("No Data");
+            jq("#lab-work-list-table").append("No Data");
         }
 
         if (referedTests.length > 0) {
-            jq("#referred-tests-tab").append(tableHeader + referedTests + tableFooter);
+            jq("#referred-tests-list-table").append(tableHeader + referedTests + tableFooter);
         } else {
-            jq("#referred-tests-tab").append("No Data ");
+            jq("#referred-tests-list-table").append("No Data ");
         }
     }
 
@@ -277,10 +315,17 @@
         var diff = Math.abs(new Date() - new Date(queueDate));
         var seconds = Math.floor(diff / 1000); //ignore any left over units smaller than a second
         var minutes = Math.floor(seconds / 60);
+        var waitingTime = "";
         seconds = seconds % 60;
         var hours = Math.floor(minutes / 60);
         minutes = minutes % 60;
-        return hours + ":" + minutes + ":" + seconds
+
+        if (hours > 0 || minutes > 60) {
+            waitingTime = "<span style='background-color: red; color: white; width: 100%; text-align: center;'>" + hours + ":" + minutes + ":" + seconds + "</span>";
+        } else {
+            waitingTime = "<span style='background-color:green; color: white; width: 100%; text-align: center;'>" + hours + ":" + minutes + ":" + seconds + "</span>";
+        }
+        return waitingTime;
     }
 
     //Sets the Specimen Source Options in the Select in the scheduleTestDialogue
@@ -311,69 +356,101 @@
     }
 </script>
 ${ui.includeFragment("ugandaemrpoc", "lab/diplayResultList")}
-<div class="info-header">
-    <i class="icon-beaker"></i>
-    <h3 style="width: 50%">${ui.message("ugandaemrpoc.app.lab.patientqueue.title")}</h3> <span
-        style="right:auto;width: 40%;font-weight: bold"></span>
-</div>
 
-<div id="tabs">
-    <ul>
-        <li>
-            <a href="#queue-lab-tab">
-                TESTS ORDERED
-            </a>
-        </li>
-        <li>
-            <a href="#lab-work-list-tab">
-                WORK LIST
-            </a>
-        </li>
-        <li>
-            <a href="#referred-tests-tab">
-                REFERRED TESTS
-            </a>
-        </li>
-        <li>
-            <a href="#lab-results-tab">
-                RESULTS
-            </a>
-        </li>
-    </ul>
-    <section sectionTag="section" id="queue-lab-tab" headerTag="h1">
-        <span>
-            <form method="get" id="patient-lab-search-form" onsubmit="return false">
-                <input type="text" id="patient-lab-search" name="patient-lab-search"
-                       placeholder="${ui.message("coreapps.findPatient.search.placeholder")}" autocomplete="off"/>
+<div class="card">
+    <div class="card-header">
+        <div class="">
+            <div class="row">
+                <div class="col-3">
+                    <div>
+                        <h2 style="color: maroon">${currentLocation.name} - ${ui.message("Queue")}</i></h2>
+                    </div>
 
-            </form>
-        </span>
+                    <div>
+                        <h2>${currentProvider?.personName?.fullName}</h2>
+                    </div>
 
-        <div class="info-body">
-            <div id="lab-queue-list-table">
+                    <div class="vertical"></div>
+                </div>
+
+                <div class="col-8">
+                    <form method="get" id="patient-lab-search-form" onsubmit="return false">
+                        <input type="text" id="patient-lab-search" name="patient-lab-search"
+                               placeholder="${ui.message("coreapps.findPatient.search.placeholder")}" autocomplete="off"/>
+
+                    </form>
+                </div>
             </div>
         </div>
+    </div>
 
-    </section>
-    <section sectionTag="section" id="lab-work-list-tab" headerTag="h1">
-        List Of Acccepted Tests Go Here
-    </section>
-    <section sectionTag="section" id="referred-tests-tab" headerTag="h1">
-        List of Tests Referred To Other Lab go here
-    </section>
-    <section sectionTag="section" id="lab-results-tab" headerTag="h1">
-        Lab Results To Tests Go Here
-    </section>
+    <div class="card-body">
+        <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-item nav-link active" id="pending-queue-lab-tab" data-toggle="tab" href="#pending-queue-lab" role="tab"
+                   aria-controls="pending-queue-lab-tab" aria-selected="true">TESTS ORDERED <span style="color:red"
+                                                                                                 id="pending-queue-lab-number">0</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="lab-work-list-tab" data-toggle="tab" href="#lab-work-list" role="tab"
+                   aria-controls="lab-work-list-tab" aria-selected="false"> WORKLIST <span style="color:red"
+                                                                                               id="lab-work-list-number">0</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="referred-tests-tab" data-toggle="tab" href="#referred-tests" role="tab"
+                   aria-controls="referred-tests-tab" aria-selected="false"> REFFERED TESTS <span
+                        style="color:red" id="referred-tests-number">0</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" id="lab-results-tab" data-toggle="tab" href="#lab-results" role="tab"
+                   aria-controls="lab-results-number-tab" aria-selected="false"> RESULTS <span
+                        style="color:red" id="lab-results-number">0</span></a>
+            </li>
+        </ul>
+
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="pending-queue-lab" role="tabpanel"
+                 aria-pharmacyelledby="pending-queue-lab-tab">
+                <div class="info-body">
+                    <div id="pending-queue-lab-table">
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="lab-work-list" role="tabpanel"
+                 aria-pharmacyelledby="lab-work-list-tab">
+                <div class="info-body">
+                    <div id="lab-work-list-table">
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="referred-tests" role="tabpanel"
+                 aria-pharmacyelledby="referred-tests-tab">
+                <div class="info-body">
+                    <div id="referred-tests-list-table">
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="lab-results" role="tabpanel"
+                 aria-pharmacyelledby="lab-results-tab">
+                <div class="info-body">
+                    <div id="lab-results-list-table">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 ${ui.includeFragment("ugandaemrpoc", "lab/resultForm")}
 ${ui.includeFragment("ugandaemrpoc", "printResults")}
 </div>
 ${ui.includeFragment("ugandaemrpoc", "lab/scheduleTestDialogue")}
 <% } %>
-
-
 
 
 

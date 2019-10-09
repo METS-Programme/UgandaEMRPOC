@@ -40,7 +40,7 @@
             <ref bean="transactionAttributeSource"/>
         </property>
     </bean>
-    
+
     <bean parent="serviceContext">
         <property name="moduleService">
             <list>

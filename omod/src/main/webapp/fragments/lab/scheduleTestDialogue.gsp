@@ -2,12 +2,11 @@
      aria-labelledby="scheduleOrderModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>${ui.message("SCHEDULE TEST")}</h3>
-            </div>
-
-            <form id="addtesttoworklist">
+        <form id="addtesttoworklist">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>${ui.message("SCHEDULE TEST")}</h3>
+                </div>
                 <div class="modal-body">
 
                     <span id="add_to_queue-container">
@@ -28,10 +27,6 @@
                             </div>
 
                             <div class="col-6">
-                                <span>
-
-                                </span>
-
                                 <div class="form-group" id="specimen-source-container">
                                     <label for="specimen_source_id">
                                         <span>${ui.message("SAMPLE TYPE")}</span>
@@ -46,7 +41,7 @@
                         </div>
                         <br/><br/>
 
-                        <div class="row">
+                        <div class="row" style="margin-top: 20px">
                             <div class="col-6">
                                 <label for="refer_test">
                                     <span>${ui.message("REFER TEST")}</span>
@@ -74,15 +69,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="modal-footer">
+                        <button class="cancel" data-dismiss="modal"
+                                id="">${ui.message("patientqueueing.close.label")}</button>
+                        <button type="submit" class="confirm"
+                                id="submit-schedule">${ui.message("patientqueueing.send.label")}</button>
+                    </div>
                 </div>
-
-                <div class="modal-footer">
-                    <button class="cancel" data-dismiss="modal"
-                            id="">${ui.message("patientqueueing.close.label")}</button>
-                    <button type="submit" class="confirm"
-                            id="submit-schedule">${ui.message("patientqueueing.send.label")}</button>
-                </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
 </div>

@@ -3,7 +3,7 @@
         var referedTests = "";
         var workListTests = "";
 
-        var tableHeader = "<table><thead><tr><th>ORDER NO</th><th>PATIENT NAME</th><th>TEST</th><th>STATUS</th><th>URGENCY</th><th>ACTION</th></tr></thead><tbody>";
+        var tableHeader = "<table><thead><tr><th>ORDER NO</th><th>PATIENT NAME</th><th>TEST</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody>";
 
         var tableFooter = "</tbody></table>";
 
@@ -24,7 +24,6 @@
             orderedTestsRows += "<td>" + element.patient + "</td>";
             orderedTestsRows += "<td>" + element.conceptName + "</td>";
             orderedTestsRows += "<td>" + element.status + "</td>";
-            orderedTestsRows += "<td>" + element.urgency + "</td>";
             orderedTestsRows += "<td>";
             orderedTestsRows += "<a title=\"Edit Result\" onclick='showEditResultForm(" + element.orderId + ")'><i class=\"icon-list-ul small\"></i></a>";
             orderedTestsRows += "<a title=\"Print Results\" onclick='printresult(" + element.orderId + "," + element.patientId + ")'><i class=\"icon-print small\"></i></a>";
@@ -33,11 +32,11 @@
             referedTests += orderedTestsRows;
         });
 
-        jq("#lab-results-tab").html("");
+        jq("#lab-results-list-table").html("");
         if (referedTests.length > 0) {
-            jq("#lab-results-tab").append(tableHeader + referedTests + tableFooter);
+            jq("#lab-results-list-table").append(tableHeader + referedTests + tableFooter);
         } else {
-            jq("#lab-results-tab").append("No Data ");
+            jq("#lab-results-list-table").append("No Data ");
         }
     }
 </script>

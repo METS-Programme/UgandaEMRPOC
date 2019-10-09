@@ -19,8 +19,8 @@
             actions: {
                 confirm: function () {
                     saveEditResult();
-                    ('#modal').modal('toggle');
                     editResultsDialog.close();
+                    window.location.reload();
                 },
                 cancel: function () {
                     editResultsDialog.close();
@@ -69,7 +69,7 @@
             success: function (data) {
                 if (data.status === "success") {
                     jq().toastmessage('showSuccessToast', data.message);
-                    editResultsDialog.dialog("close");
+                    editResultsDialog.close();
                 } else {
                     jq().toastmessage('showErrorToast', data.error);
                 }
@@ -210,35 +210,12 @@ form input {
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>${ui.message("Edit Results")}</h3>
+                <h3 style="color: #FFFFFF">${ui.message("Edit Results")}</h3>
             </div>
 
             <div class="modal-body">
                 <form>
                     <input type="hidden" name="wrap.testId" id="edit-result-id"/>
-
-                    <div data-bind="if: editResultsParameterOptions()[0]">
-                        <p>
-
-                        <div class="dialog-data">Patient Name:</div>
-
-                        <div class="inline" data-bind="text: editResultsParameterOptions()[0].patientName"></div>
-                    </p>
-
-                        <p>
-
-                        <div class="dialog-data">Test Name:</div>
-
-                        <div class="inline" data-bind="text: editResultsParameterOptions()[0].testName"></div>
-                    </p>
-
-                        <p>
-
-                        <div class="dialog-data">Patient Name:</div>
-
-                        <div class="inline" data-bind="text: editResultsParameterOptions()[0].startDate"></div>
-                    </p>
-                    </div>
 
                     <div class="box" data-bind="foreach: editResultsParameterOptions">
                         <div class="div-col3">

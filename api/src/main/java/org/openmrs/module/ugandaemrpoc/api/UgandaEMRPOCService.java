@@ -94,7 +94,7 @@ public abstract interface UgandaEMRPOCService extends OpenmrsService {
 	 * 
 	 * @param session
 	 */
-	public void sendPatientToLab(FormEntrySession session, boolean completePreviousQueue);
+	public void sendPatientToNextLocation(FormEntrySession session, String locationUUID,String locationFromUUID,String completePreviousQueueStatus,String nextQueueStatus,boolean completePreviousQueue);
 
 	/**
 	 * Complete Previous Queue of Patient
@@ -102,7 +102,7 @@ public abstract interface UgandaEMRPOCService extends OpenmrsService {
 	 * @param patient
 	 * @return
 	 */
-	public PatientQueue completePreviousQueue(Patient patient, Location location, String status);
+	public PatientQueue completePreviousQueue(Patient patient, Location location,String completionStatus, String searchStatus);
 
 	/**
 	 * @param encounter
@@ -115,7 +115,7 @@ public abstract interface UgandaEMRPOCService extends OpenmrsService {
 	 * @param location
 	 * @return
 	 */
-	public PatientQueue getPreviousQueue(Patient patient, Location location);
+	public PatientQueue getPreviousQueue(Patient patient, Location location,String status);
 
 	/**
 	 * @param query
@@ -127,4 +127,13 @@ public abstract interface UgandaEMRPOCService extends OpenmrsService {
 	 */
 	public SimpleObject getOrderResultsOnEncounter(String query, int encounterId, boolean includeProccesed)
 	        throws ParseException, IOException;
+
+	/**
+	 *
+	 * @param encounter
+	 * @param locationTo
+	 * @return
+	 * @throws ParseException
+	 */
+	public boolean patientQueueExists(Encounter encounter, Location locationTo,Location locationFrom,String status) throws ParseException;
 }
