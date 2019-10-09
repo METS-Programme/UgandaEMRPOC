@@ -13,31 +13,31 @@
         <includeIf velocityTest="$fn.allEncounters('8d5b27bc-c2cc-11de-8d13-0010c6dffd0f').size() == 0">
             <script>
                 jq(function () {
-                jq().toastmessage('showErrorToast', "This patient has no Summary page");
-                alert('This patient has no Summary page, you will now be forwarded to the patient dashboard');
+                    jq().toastmessage('showErrorToast', "This patient has no Summary page");
+                    alert('This patient has no Summary page, you will now be forwarded to the patient dashboard');
 
-                /*
-                * queryParameters -> handles the query string parameters
-                * queryString -> the query string without the fist '?' character
-                * re -> the regular expression
-                * m -> holds the string matching the regular expression
-                */
-                var queryParameters = {}, queryString = location.search.substring(1),
-                re = /([^&amp;=]+)=([^&amp;]*)/g, m;
+                    /*
+                    * queryParameters -> handles the query string parameters
+                    * queryString -> the query string without the fist '?' character
+                    * re -> the regular expression
+                    * m -> holds the string matching the regular expression
+                    */
+                    var queryParameters = {}, queryString = location.search.substring(1),
+                        re = /([^&amp;=]+)=([^&amp;]*)/g, m;
 
-                // Creates a map with the query string parameters
-                while (m = re.exec(queryString)) {
-                queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
-                }
+                    // Creates a map with the query string parameters
+                    while (m = re.exec(queryString)) {
+                        queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+                    }
 
-                /*
-                * Replace the query portion of the URL.
-                * jQuery.param() -> create a serialized representation of an array or
-                * object, suitable for use in a URL query string or Ajax request.
-                */
-                location.href = window.location.protocol + "//" + window.location.host +
-                '/' + OPENMRS_CONTEXT_PATH + '/coreapps/clinicianfacing/patient.page?patientId='
-                + queryParameters['patientId']; // Causes page to reload
+                    /*
+                    * Replace the query portion of the URL.
+                    * jQuery.param() -> create a serialized representation of an array or
+                    * object, suitable for use in a URL query string or Ajax request.
+                    */
+                    location.href = window.location.protocol + "//" + window.location.host +
+                        '/' + OPENMRS_CONTEXT_PATH + '/coreapps/clinicianfacing/patient.page?patientId='
+                        + queryParameters['patientId']; // Causes page to reload
                 });
             </script>
         </includeIf>
@@ -45,19 +45,22 @@
     <!-- jquery loaded for nonessential purposes. -->
 
     <style>
-        .nav-link-1{
-            background-color: #03aec3;
+        .nav-link-1 {
+            background-color: #015f6b;
         }
-        .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+
+        .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
             color: #FFFFFF;
             background-color: #000000;
             border-radius: 5px;
         }
+
         form .lablex2 span {
             min-width: 50%;
             float: left;
             margin: 1px 0px;
         }
+
         form .lablex3 span {
             min-width: 31%;
             float: left;
@@ -69,6 +72,7 @@
             float: left;
             margin: 1px 0px;
         }
+
         a {
             color: #f9f9f9;
             text-decoration: none;
@@ -83,30 +87,34 @@
             border: 1px solid #02aec3;
             border-top-left-radius: .25rem;
             border-top-right-radius: .25rem;
-            color:blue
-        }
-        #final-out-come{
-            margin-top:26px;
+            color: blue
         }
 
-         .customSubmit {
-             font-weight: bold;
-             width: 70%;
-         }
-        .submission-section{
+        #final-out-come {
+            margin-top: 26px;
+        }
+
+        .customSubmit {
+            font-weight: bold;
+            width: 70%;
+        }
+
+        .submission-section {
             width: 100%;
             align-items: center;
 
         }
-        .encounter-details{
+
+        .encounter-details {
             margin-top: 68px;
             margin-left: 120px;
             width: 70%;
         }
 
-        .submitButton{
+        .submitButton {
             width: 50%;
         }
+
         form select[disabled], .form select[disabled] {
             background: #EEE;
             border: #1dacbd 1px solid;
@@ -119,23 +127,24 @@
             max-width: 100%;
         }
 
-        form input{
+        form input {
             min-width: 100%;
             max-width: 100%;
         }
-        .add-more-link{
+
+        .add-more-link {
             color: dodgerblue;
         }
 
-        .remove-more-link{
+        .remove-more-link {
             color: darkred;
         }
 
 
     </style>
     <script type="text/javascript">
-        if(jQuery){
-            jq(document).ready(function(){
+        if (jQuery) {
+            jq(document).ready(function () {
                 $allRows = jq(this).find('.multi-drug');
                 $allRows.hide();
                 jq('#1-removeEntry').remove();
@@ -148,24 +157,28 @@
             });
 
 
-            jq(document).ready(function(){
-                jq('.addEntry').on("click", function(){
+            jq(document).ready(function () {
+                jq('.addEntry').on("click", function () {
                     var correctedAddButtonId = parseFloat(this.id) + 1;
                     var contentAddId = "#" + correctedAddButtonId + "-toggleContainer";
                     jq(contentAddId).toggle(true);
-                    jq('#' + this.id).toggle(false); jq('#' + parseFloat(this.id) + '-removeEntry').toggle(true);
-                    return false;});
+                    jq('#' + this.id).toggle(false);
+                    jq('#' + parseFloat(this.id) + '-removeEntry').toggle(true);
+                    return false;
+                });
             });
 
-            jq(document).ready(function(){
-                jq('.removeEntry').on("click", function(){
+            jq(document).ready(function () {
+                jq('.removeEntry').on("click", function () {
                     var correctedRemoveButtonId = parseFloat(this.id) - 1;
                     var contentAddId = "#" + parseFloat(this.id) + "-toggleContainer";
                     jq(contentAddId).toggle(false);
-                    jq( ':input:not(:button)', contentAddId).val([]);
-                    jq('#' + correctedRemoveButtonId + '-addEntry').toggle(true); jq('#' + correctedRemoveButtonId + '-removeEntry').toggle(true);
+                    jq(':input:not(:button)', contentAddId).val([]);
+                    jq('#' + correctedRemoveButtonId + '-addEntry').toggle(true);
+                    jq('#' + correctedRemoveButtonId + '-removeEntry').toggle(true);
 
-                    return false;});
+                    return false;
+                });
 
             });
         }
@@ -189,8 +202,7 @@
 
             if (input_type == "select") {
                 selected_value = jq(field).find(":selected").text().trim().toLowerCase();
-            }
-            else if (input_type == "hidden") {
+            } else if (input_type == "hidden") {
                 selected_value = jq(field).find("input[type=hidden]").val().trim().toLowerCase();
             }
 
@@ -265,8 +277,7 @@
                     group.find('select').attr("disabled", disable);
                     if (requires == false) {
                         group.find('.required').show();
-                    }
-                    else if (requires == true) {
+                    } else if (requires == true) {
                         group.find('.required').hide();
                     }
 
@@ -300,7 +311,7 @@
                 jq("#location_id select").val(5);
 
                 //Block Multiple encounter entry on same date
-                blockEncounterOnSameDateEncounter(jq("#encounterDate").find("input[type=hidden]"),"block");
+                blockEncounterOnSameDateEncounter(jq("#encounterDate").find("input[type=hidden]"), "block");
 
                 var stableArray = [];
 
@@ -369,41 +380,13 @@
 
                     if (currentRegimen !== jq("#90315").find("select").find(":selected").val()) {
                         jq("#99025 input").val(0);
-                    }else {
+                    } else {
                         jq("#99025 input").val(durationOnCurrentRegimen);
                     }
                     stabilityCheck();
                 });
                 /* End of Validation */
 
-
-                /* Handle viral load results */
-                jq("#viral-load-results-copies").attr("disabled", true);
-                jq("#viral-load-results-qualitative").change(function () {
-                    var viral_load_status = getValue('viral-load-results-qualitative.value');
-                    if (viral_load_status == 1301) {
-                        /* Detected */
-                        jq("#viral-load-results-copies").attr("disabled", false).attr("readonly", false).fadeTo(250, 1);
-                    <ifMode mode="ENTER">
-                            setValue('viral-load-results-copies.value', '');
-                    </ifMode>
-
-                        var viral_load_copies = getValue('viral-load-results-copies.value');
-                        if(viral_load_copies == 1){
-                            setValue('viral-load-results-copies.value', '');
-                        }
-                    }
-                    if (viral_load_status == 1306) {
-                        /* Not Detected */
-                        jq("#viral-load-results-copies").attr("disabled", false).attr("readonly", true).fadeTo(250, 0.25);
-                        setValue('viral-load-results-copies.value', 1);
-                    }
-                    if (viral_load_status == "" || viral_load_status == 1304) {
-                        /* Sample Rejected and no data */
-                        jq("#viral-load-results-copies").attr("disabled", true).attr("readonly", true).fadeTo(250, 0.25);
-                        setValue('viral-load-results-copies.value', '');
-                    }
-                });
 
                 jq("#viral-load-results-copies").change(function () {
                     previousVl = jq("#viral-load-results-copies").find("input").val();
@@ -552,7 +535,7 @@
                     }
                     var pageCurrentRegimen = jq("#90315").find("select").find(":selected").val();
                     var pageEncounterDate = jq("#encounterDate").find("input[type=hidden]").val();
-                    var dsdmRegimenCoceptsIds="164976,164977,164978,164979";
+                    var dsdmRegimenCoceptsIds = "164976,164977,164978,164979";
 
                     if (currentRegimen !== "" &amp;&amp; (currentRegimen === pageCurrentRegimen || dsdmRegimenCoceptsIds.trim().includes(pageCurrentRegimen)) &amp;&amp; diff_months(new Date(pageEncounterDate), new Date(regimenStartedDate)) &gt; 12) {
 
@@ -584,8 +567,6 @@
             beforeSubmit.push(function () {
                 <!-- clear the previous errors -->
                 setValue('returndate.error', '');
-                setValue('viral-load-results-copies.error', '');
-                setValue('date-viral-load-taken.error', '');
 
                 var encounterDate = new Date((getValue('encounterDate.value')));
                 var returnDate = new Date((getValue('returndate.value')));
@@ -607,29 +588,10 @@
                     return false;
                 }
 
-                var viral_load_qualitative = getValue('viral-load-results-qualitative.value');
-                var date_viral_load_taken = getValue('date-viral-load-taken.value');
-                /* The date that the viral load was taken is required if a qualitative result is selected */
-                if (viral_load_qualitative != "") {
-                    if (date_viral_load_taken == "") {
-                        getField('date-viral-load-taken.error').html('Please enter the date when the viral load sample was taken').show();
-                        return false;
-                    }
-                }
 
                 /** The date the viral load was taken cannot be after the encounter date */
-                if (date_viral_load_taken != "") {
-                    if (encounterDate &lt; date_viral_load_taken) {
-                        getField('date-viral-load-taken.error').html('The date the viral load sample was taken cannot be after the date of this visit ' + encounterDate).show();
-                        return false;
-                    }
-                }
 
                 /* If the viral load is detected, the number of copies must be greater than 20 which is the lowest detectable level for a machine */
-                if ((viral_load_qualitative == 1301) &amp;&amp; (getValue('viral-load-results-copies.value') &lt; 20)) {
-                    getField('viral-load-results-copies.error').html('Please enter the number of virus copies per ml. the minimum number of copies is 20').show();
-                    return false;
-                }
 
                 /* if DSDM is not FBIM or FTR or Empty and patient is not stable should not save.*/
                 if (jq("#165144").find("select").find(":selected").val() !== "90003" &amp;&amp; (jq("#165143").find("select").find(":selected").val() !== "165138" &amp;&amp; jq("#165143").find("select").find(":selected").val() !== "165140" &amp;&amp; jq("#165143").find("select").find(":selected").val() !== "")) {
@@ -757,12 +719,14 @@
 
                     </div>
                     <div class="submission-section" style="align:center">
-                        <encounterProviderAndRole encounterRole="240b26f9-dd88-4172-823d-4a8bfeb7841f" required="required" default="currentUser"/>
+                        <encounterProviderAndRole encounterRole="240b26f9-dd88-4172-823d-4a8bfeb7841f"
+                                                  required="required" default="currentUser"/>
                     </div>
                     <div class="submission-section" style="align:center;margin-top:10px;">
-                        <submit submitStyle="customSubmit" class="confirm" submitLabel="SAVE" style="width:200px; align:center"/>
+                        <submit submitStyle="customSubmit" class="confirm" submitLabel="SAVE"
+                                style="width:200px; align:center"/>
                         <postSubmissionAction
-                                class="org.openmrs.module.ugandaemrpoc.htmlformentry.LabOrderSubmissionAction"/>
+                                class="org.openmrs.module.ugandaemrpoc.htmlformentry.DSDSProgramSubmissionAction"/>
                     </div>
                 </div>
             </div>
@@ -775,7 +739,7 @@
                      aria-labelledby="v-pills-home-tab">
                     <div class="card">
                         <div class="card-header">
-                            Clinical Encounter. Information On the Encounter with the Patient Must Be filed Here
+                            Clinical-Assessment
                         </div>
                         <div class="card-body">
                             <nav>
@@ -934,8 +898,7 @@
                                                                         </label>
                                                                     </div>
                                                                     <div class="col-7">
-                                                                        <obs conceptId="165260" answerConceptIds="90003,90004"
-                                                                             answerLabels="Yes,No" />
+                                                                        <!--<obs conceptId="165260" answerConceptIds="90003,90004" answerLabels="Yes,No" />-->
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -972,11 +935,13 @@
                                                                      answerLabel="{1}" style="checkbox"/>
                                                             </repeat>
                                                             <span id="trigger">
-                                                                <obs id="90251" conceptId="90251" answerConceptId="90002"
+                                                                <obs id="90251" conceptId="90251"
+                                                                     answerConceptId="90002"
                                                                      answerLabel="Other specify:"/>
                                                             </span>
                                                             <span id="disabled">
-                                                                <obs id="99032" conceptId="99032" size="17" labelText=""/>
+                                                                <obs id="99032" conceptId="99032" size="17"
+                                                                     labelText=""/>
                                                             </span>
                                                         </span>
 
@@ -1095,8 +1060,8 @@
                                                                     <label>TPT Status</label>
                                                                 </div>
                                                                 <div class="col-7">
-                                                                    <obs conceptId="165261"
-                                                                         answerConceptIds="165262,656,165263,165264,1267"
+                                                                    <obs conceptId="165288"
+                                                                         answerConceptIds="1090,90072,165307,90040,160035"
                                                                          answerLabels="Never Initiated,On INH,Defaulted,Taken off due to side effects,Completed"/>
                                                                 </div>
                                                             </div>
@@ -1140,7 +1105,7 @@
                                                 <div class="card-body">
                                                     <div class="investigations">
                                                         <span class="lablex2">
-                                                            <repeat with="['1019','CBC'],['99152','RPR'],['21','Hgb'],['657','Cd4'],['165273','VL'],['307','Sputums'],['99149','Infant Ab/PCR']">
+                                                            <repeat with="['165311','CrAg'],['165312','RPR'],['165313','TB LAM'],['165314','GeneXpert'],['165315','Microscopy'],['165316','X-RAY'],['1019','CBC'],['21','Hgb'],['657','Cd4'],['165310','VL'],['307','Sputums']">
                                                                 <obs id="{0}" conceptId="1271" answerConceptId="{0}"
                                                                      answerLabel="{1}" style="checkbox"/>
                                                             </repeat>
@@ -1218,15 +1183,19 @@
                                 Why Poor/Fair:
                                 <br/>
                                 <obs id="br" conceptId="90223" answerConceptId="90040" answerLabel="1 - Toxicity"/>
-                                <obs id="br" conceptId="90223" answerConceptId="90146" answerLabel="2 - Share with others"/>
+                                <obs id="br" conceptId="90223" answerConceptId="90146"
+                                     answerLabel="2 - Share with others"/>
                                 <obs id="br" conceptId="90223" answerConceptId="90147" answerLabel="3 - Forgot"/>
                                 <obs id="br" conceptId="90223" answerConceptId="90148" answerLabel="4 - Felt better"/>
                                 <obs id="br" conceptId="90223" answerConceptId="90149" answerLabel="5 - Too ill"/>
                                 <obs id="br" conceptId="90223" answerConceptId="90150" answerLabel="6 - Stigma"/>
-                                <obs id="br" conceptId="90223" answerConceptId="90045" answerLabel="7 - Drug Stock out"/>
+                                <obs id="br" conceptId="90223" answerConceptId="90045"
+                                     answerLabel="7 - Drug Stock out"/>
                                 <obs id="br" conceptId="90223" answerConceptId="90151" answerLabel="8 - Lost pills"/>
-                                <obs id="br" conceptId="90223" answerConceptId="90152" answerLabel="9 - Travel problems"/>
-                                <obs id="br" conceptId="90223" answerConceptId="90051" answerLabel="10 - Inability to pay"/>
+                                <obs id="br" conceptId="90223" answerConceptId="90152"
+                                     answerLabel="9 - Travel problems"/>
+                                <obs id="br" conceptId="90223" answerConceptId="90051"
+                                     answerLabel="10 - Inability to pay"/>
                                 <obs id="br" conceptId="90223" answerConceptId="90153" answerLabel="11 - Alcohol"/>
                                 <obs id="br" conceptId="90223" answerConceptId="90154" answerLabel="12 - Depression"/>
                                 <obs id="br" conceptId="90223" answerConceptId="90155" answerLabel="13 - Pill burden"/>
@@ -1272,39 +1241,41 @@
                                     TPT/B6
                                 </div>
                                 <div class="card-body">
-                                    <obsgroup groupingConceptId="165281">
+                                    <obsgroup groupingConceptId="165305">
                                         <div class="row">
                                             <div class="col-12">
                                                 <div class="row">
-                                                    <div class="col-4">Drug</div>
-                                                    <div class="col-8">
-                                                        <obs conceptId="1282"
-                                                             answerConceptSetIds="160021"
-                                                             style="checkbox" class="fullwidth"/>
+                                                    <div class="col-4">
+                                                        <obs conceptId="1282" answerConceptSetIds="160021" style="radio"
+                                                             answerConceptIds="78280" class="fullwidth"/>
                                                     </div>
-                                                </div>
+                                                    <div class="col-4">
+                                                        <label>No. of Pills:</label>
+                                                    </div>
 
-                                                <div class="row">
-                                                    <div class="col-4">Units per dose</div>
-                                                    <div class="col-8">
+                                                    <div class="col-4">
                                                         <obs conceptId="160856"/>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-4">Doses per day</div>
-                                                    <div class="col-8">
-                                                        <obs conceptId="160855"/>
+                                                    <div class="col-4">
+                                                        <obs conceptId="1282" answerConceptSetIds="160021" style="radio"
+                                                             answerConceptIds="82912" answerLabels="Vitamin B6"
+                                                             class="fullwidth"/>
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <label>No. of Pills:</label>
+                                                    </div>
+
+                                                    <div class="col-4">
+                                                        <obs conceptId="160856"/>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
-                                                    <div class="col-4">Duration</div>
+                                                    <div class="col-4"></div>
                                                     <div class="col-8">
-                                                        <div class="row">
-                                                            <div class="col-6"><obs conceptId="159368"/></div>
-                                                            <div class="col-6"><obs conceptId="1732"/></div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1314,160 +1285,131 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card" style="margin-top:10px">
-                        <div class="card-header">
-                            CTX/DAPSONE (ANTI-BIOTICS)
-                        </div>
-                        <div class="card-body">
-                            <obsgroup groupingConceptId="165282">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <obs labelText="Drug" conceptId="1282"
-                                             answerConceptSetIds="1157"
-                                             style="checkbox" class="fullwidth"/>
-                                    </div>
-                                    <div class="col-2">
-                                        <obs labelText="Units per dose" conceptId="160856"/>
-                                    </div>
-                                    <div class="col-2">
-                                        <obs labelText="Doses per day" conceptId="160855"/>
-                                    </div>
-                                    <div class="col-2 duration">
-                                        <label>Duration</label>
-                                        <obs conceptId="159368"/>
-                                    </div>
-                                    <div class="col-2">
-                                        <br/>
-                                        <obs conceptId="1732"/>
-                                    </div>
-                                    <div class="col-2">
-                                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card" style="margin-top:10px">
+                                <div class="card-header">
+                                    CTX/DAPSONE (ANTI-BIOTICS)
                                 </div>
-                            </obsgroup>
-                        </div>
-                    </div>
-                    <div class="card" style="margin-top:10px">
-                        <div class="card-header">
-                            FLUCONAZOLE - (ANTI-FUNGAL)
-                        </div>
-                        <div class="card-body">
-                            <obsgroup groupingConceptId="165283">
-                                <div class="row">
-                                    <div class="col-2">
-                                        <obs labelText="Drug" conceptId="1282"
-                                             answerConceptSetIds="165278"
-                                             style="checkbox" class="fullwidth"/>
-                                    </div>
-                                    <div class="col-2">
-                                        <obs labelText="Units per dose" conceptId="160856"/>
-                                    </div>
-                                    <div class="col-2">
-                                        <obs labelText="Doses per day" conceptId="160855"/>
-                                    </div>
-                                    <div class="col-2 duration">
-                                        <label>Duration</label>
-                                        <obs conceptId="159368"/>
-                                    </div>
-                                    <div class="col-2">
-                                        <br/>
-                                        <obs conceptId="1732"/>
-                                    </div>
-                                    <div class="col-2">
-                                    </div>
-                                </div>
+                                <div class="card-body">
+                                    <obsgroup groupingConceptId="165304">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <br/>
+                                                <obs conceptId="1282" class="horizontal" answerConceptSetIds="1157"
+                                                     answerConceptIds="92,90168" style="radio"/>
+                                            </div>
+                                            <div class="col-3">
+                                                <obs labelText="Number of Pills" conceptId="160856"/>
+                                            </div>
 
-                                <div class="row" style="margin-top: 10px">
-                                    <div class="col-4">
-                                        <obs id="br" conceptId="1190" labelText="Start Date"/>
-                                    </div>
-                                    <div class="col-4">
-                                        <obs id="br" conceptId="1191" labelText="Completion Date"/>
-                                    </div>
+                                            <div class="col-3 duration">
+                                                <label>Number of Days</label>
+                                                <obs conceptId="159368"/>
+                                            </div>
+                                        </div>
+                                    </obsgroup>
                                 </div>
-                            </obsgroup>
-
-                        </div>
-                    </div>
-                    <div class="card" style="margin-top:10px">
-                        <div class="card" >
-                            <div class="card-header">
-                                <label>OTHER MEDICATIONS</label>
                             </div>
-                            <div class="card-body">
-                                <div>
-                                    <repeat>
-                                        <template>
-                                            <obsgroup groupingConceptId="160741">
-                                                <div class="row multi-drug" id="{id}-toggleContainer">
-                                                    <div class="col-2">
-                                                            <obs labelText="Drug" conceptId="1282" answerConceptSetIds="1157,1158,1159,1195,1197,5279,5839" style="autocomplete" class="fullwidth"/>
-                                                    </div>
-                                                    <div class="col-2">
-                                                            <obs labelText="Units per dose" conceptId="160856"/>
-                                                    </div>
-                                                    <div class="col-2">
-                                                            <obs labelText="Doses per day" conceptId="160855"/>
-                                                    </div>
-                                                    <div class="col-2 duration">
-                                                        <label>Duration</label>
-                                                            <obs conceptId="159368"/>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <br/>
-                                                        <obs conceptId="1732"/>
-                                                    </div>
-                                                    <div class="col-2">
-                                                        <div style="font-size: 25px;margin-top: 26px;">
-                                                        <a href="#" id="{id}-addEntry" class="addEntry add-more-link"><i class="icon-plus-sign"></i></a>  <a href="#" class="removeEntry remove-more-link" id="{id}-removeEntry"> <i class="icon-minus">  </i></a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card" style="margin-top:10px">
+                                <div class="card-header">
+                                    FLUCONAZOLE - (ANTI-FUNGAL)
+                                </div>
+                                <div class="card-body">
+                                    <obsgroup groupingConceptId="165306">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <br/>
+                                                <obs conceptId="1282" answerConceptSetIds="165308"
+                                                     answerConceptIds="747" style="radio" class="horizontal"/>
+                                            </div>
+                                            <div class="col-2">
+                                                <obs labelText="No. of Pills" conceptId="160856"/>
+                                            </div>
+                                            <div class="col-2 duration">
+                                                <obs conceptId="159368" labelText="No. of Days"/>
+                                            </div>
+
+                                            <div class="col-2">
+                                                <obs id="br" conceptId="1190" labelText="Start Date"/>
+                                            </div>
+                                            <div class="col-2">
+                                                <obs id="br" conceptId="1191" labelText="Stop Date"/>
+                                            </div>
+                                        </div>
+                                    </obsgroup>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card" style="margin-top:10px">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <label>OTHER MEDICATIONS</label>
+                                    </div>
+                                    <div class="card-body">
+                                        <div>
+                                            <repeat>
+                                                <template>
+                                                    <obsgroup groupingConceptId="160741">
+                                                        <div class="row multi-drug" id="{id}-toggleContainer">
+                                                            <div class="col-2">
+                                                                <obs labelText="Drug" conceptId="1282"
+                                                                     answerConceptSetIds="1157,1158,1159,1195,1197,5279,5839"
+                                                                     style="autocomplete" class="fullwidth"/>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <obs labelText="Units per dose" conceptId="160856"/>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <obs labelText="Doses per day" conceptId="160855"/>
+                                                            </div>
+                                                            <div class="col-2 duration">
+                                                                <label>Duration</label>
+                                                                <obs conceptId="159368"/>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <br/>
+                                                                <obs conceptId="1732"/>
+                                                            </div>
+                                                            <div class="col-2">
+                                                                <div style="font-size: 25px;margin-top: 26px;">
+                                                                    <a href="#" id="{id}-addEntry"
+                                                                       class="addEntry add-more-link"><i
+                                                                            class="icon-plus-sign"></i></a> <a href="#"
+                                                                                                               class="removeEntry remove-more-link"
+                                                                                                               id="{id}-removeEntry">
+                                                                    <i class="icon-minus"> </i></a>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </obsgroup>
-                                        </template>
-                                        <render id="1"/>
-                                        <render id="2"/>
-                                        <render id="3"/>
-                                        <render id="4"/>
-                                        <render id="5"/>
-                                        <render id="6"/>
-                                        <render id="7"/>
-                                        <render id="8"/>
-                                        <render id="9"/>
-                                        <render id="10"/>
-                                    </repeat>
+                                                    </obsgroup>
+                                                </template>
+                                                <render id="1"/>
+                                                <render id="2"/>
+                                                <render id="3"/>
+                                                <render id="4"/>
+                                                <render id="5"/>
+                                                <render id="6"/>
+                                                <render id="7"/>
+                                                <render id="8"/>
+                                                <render id="9"/>
+                                                <render id="10"/>
+                                            </repeat>
+                                        </div>
+                                    </div>
                                 </div>
-                                <!--<span class="lablex3">
-                                    <obs id="br" conceptId="1193" answerConceptId="931" answerLabels="Amitriptilline"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="265" answerLabel="Amoxicillin"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="779" answerLabel="Cetrizine"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="740" answerLabel="Ciprofloxacine"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="922" answerLabel="Cloxacillin"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="99266" answerLabel="Coartem"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="90171" answerLabel="Dapsone"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="95" answerLabel="Doxycycline"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="1108" answerLabel="EH"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="272" answerLabel="Erythromycin"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="747" answerLabel="Fluconazole"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="912" answerLabel="Ibuprofen"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="926" answerLabel="Ketoconazole"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="244" answerLabel="Mebendazole"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="237" answerLabel="Metronidazole"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="461" answerLabel="Multivitamins"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="99054"
-                                         answerLabel="Nutrition Support"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="919" answerLabel="Nystatin"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="89" answerLabel="Paracetamol"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="1194" answerLabel="RH"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="99127" answerLabel="RHE"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="768" answerLabel="RHZ"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="1131" answerLabel="RHZE"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="99128" answerLabel="RHZES"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="916" answerLabel="Septrin"/>
-                                    <obs id="br" conceptId="1193" answerConceptId="329" answerLabel="Vit B Complex"/>
-                                </span>-->
                             </div>
                         </div>
                     </div>
+
                 </div>
                 <div class="tab-pane fade" id="v-hiv-programing" role="tabpanel" aria-labelledby="v-pills-profile-tab">
                     <div class="card" style="margin-top:10px">
@@ -1500,7 +1442,8 @@
                                         <obs id="99024" conceptId="99024" labelText="Duration(Months since baseline):"/>
                                     </div>
                                     <div class="col-4">
-                                        <obs id="99025" conceptId="99025" labelText="Duration:(Months on current regimen)"/>
+                                        <obs id="99025" conceptId="99025"
+                                             labelText="Duration:(Months on current regimen)"/>
 
                                     </div>
                                     <div class="col-4">

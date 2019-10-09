@@ -3,7 +3,6 @@ package org.openmrs.module.ugandaemrpoc.fragment.controller;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.openmrs.Location;
 import org.openmrs.api.LocationService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
@@ -23,24 +22,26 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static org.openmrs.module.ugandaemrpoc.UgandaEMRPOCConfig.DAY_END_TIME;
+import static org.openmrs.module.ugandaemrpoc.UgandaEMRPOCConfig.DAY_START_TIME;
+
 public class ClinicianQueueListFragmentController {
 	
 	protected final Log log = LogFactory.getLog(getClass());
 	
 	public ClinicianQueueListFragmentController() {
+		//Constructor
 	}
 	
 	public void controller(@SpringBean FragmentModel pageModel,
-	        @SpringBean("locationService") LocationService locationService, UiSessionContext uiSessionContext) {
-		SimpleObject simpleObject = new SimpleObject();
-		
+	        @SpringBean("locationService") LocationService locationService) {
 		List<String> list = new ArrayList();
 		list.add("86863db4-6101-4ecf-9a86-5e716d6504e4");
 		list.add("11d5d2b8-0fdd-42e0-9f53-257c760bb9a3");
 		list.add("e9bc61b5-69ff-414b-9cf0-0c22d6dfca2b");
 		list.add("8f96e239-8586-4ec6-9375-04c6e19628ae");
 		list.add("8ab22b55-9a17-4121-bf08-6134a9a2439f");
-		pageModel.put("locationList", ((Location) locationService.getRootLocations(false).get(0)).getChildLocations());
+		pageModel.put("locationList", (locationService.getRootLocations(false).get(0)).getChildLocations());
 		pageModel.put("clinicianLocation", list);
 		pageModel.put("currentProvider", Context.getAuthenticatedUser());
 	}
@@ -57,8 +58,8 @@ public class ClinicianQueueListFragmentController {
 		if (!searchfilter.equals("")) {
 			try {
 				patientQueueList = patientQueueingService.searchQueue(searchfilter,
-				    QueueingUtil.dateFormtterString(new Date(), "00:00:00"),
-				    QueueingUtil.dateFormtterString(new Date(), "23:59:59"), null, uiSessionContext.getSessionLocation());
+				    QueueingUtil.dateFormtterString(new Date(), DAY_START_TIME),
+				    QueueingUtil.dateFormtterString(new Date(), DAY_END_TIME), null, uiSessionContext.getSessionLocation());
 			}
 			catch (ParseException e) {
 				log.error(e);
@@ -66,8 +67,8 @@ public class ClinicianQueueListFragmentController {
 		} else {
 			try {
 				patientQueueList = patientQueueingService
-				        .getPatientInQueueList(null, QueueingUtil.dateFormtterDate(new Date(), "00:00:00"),
-				            QueueingUtil.dateFormtterDate(new Date(), "23:59:59"), uiSessionContext.getSessionLocation(),
+				        .getPatientInQueueList(null, QueueingUtil.dateFormtterDate(new Date(), DAY_START_TIME),
+				            QueueingUtil.dateFormtterDate(new Date(), DAY_END_TIME), uiSessionContext.getSessionLocation(),
 				            null, null);
 			}
 			catch (ParseException e) {
@@ -80,7 +81,7 @@ public class ClinicianQueueListFragmentController {
 			simpleObject.put("patientClinicianQueueList", objectMapper.writeValueAsString(patientQueueMappers));
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		return simpleObject;
 	}

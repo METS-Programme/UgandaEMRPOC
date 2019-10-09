@@ -41,7 +41,7 @@
         }, 3000);
         jq(document).ready(function () {
 
-            jq(document).on('sessionLocationChanged', function() {
+            jq(document).on('sessionLocationChanged', function () {
                 window.location.reload();
             });
 
@@ -134,8 +134,8 @@
         completedQueue = 0;
         fromLabQueue = 0;
         var headerPending = "<table><thead><tr><th>VISIT ID</th><th>NAMES</th><th>GENDER</th><th>AGE</th><th>VISIT TYPE</th><th>ENTRY POINT</th><th>STATUS</th><th>WAITING TIME</th><th>ACTION</th></tr></thead><tbody>";
-        var headerCompleted = "<table><thead><tr><th>VISIT ID</th><th>NAMES</th><th>GENDER</th><th>AGE</th><th>ENTRY POINT</th><th>COMPLETED TIME</th><th>ACTION</th></tr></thead><tbody>";
-        var headerFromLab = "<table><thead><tr><th>VISIT ID</th><th>NAMES</th><th>GENDER</th><th>AGE</th><th>ENTRY POINT</th><th>COMPLETED TIME</th><th>ACTION</th></tr></thead><tbody>";
+        var headerCompleted = "<table><thead><tr><th>VISIT ID</th><th>NAMES</th><th>GENDER</th><th>AGE</th><th>ENTRY POINT</th><th>STATUS</th><th>TIME</th></tr></thead><tbody>";
+        var headerFromLab = "<table><thead><tr><th>VISIT ID</th><th>NAMES</th><th>GENDER</th><th>AGE</th><th>ENTRY POINT</th><th>STATUS</th><th>WAITING TIME</th><th>ACTION</th></tr></thead><tbody>";
         var footer = "</tbody></table>";
         jq.each(response.patientClinicianQueueList, function (index, element) {
                 var patientQueueListElement = element;
@@ -147,12 +147,13 @@
                 dataRowTable += "<tr>";
                 if (patientQueueListElement.queueNumber !== null) {
                     dataRowTable += "<td>" + patientQueueListElement.queueNumber.substring(15) + "</td>";
+                }else {
+                    dataRowTable += "<td></td>";
                 }
                 dataRowTable += "<td>" + patientQueueListElement.patientNames + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.gender + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.age + "</td>";
-                if (element.status !== "completed") {
-
+                if (element.status === "pending") {
                     if (patientQueueListElement.priorityComment != null) {
                         dataRowTable += "<td>" + patientQueueListElement.priorityComment + "</td>";
                     } else {
@@ -160,27 +161,28 @@
                     }
                 }
                 dataRowTable += "<td>" + patientQueueListElement.locationFrom.substring(0, 3) + "</td>";
-                dataRowTable += "<td>" + "" + "</td>";
+                dataRowTable += "<td>" + patientQueueListElement.status + "</td>";
                 dataRowTable += "<td>" + waitingTime + "</td>";
                 dataRowTable += "<td>";
                 if (element.status === "pending") {
                     dataRowTable += "<i style=\"font-size: 25px;\" class=\"icon-dashboard view-action\" title=\"Goto Patient's Dashboard\" onclick=\"location.href = '" + urlToPatientDashBoard + "'\"></i>";
                     dataRowTable += "<i  style=\"font-size: 25px;\" class=\"icon-external-link edit-action\" title=\"Send Patient To Another Location\" data-toggle=\"modal\" data-target=\"#add_patient_to_other_queue_dialog\" data-id=\"\" data-patient-id=\"%s\"></i>".replace("%s", element.patientId);
-                } else if (element.status === "from lab" || element.status === "completed") {
+                } else if (element.status === "from lab") {
                     dataRowTable += "<i  style=\"font-size: 25px;\" class=\"icon-edit edit-action\" title=\"Edit Patient Encounter\" onclick=\"location.href = '" + encounterUrl + "'\"></i>";
                 }
+
                 dataRowTable += "</td></tr>";
 
                 if (element.status === "pending") {
                     stillInQueue += 1;
                     stillInQueueDataRows += dataRowTable;
 
-                } else if (element.status === "completed") {
-                    completedQueue += 1;
-                    completedDataRows += dataRowTable;
                 } else if (element.status === "from lab") {
                     fromLabQueue += 1;
                     fromLabDataRows += dataRowTable;
+                } else {
+                    completedQueue += 1;
+                    completedDataRows += dataRowTable;
                 }
             }
         )
@@ -192,7 +194,7 @@
 
         }
 
-        if (completedDataRows!== "") {
+        if (completedDataRows !== "") {
             jq("#clinician-completed-list-table").html("");
             jq("#clinician-completed-list-table").append(headerCompleted + completedDataRows + footer);
         }
@@ -257,7 +259,7 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#clinician-completed" role="tab"
-                   aria-controls="clinician-completed-number-tab" aria-selected="false">Patients - Completed<span
+                   aria-controls="clinician-completed-number-tab" aria-selected="false">Patients - Attended To<span
                         style="color:red" id="clinician-completed-number">0</span></a>
             </li>
         </ul>
