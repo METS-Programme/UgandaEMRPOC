@@ -1,3 +1,4 @@
+
 function enable_fields(group){
     var disable = false;
     var group = jq("#"+group);
