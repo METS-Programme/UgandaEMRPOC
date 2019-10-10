@@ -11,6 +11,8 @@ import org.openmrs.module.patientqueueing.model.PatientQueue;
 
 import java.util.List;
 
+import static org.openmrs.module.ugandaemrpoc.UgandaEMRPOCConfig.QUEUE_STATUS_COMPLETED;
+
 /**
  * Enrolls patients into DSDM programs
  */
@@ -30,7 +32,7 @@ public class TriageFormSubmissionAction implements CustomFormSubmissionAction {
 		PatientQueue patientQueue = new PatientQueue();
 		
 		List<PatientQueue> patientQueueList = patientQueueingService.getPatientInQueueList(null, null, null, null,
-		    session.getPatient(), "completed");
+		    session.getPatient(), QUEUE_STATUS_COMPLETED);
 		if (patientQueueList.size() > 0) {
 			patientQueue = patientQueueList.get(0);
 			patientQueue.setEncounter(session.getEncounter());

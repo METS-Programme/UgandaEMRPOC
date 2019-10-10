@@ -11,6 +11,7 @@ import org.openmrs.api.PatientService;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.patientqueueing.api.PatientQueueingService;
+import org.openmrs.module.patientqueueing.mapper.PatientQueueMapper;
 import org.openmrs.module.patientqueueing.model.PatientQueue;
 import org.openmrs.module.ugandaemrpoc.api.UgandaEMRPOCService;
 import org.openmrs.ui.framework.SimpleObject;
@@ -23,6 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+
+import static org.openmrs.module.ugandaemrpoc.UgandaEMRPOCConfig.QUEUE_STATUS_COMPLETED;
+import static org.openmrs.module.ugandaemrpoc.UgandaEMRPOCConfig.QUEUE_STATUS_PENDING;
+
 
 public class ReferToNextProviderFragmentController {
 	
@@ -76,18 +81,46 @@ public class ReferToNextProviderFragmentController {
 			patientQueue.setComment(visitComment);
 		}
 		
-		PatientQueue previousQueue = ugandaEMRPOCService.completePreviousQueue(patient, currentLocation, "completed");
+		PatientQueue previousQueue = ugandaEMRPOCService.completePreviousQueue(patient, currentLocation, QUEUE_STATUS_COMPLETED,QUEUE_STATUS_PENDING);
 		
 		patientQueue.setLocationFrom(currentLocation);
 		patientQueue.setPatient(patient);
 		patientQueue.setLocationTo(location);
 		patientQueue.setProvider(provider);
 		patientQueue.setQueueNumber(previousQueue.getQueueNumber());
-		patientQueue.setStatus("pending");
+		patientQueue.setStatus(QUEUE_STATUS_PENDING);
 		patientQueue.setCreator(uiSessionContext.getCurrentUser());
 		patientQueue.setDateCreated(new Date());
 		patientQueueingService.savePatientQue(patientQueue);
-		simpleObject.put("patientTriageQueue", objectMapper.writeValueAsString(ugandaEMRPOCService.singlePatientQueueToMapper(patientQueue)));
+		simpleObject.put("patientTriageQueue", objectMapper.writeValueAsString(mapPatientQueueToMapper(patientQueue)));
 		return simpleObject;
 	}
+
+	private PatientQueueMapper mapPatientQueueToMapper(PatientQueue patientQueue) {
+		PatientQueueMapper patientQueueMapper = new PatientQueueMapper();
+		if (patientQueue != null) {
+			String names = patientQueue.getPatient().getFamilyName() + " " + patientQueue.getPatient().getGivenName() + " "
+			        + patientQueue.getPatient().getMiddleName();
+
+			patientQueueMapper.setId(patientQueue.getId());
+			patientQueueMapper.setPatientNames(names.replace("null", ""));
+			patientQueueMapper.setPatientId(patientQueue.getPatient().getPatientId());
+			patientQueueMapper.setLocationFrom(patientQueue.getLocationFrom().getName());
+			patientQueueMapper.setLocationTo(patientQueue.getLocationTo().getName());
+			if (patientQueue.getProvider() != null) {
+				patientQueueMapper.setProviderNames(patientQueue.getProvider().getName());
+			}
+
+			if (patientQueue.getCreator() != null) {
+				patientQueueMapper.setCreatorNames(patientQueue.getCreator().getPersonName().getFullName());
+			}
+			patientQueueMapper.setStatus(patientQueue.getStatus());
+			patientQueueMapper.setQueueNumber(patientQueue.getQueueNumber());
+			patientQueueMapper.setGender(patientQueue.getPatient().getGender());
+			patientQueueMapper.setAge(patientQueue.getPatient().getAge().toString());
+			patientQueueMapper.setDateCreated(patientQueue.getDateCreated().toString());
+		}
+		return patientQueueMapper;
+	}
+
 }

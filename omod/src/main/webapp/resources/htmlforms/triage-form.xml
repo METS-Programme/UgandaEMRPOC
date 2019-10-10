@@ -176,7 +176,7 @@
                         <div style="margin-top:10px">
                             <div class="row">
                                 <div class="col-5">
-                                    Hear Rate
+                                    Heart Rate
                                 </div>
                                 <div class="col-7">
                                     <obs conceptId="CIEL:5087" id="heart_rate"/>
@@ -187,7 +187,7 @@
                 </div>
                 <div class="card" style="margin-top:10px">
                     <div class="card-header">
-                        <label>B-G</label>
+                        <label>Blood Group</label>
                     </div>
                     <div class="card-body">
                         <div style="margin-top:10px">
@@ -275,6 +275,16 @@
                         <div style="margin-top:10px">
                             <div class="row">
                                 <div class="col-5">
+                                    <label>MUAC Score</label>
+                                </div>
+                                <div class="col-7">
+                                    <obs conceptId="CIEL:1343" id="muac_size"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:10px">
+                            <div class="row">
+                                <div class="col-5">
                                     <label>MUAC Code</label>
                                 </div>
                                 <div class="col-7">
@@ -294,17 +304,6 @@
                                         <obs conceptId="99030" answerConceptIds="99028,99029,99027"
                                              answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm"/>
                                     </includeIf>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div style="margin-top:10px">
-                            <div class="row">
-                                <div class="col-5">
-                                    <label>MUAC Score</label>
-                                </div>
-                                <div class="col-7">
-                                    <obs conceptId="CIEL:1343" id="muac_size"/>
                                 </div>
                             </div>
                         </div>
@@ -350,7 +349,7 @@
                 <ifMode mode="ENTER">
                     <div class="card">
                         <div class="card-header">
-                            <label>Refer To</label>
+                            <label>Refer To Next Location</label>
                         </div>
                         <div class="card-body">
                             <uiInclude provider="ugandaemrpoc" fragment="referToNextProvider"/>

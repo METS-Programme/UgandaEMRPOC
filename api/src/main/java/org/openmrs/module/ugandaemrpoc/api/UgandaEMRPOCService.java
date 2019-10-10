@@ -10,6 +10,7 @@ import java.util.List;
 
 public abstract interface UgandaEMRPOCService extends OpenmrsService {
 
+
 	/**
 	 * @param patientQueueList
 	 * @return
@@ -18,18 +19,19 @@ public abstract interface UgandaEMRPOCService extends OpenmrsService {
 
 
 	/**
-	 *
-	 * @param patientQueue
-	 * @return
-	 */
-	public PatientQueueMapper singlePatientQueueToMapper(PatientQueue patientQueue);
-
-	/**
 	 * Complete Previous Queue of Patient
 	 *
 	 * @param patient
 	 * @return
 	 */
-	public PatientQueue completePreviousQueue(Patient patient, Location location, String status);
+	public PatientQueue completePreviousQueue(Patient patient, Location location,String completionStatus, String searchStatus);
+
+
+	/**
+	 * @param patient
+	 * @param location
+	 * @return
+	 */
+	public PatientQueue getPreviousQueue(Patient patient, Location location,String status);
 
 }

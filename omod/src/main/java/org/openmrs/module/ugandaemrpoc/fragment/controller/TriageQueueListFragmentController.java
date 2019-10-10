@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static org.openmrs.module.ugandaemrpoc.UgandaEMRPOCConfig.TRIAGE_LOCATION_UUID;
+import static org.openmrs.module.ugandaemrpoc.UgandaEMRPOCConfig.*;
 
 public class TriageQueueListFragmentController {
 	
@@ -65,12 +65,12 @@ public class TriageQueueListFragmentController {
 		List<PatientQueue> patientQueueList = new ArrayList();
 		if (!searchfilter.equals("")) {
 			patientQueueList = patientQueueingService.searchQueue(searchfilter,
-			    QueueingUtil.dateFormtterString(new Date(), "00:00:00"),
-			    QueueingUtil.dateFormtterString(new Date(), "23:59:59"), null, uiSessionContext.getSessionLocation());
+			    QueueingUtil.dateFormtterString(new Date(), DAY_START_TIME),
+			    QueueingUtil.dateFormtterString(new Date(), DAY_END_TIME), null, uiSessionContext.getSessionLocation());
 		} else {
 			patientQueueList = patientQueueingService.getPatientInQueueList(
-			    QueueingUtil.dateFormtterDate(new Date(), "00:00:00"),
-			    QueueingUtil.dateFormtterDate(new Date(), "23:59:59"), uiSessionContext.getSessionLocation());
+			    QueueingUtil.dateFormtterDate(new Date(), DAY_START_TIME),
+			    QueueingUtil.dateFormtterDate(new Date(), DAY_END_TIME), uiSessionContext.getSessionLocation());
 		}
 		simpleObject.put("patientTriageQueueList",
 		    objectMapper.writeValueAsString(ugandaEMRPOCService.mapPatientQueueToMapper(patientQueueList)));

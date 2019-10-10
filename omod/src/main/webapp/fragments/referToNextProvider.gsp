@@ -99,13 +99,13 @@
     </div>
 
     <div class="row" id="patient_status_container">
-        <div class="col-4">Patient Status:</div>
+        <div class="col-4">Urgency of Care:</div>
 
         <div class="col-8">
             <div class="form-group">
                 <select class="form-control" id="patient_status" name="patient_status">
-                    <option value="">Select Patient Status</option>
-                    <option value="normal">Normal</option>
+                    <option value="">Select Urgency</option>
+                    <option value="non-emergency">Non-Emergency</option>
                     <option value="emergency">Emergency</option>
                 </select>
                 <span class="field-error" style="display: none;"></span>
