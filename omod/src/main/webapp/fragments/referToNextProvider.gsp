@@ -4,27 +4,23 @@
 
 <script>
     jq(document).ready(function () {
-        jq("#provider_id_container").addClass('hidden');
-        jq("#patient_status_container").addClass('hidden');
-        jq("#visit_comment_container").addClass('hidden');
+        jq("#patient_status_container").hide();
+        jq("#visit_comment_container").hide();
         jq("#location_id").change(function () {
             if (jq("#location_id").val() !== "ff01eaab-561e-40c6-bf24-539206b521ce") {
-                jq("#provider_id_container").removeClass('hidden');
-                jq("#patient_status_container").removeClass('hidden');
-                jq("#visit_comment_container").removeClass('hidden');
+                jq("#patient_status_container").show();
+                jq("#visit_comment_container").show();
             } else {
-                jq("#provider_id_container").addClass('hidden');
-                jq("#patient_status_container").addClass('hidden');
-                jq("#visit_comment_container").addClass('hidden');
+                jq("#patient_status_container").hide();
+                jq("#visit_comment_container").hide();
             }
         });
 
         beforeSubmit.push(function () {
             var locationTo = jq("#location_id").val();
-            var providerTo = jq("#provider_id").val();
             var patientStatus = jq("#patient_status").val();
             var visitComment = jq("#visit_comment").val();
-            sendPatientToNextLocation(locationTo, providerTo, patientStatus, visitComment, patientId);
+            sendPatientToNextLocation(locationTo, null, patientStatus, visitComment, patientId);
             return true;
         });
     });
@@ -104,8 +100,8 @@
         <div class="col-8">
             <div class="form-group">
                 <select class="form-control" id="patient_status" name="patient_status">
-                    <option value="">Select Urgency</option>
-                    <option value="non-emergency">Non-Emergency</option>
+                    <option value="">Select Urgency of Care</option>
+                    <option value="Normal">Normal</option>
                     <option value="emergency">Emergency</option>
                 </select>
                 <span class="field-error" style="display: none;"></span>
