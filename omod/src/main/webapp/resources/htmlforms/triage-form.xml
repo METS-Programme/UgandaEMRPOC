@@ -39,6 +39,33 @@
                 float: left;
                 margin: 1px 0px;
             }
+
+            form select[disabled], .form select[disabled] {
+                background: #EEE;
+                border: #1dacbd 1px solid;
+                color: #060606;
+                font-style: normal;
+            }
+
+            form select, .form select {
+                min-width: 100%;
+                max-width: 100%;
+            }
+
+            form input {
+                min-width: 100%;
+                max-width: 100%;
+            }
+
+            .add-more-link {
+                color: dodgerblue;
+            }
+
+            .remove-more-link {
+                color: darkred;
+            }
+
+
         </style>
 
         <ifMode mode="ENTER">
@@ -76,6 +103,55 @@
 
                 jq(function () {
                     jq('#bp_diastolic input[type=text]').attr('min', '30');
+                });
+
+                jq(document).ready(function () {
+
+                    jq("#99030").find("select").attr("style", "pointer-events: none;");
+
+                    jq("#1343").find("input[type$='text']").keyup(function () {
+                        jq("#99030").find("select").val("").attr('selected', 'selected');
+
+                        var age = '<lookup complexExpression="$patient.age"/>';
+                        var muacScore = jq(this).val();
+
+                        //Age less that 5
+                        if (muacScore &lt; 11.5 &amp;&amp; (age &lt; 5)) {
+                            jq("#99030").find("select").val(99028).attr('selected', 'selected');
+                        } else if ((muacScore &gt;= 11.5 &amp;&amp; muacScore &lt; 12.5) &amp;&amp; (age &lt; 5)) {
+                            jq("#99030").find("select").val(99029).attr('selected', 'selected');
+                        } else if (muacScore &gt;= 12.5 &amp;&amp; (age &lt; 5)) {
+                            jq("#99030").find("select").val(99027).attr('selected', 'selected');
+                        }
+
+                        //Age between 5 amd 10
+                        else if (muacScore &lt; 13.5 &amp;&amp; (age &gt;= 5 &amp;&amp; age &lt; 10)) {
+                            jq("#99030").find("select").val(99028).attr('selected', 'selected');
+                        } else if ((muacScore &gt;= 13.5 &amp;&amp; muacScore &lt; 14.5) &amp;&amp; (age &gt;= 5 &amp;&amp; age &lt; 10)) {
+                            jq("#99030").find("select").val(99029).attr('selected', 'selected');
+                        } else if (muacScore &gt;= 14.5 &amp;&amp; (age &gt;= 5 &amp;&amp; age &lt; 10)) {
+                            jq("#99030").find("select").val(99027).attr('selected', 'selected');
+                        }
+
+                        //Age between 10 amd 18
+                        else if (muacScore &lt; 16.5 &amp;&amp; (age &gt;= 10 &amp;&amp; age &lt; 18)) {
+                            jq("#99030").find("select").val(99028).attr('selected', 'selected');
+                        } else if ((muacScore &gt;= 16.5 &amp;&amp; muacScore &lt; 19) &amp;&amp; (age &gt;= 10 &amp;&amp; age &lt; 18)) {
+                            jq("#99030").find("select").val(99029).attr('selected', 'selected');
+                        } else if (muacScore &gt;= 19 &amp;&amp; (age &gt;= 10 &amp;&amp; age &lt; 18)) {
+                            jq("#99030").find("select").val(99027).attr('selected', 'selected');
+                        }
+
+                        //Age greater 19
+                        else if (muacScore &lt; 19 &amp;&amp; age &gt;= 18) {
+                            jq("#99030").find("select").val(99028).attr('selected', 'selected');
+                        } else if ((muacScore &gt;= 19 &amp;&amp; muacScore &lt; 22) &amp;&amp; age &gt;= 18) {
+                            jq("#99030").find("select").val(99029).attr('selected', 'selected');
+                        } else if (muacScore &gt;= 22 &amp;&amp; age &gt;= 18) {
+                            jq("#99030").find("select").val(99027).attr('selected', 'selected');
+                        }
+
+                    });
                 });
 
             </script>
@@ -127,6 +203,7 @@
             <encounterLocation default="ba158c33-dc43-4306-9a4a-b4075751d36c"
                                order="ba158c33-dc43-4306-9a4a-b4075751d36c"/>
         </span>
+
         <div class="row">
             <div class="col-4">
                 <div class="card">
@@ -278,7 +355,7 @@
                                     <label>MUAC Score</label>
                                 </div>
                                 <div class="col-7">
-                                    <obs conceptId="CIEL:1343" id="muac_size"/>
+                                    <obs id="1343" conceptId="CIEL:1343"/>
                                 </div>
                             </div>
                         </div>
@@ -289,19 +366,19 @@
                                 </div>
                                 <div class="col-7">
                                     <includeIf velocityTest="$patient.age &lt; 5">
-                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027"
+                                        <obs id="99030" conceptId="99030" answerConceptIds="99028,99029,99027"
                                              answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;=12.5cm"/>
                                     </includeIf>
                                     <includeIf velocityTest="$patient.age &lt; 10 &amp;&amp; $patient.age &gt;=5">
-                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027"
+                                        <obs id="99030" conceptId="99030" answerConceptIds="99028,99029,99027"
                                              answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm"/>
                                     </includeIf>
                                     <includeIf velocityTest="$patient.age &lt; 18 &amp;&amp; $patient.age &gt;=10">
-                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027"
+                                        <obs id="99030" conceptId="99030" answerConceptIds="99028,99029,99027"
                                              answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm"/>
                                     </includeIf>
                                     <includeIf velocityTest="$patient.age &gt;=18">
-                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027"
+                                        <obs id="99030" conceptId="99030" answerConceptIds="99028,99029,99027"
                                              answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm"/>
                                     </includeIf>
                                 </div>
