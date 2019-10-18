@@ -1,0 +1,474 @@
+<htmlform formName="HMIS-072-Maternity"
+          formDescription="HIV Testing Services Client Card"
+          formEncounterType="264daIZd-f80e-48fe-nba9-P37f2W1905Pv"
+          formUuid="0b946c41-957c-4aeb-9b1a-da3983c0d163"
+          formVersion="1.2"
+          formAddMetadata="yes"
+          formUILocation="patientDashboard.visitActions"
+          formOrder="6"
+          formIcon="icon-medkit"
+          formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; patient.person.gender=='F'"
+          formDisplayStyle="Standard"
+          formLabel="HMIS Maternity Form">
+    <script type="text/javascript">
+
+        var facility_entry_point ;
+        var facility_entry_point_enabled =false;
+        var community_entry_testing_point ;
+        var community_entry_testing_point_enabled = false;
+
+        if (jQuery) {
+            jq(document).ready(function () {
+
+                //Block Multiple encounter entry on same date
+                blockEncounterOnSameDateEncounter(jq("#encounterDate").find("input[type=hidden]"),"block");
+
+            <ifMode mode="EDIT">
+                if( jq("#165160").find("input").val()==''){
+                disable_fields(165160);
+                }
+                if( jq("#162925").find("input").val()==''){
+                    disable_fields(162925);
+                }
+                if( jq("#90211").find("input").val()==''){
+                    disable_fields(90211);
+                }
+                if( jq("#99115").find("input").val()==''){
+                    disable_fields(99115);
+                }
+                if( jq("#165159").find("input").val()==''){
+                    disable_fields(165159);
+                }
+                if( jq("#165167").find("input").val()==''){
+                    disable_fields(165167);
+                }
+                if( jq("#141520").find("input").val()==''){
+                    disable_fields(141520);
+                }
+                if(jq("#165182").find("input[type$='radio']").val()==''){
+                    jq("#165182").find("input[type$='radio']").attr("disabled",true);
+                }
+
+              if( jq("#99369").find("input[type$='text']").val()==''){
+                jq("#99369").find("input[type$='text']").attr("disabled",true);
+              }
+              if(jq("#99477").find("input[type$='radio']").val()==''){
+                  jq("#99477").find("input[type$='radio']").attr("disabled",true);
+              }
+              if(jq("#99481").find("input[type$='radio']").val()==''){
+                  jq("#99481").find("input[type$='radio']").attr("disabled",true);
+              }
+              if(jq("#165178").find("input[type$='radio']").val()==''){
+                  jq("#165178").find("input[type$='radio']").attr("disabled",true);
+              }
+              if(jq("#165175").find("input[type$='text']").val()==''){
+                  jq("#165175").find("input[type$='text']").attr("disabled",true);
+              }
+              if(jq("#other-special-category").find("input[type$='text']").val()==''){
+                  jq("#other-special-category").find("input[type$='text']").attr("disabled",true);
+              }
+              if(jq("#165170").find("input[type$='text']").val()==''){
+                    jq("#165170").find("input[type$='text']").attr("disabled",true);
+               }
+              if(jq("#165181").find("input[type$='radio']").val()==''){
+                    jq("#165181").find("input[type$='radio']").attr("disabled",true);
+              }
+              if(jq("#162965").find("input[type$='text']").val()==''){
+                    jq("#162965").find("input[type$='text']").attr("disabled",true);
+              }
+              if(jq("#165184").find("input[type$='text']").val()==''){
+                    jq("#165184").find("input[type$='text']").attr("disabled",true);
+              }
+            </ifMode>
+            <ifMode mode="ENTER">
+                disable_fields(165160);
+                disable_fields(162925);
+                disable_fields(90211);
+                jq("#99369").find("input[type$='text']").attr("disabled",true);
+                disable_fields(99115);
+                disable_fields(165159);
+                disable_fields(165167);
+                disable_fields(141520);
+                disable_fields(165184);
+                jq("#99477").find("input[type$='radio']").attr("disabled",true);
+                jq("#99481").find("input[type$='radio']").attr("disabled",true);
+                jq("#165178").find("input[type$='radio']").attr("disabled",true);
+                jq("#165175").find("input[type$='text']").attr("disabled",true);
+                jq("#other-special-category").find("input[type$='text']").attr("disabled",true);
+                jq("#165170").find("input[type$='text']").attr("disabled",true);
+                jq("#162965").find("input[type$='text']").attr("disabled",true);
+                jq("#165181").find("input[type$='radio']").attr("disabled",true);
+                jq("#165182").find("input[type$='radio']").attr("disabled",true);
+
+            </ifMode>
+
+                <!--         Enable HTC Delivery Model-->
+                jq("#165171").change(function () {
+                    var hts_Delivery_Model  = getValue('165171.value');
+
+                    if(hts_Delivery_Model == 99416 ){
+                        disable_fields(165160);
+                        enable_fields(162925);
+                        disable_fields(165159);
+                        facility_entry_point_enabled= true;
+                        community_entry_testing_point_enabled= false;
+                    }
+                    else if(hts_Delivery_Model == 165160){
+                        disable_fields(162925);
+                        enable_fields(165160);
+                        disable_fields(99115);
+                        community_entry_testing_point_enabled= true;
+                        facility_entry_point_enabled= false;
+                    }
+                    else{
+                        disable_fields(165160);
+                        disable_fields(162925);
+                    }
+                });
+
+
+
+                <!--         Enable HIV Test date-->
+                jq('#165180').change(function () {
+                    enable_disable('165180', '165170', '90004');
+                    enable_disable('165180', '165181', '90004');
+                    enable_disable('165180', '162965', '90004');
+                });
+
+                <!--Enable HIV spouse test field-->
+                jq('#99472').change(function () {
+                    enable_disable('99472', '99477', '1065');
+                });
+
+
+                jq('#162982').change(function () {
+                    enable_disable('162982', '90211', '1065');
+                });
+
+                jq('#165169').change(function () {
+                    enable_disable('165169', '165184', '90002');
+                });
+
+
+                <!--Enable pre test counselling-->
+                jq('#162918').change(function () {
+                    enable_disable('162918', '99368', '90003');
+                });
+
+                <!--Enable Results received as a couple:-->
+                jq('#99494').change(function () {
+                    enable_disable('99494', '99497', '1065');
+                });
+
+                // other specify handling
+                jq('#969').change(function () {
+                    enable_disable('969', '99369', '5620');
+                });
+
+                jq('#162925').change(function () {
+                    enable_disable('162925', '99115', '90002');
+                });
+
+                jq('#165160').change(function () {
+                    enable_disable('165160', '165159', '90002');
+                });
+
+                jq('#165168').change(function () {
+                    enable_disable('165168', '165167', '90002');
+                });
+
+
+                <includeIf velocityTest="$fn.globalProperty('ugandaemr.hts.recency') == true">
+                <excludeIf velocityTest="$patient.age &lt; 15">
+                jq('#99493').change(function () {
+                    enable_disable('99493', '99481', '90166');
+                });
+
+                </excludeIf>
+                </includeIf>
+
+                jq('#99498').change(function () {
+                    enable_disable('99498', '165178', '1065');
+                });
+
+                jq('#form-id').change(function () {
+                    if(getValue('99493' + '.value')== 90166 ){
+                        enable_disable('99493', '165182', '90166');
+
+                        if( getValue('99481' + '.value')== 1065){
+                            enable_fields(141520);
+                        }
+                        else if( getValue('99481' + '.value')== 1066){
+                            disable_fields(141520);
+                        }else{
+                            disable_fields(141520);
+                        }
+                    }else{
+                        disable_fields(141520);
+                    }
+                });
+
+
+                jq('#other-prevention-services').change(function(){
+                    if(!jq('#other-prevention-services').find(':checkbox').prop('checked')){
+                        jq("#165175").find("input[type$='text']").attr("disabled",true);
+                        jq("#165175").find("input[type$='text']").val("");
+                    }else{
+                        jq("#165175").find("input[type$='text']").attr("disabled",false); }
+                });
+
+
+
+                jq('#other-special-category').change(function(){
+                    if(!jq('#other-special-category').find(':checkbox').prop('checked')){
+                        jq("#other-special-category").find("input[type$='text']").attr("disabled",true);
+                        jq("#other-special-category").find("input[type$='text']").val("");
+                    }else{
+                        jq("#other-special-category").find("input[type$='text']").attr("disabled",false); }
+                });
+
+                /* add JQuery validator classes and rules*/
+                jq("#nationalid input:text").addClass("nationalid");
+
+                /* add the validator on the beforeSubmit*/
+                beforeSubmit.push(function () {
+                        jq("#htmlform").validate();
+                        return jq("#htmlform").valid();
+                    }
+                );
+
+            });
+
+            function disable_fields(groupId){
+                var disable = true;
+                var group = jq("#"+groupId);
+                group.find("input").attr("disabled", disable);
+                group.find('select').attr("disabled", disable);
+
+                if (disable) {
+                    /* fade out the fields that are disabled */
+                    group.find("input").fadeTo(250, 0.25);
+                    group.find("select").fadeTo(250, 0.25);
+                } else {
+                    /* remove the fade on the fields */
+                    group.find("input").fadeTo(250, 1);
+                    group.find("select").fadeTo(250, 1);
+                }
+            }
+
+            function enable_fields(group){
+                var disable = false;
+                var group = jq("#"+group);
+                group.find("input").attr("disabled", disable);
+                group.find('select').attr("disabled", disable);
+
+                if (!disable) {
+                    /* remove the fade on the fields */
+                    group.find("input").fadeTo(250, 1);
+                    group.find("select").fadeTo(250, 1);
+                }
+            }
+
+
+            function enable_disable(triggerId, enabledDisabledId, conditionValue) {
+                if (getValue(triggerId + '.value') == conditionValue){
+
+                    enableContainer('#' + enabledDisabledId);
+                }
+                else {
+                    if(getValue(enabledDisabledId+'.value')!=''){
+                        setValue(enabledDisabledId+'.value', '');
+                    }
+                    disableContainer('#' + enabledDisabledId);
+                }
+
+            }
+
+            beforeSubmit.push(function () {
+                setValue('162925.error', '');
+                setValue('165160.error', '');
+                setValue('99115.error', '');
+                setValue('165159.error', '');
+                setValue('165167.error', '');
+
+                var submitVal = true;
+                var submitValStage = [];
+               if( jq("#162925").find("select").find(":selected").val()== '' &amp;&amp; facility_entry_point_enabled ){
+                   getField('162925.error').html('Select one of the options ').show();
+                   return false;
+               }
+               if( jq("#165160").find("select").find(":selected").val()== '' &amp;&amp; community_entry_testing_point_enabled ){
+                  getField('165160.error').html('Select one of the options ').show();
+                  return false;
+               }
+               if(! jq("#162925").find("select").is(':disabled') &amp;&amp; jq("#162925").find("select").find(":selected").val()== 90002 &amp;&amp; jq("#99115").find("input[type$='text']").val()=='') {
+                   getField('99115.error').html('Required text field is empty').show();
+                   return false;
+               }
+               if(! jq("#165160").find("select").is(':disabled') &amp;&amp; jq("#165160").find("select").find(":selected").val()== 90002 &amp;&amp; jq("#165159").find("input[type$='text']").val()=='') {
+                    getField('165159.error').html('Required text field is empty').show();
+                    return false;
+               }
+               if(! jq("#165168").find("select").is(':disabled') &amp;&amp; jq("#165168").find("select").find(":selected").val()== 90002 &amp;&amp; jq("#165167").find("input[type$='text']").val()=='') {
+                    getField('165167.error').html('Required text field is empty').show();
+                    return false;
+               }
+
+                return true;
+            });
+        }
+
+    </script>
+
+<div class="ai-page-frame" id="form-id">
+        <div class="headers" style="text-align: center;">
+            <h3 style="background: #FFFF7D; padding: 10px;">072 Maternity Form</h3>
+        </div>
+         <div>
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="care-entry-section-tab" data-toggle="tab" href="#care-entry-section" role="tab" aria-controls="nav-home" aria-selected="true">Admission Information</a>
+                                <a class="nav-item nav-link" id="art-care-cohort-tab" data-toggle="tab" href="#art-care-cohort-section" role="tab" aria-controls="nav-profile" aria-selected="false">Delivery information</a>
+                                <a class="nav-item nav-link" id="prior-art-tab" data-toggle="tab" href="#prior-art-section" role="tab" aria-controls="nav-contact" aria-selected="false">Child Information</a>
+                                <a class="nav-item nav-link" id="drug-allergies-and-art-care-tab1" data-toggle="tab" href="#drug-allergies-and-art-care" role="tab" aria-controls="nav-contact" aria-selected="false">Discharge Information</a>
+                            </div>
+                        </nav>
+                    </div>
+    
+    </div>
+
+     <section> 
+            <h3>Admission Information</h3>
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <label>Date:</label>
+                        <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
+                        <span style="display: none;">
+                                <encounterLocation default="629d78e9-93e5-43b0-ad8a-48313fd99117"
+                                                   order="629d78e9-93e5-43b0-ad8a-48313fd99117"/>
+                            </span>
+                    </td>
+                    <td>
+                        <label>Gravida:</label>
+                        <obs conceptId="5624" required="false"/>
+                    </td>
+
+                     <td>
+                        <label>Parity:</label>
+                        <obs conceptId="1053" required="false"/>
+                    </td>
+                    <td>
+                        <label>Weeks of gestation:</label>
+                        <obs conceptId="162983" required="false"/>
+                    </td>
+
+
+                </tr>
+                <tr>
+
+                    <td>
+                        <label>IPA:</label>
+                        <obs conceptId="1646" required="false"/>
+                    </td>
+
+                     <td>
+                        <label>ANC:</label>
+                        <obs conceptId="99727" required="false"/>
+                    </td>
+                     <td>
+                        <label>Ref no.:</label>
+                        <obs conceptId="99767" required="true"/>
+                    </td>
+
+
+                </tr>
+
+
+                </tbody>
+            </table>
+        </section>
+
+        <div class="row">
+                                          <div class="col-md-12">
+                                              <b>Final Diagnosis:</b>
+                                          </div>
+                                      </div>
+                                      <div class="row ARTSpecialCateogryEnableDisable1">
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="162277" answerLabel="1 - Abortions" style="checkbox"/>
+                                          </div>
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="160666" answerLabel="2 - APH" style="checkbox"  />
+                                          </div>
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="165125" answerLabel="3 -  PPH" style="checkbox"  />
+                                          </div>
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="165126" answerLabel="4 -  Malaria in Pregnancy" style="checkbox" />
+                                          </div>
+                                      </div>
+                                      <div class="row ARTSpecialCateogryEnableDisable1">
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="162198" answerLabel="5 - Highblood Pressure in Pregnancy" style="checkbox" />
+                                          </div>
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="159674" answerLabel="6 -  Obstructed Labour" style="checkbox"  />
+                                          </div>
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="165127" answerLabel="7 - Puerperal Sepsis" style="checkbox"  />
+                                          </div>
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="90041" answerLabel="8 - Sepsis related to pregnancy" style="checkbox"  />
+                                          </div>
+                                      </div>
+                                      <div class="row ARTSpecialCateogryEnableDisable1">
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="99601" answerLabel="9 - Anaemia in pregnancy" style="checkbox"   />
+                                          </div>
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="165132" answerLabel="10 - Reptured uterus" style="checkbox" />
+                                          </div>
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="162558" answerLabel="11 -   Ectopic Pregnancy" style="checkbox"  />
+                                          </div>
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" id="165169" answerConceptId="90002" answerLabel="12 - Others (specify)" style="checkbox" />
+
+                                              <obs id="165184" conceptId="165184" class="ARTSpecialCateogryEnableDisableChild1" />
+
+                                          </div>
+                                      </div>
+
+            <table>
+    <tr>
+        <td>
+                        <label>WHO Clinical Stage:</label>
+                        <obs conceptId="5624" required="false"/>
+                    </td>
+
+                     <td>
+                        <label>CD4 Count:</label>
+                        <obs conceptId="1646" required="false"/>
+                    </td>
+                    <td>
+                        <label>CD4 Count Date:</label>
+                        <i class="icon-calendar small right-addon-row"></i>
+                        <obs id = "90267" conceptId="90267"/>
+                    </td>
+        </tr>
+        <tr>
+        <td>
+                        <label>Viral Load Results:</label>
+                        <obs conceptId="5624" required="false"/>
+                    </td>
+
+                     <td>
+                        <label>Viral Load Results Date:</label>
+                        <obs conceptId="1646" required="false"/>
+                    </td>
+        </tr>
+                            </table>
+
+</htmlform>
