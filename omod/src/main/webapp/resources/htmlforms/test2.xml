@@ -66,43 +66,43 @@
                          <div class="row">
                               <!-- <p>Family Planning Method Given</p> -->
                               <div class="col-md-4">
-                                   <obs id="no-fp-method" conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                        answerConceptId="aaf150a5-92d2-416f-8254-95d34ed9c4ab"
-                                        answerLabel="No Family Planning Method Given"
-                                        style="checkbox"  class="horizontal-layout-options"/>
+                                   <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                      answerConceptId="670b7048-d71e-483a-b2ec-f10d2326dd84"
+                                      answerLabel="Oral:Others"
+                                      style="checkbox" />
                               </div>
                               <div class="col-md-4">
                                    <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                        answerConceptId="38aa1dc0-1aaa-4bdd-b26f-28f960dfb16c"
-                                        answerLabel="Oral:Lo-Femenal"
-                                        style="checkbox" />
+                                      answerConceptId="dc882c84-30ab-102d-86b0-7a5022ba4115"
+                                      answerLabel="Female Condoms"
+                                      style="checkbox" />
                               </div>
                               <div class="col-md-4">
                                    <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                           answerConceptId="4b0899f2-395e-4e0f-8b58-d304b214615e"
-                                           answerLabel="Oral: Microgynon"
-                                           style="checkbox" />
+                                      answerConceptId="aeee4ccf-cbf8-473c-9d9f-846643afbf11"
+                                      answerLabel="Male Condoms"
+                                      style="checkbox" />
                               </div>
                          </div>
                          <div class="row">
                               <!-- <p>Family Planning Method Given</p> -->
                               <div class="col-md-4">
-                                   <obs id="no-fp-method" conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                        answerConceptId="aaf150a5-92d2-416f-8254-95d34ed9c4ab"
-                                        answerLabel="No Family Planning Method Given"
-                                        style="checkbox"  class="horizontal-layout-options"/>
+                                   <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                      answerConceptId="dcb30ba3-30ab-102d-86b0-7a5022ba4115"
+                                      answerLabel="Injectable"
+                                      style="checkbox" />
+                              </div>
+                              <div class="col-md-4">
+                                   <obs id="natural-fp" conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                    answerConceptId="dcb30381-30ab-102d-86b0-7a5022ba4115"
+                                      answerLabel="Natural"
+                                      style="checkbox" class="horizontal-layout-options"/>
                               </div>
                               <div class="col-md-4">
                                    <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                        answerConceptId="38aa1dc0-1aaa-4bdd-b26f-28f960dfb16c"
-                                        answerLabel="Oral:Lo-Femenal"
-                                        style="checkbox" />
-                              </div>
-                              <div class="col-md-4">
-                                   <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                           answerConceptId="4b0899f2-395e-4e0f-8b58-d304b214615e"
-                                           answerLabel="Oral: Microgynon"
-                                           style="checkbox" />
+                                      answerConceptId="dcb2fba9-30ab-102d-86b0-7a5022ba4115"
+                                      answerLabel="Female Sterilization"
+                                      style="checkbox" />
                               </div>
                          </div>
                     </div>
