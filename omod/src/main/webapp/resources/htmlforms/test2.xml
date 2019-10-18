@@ -1,0 +1,136 @@
+<htmlform formName="HMIS MCH 008: Integrated Postnatal Register"
+          formDescription="Registration form for Postnatal Care Visits"
+          formEncounterType="8d5b27bc-c2cc-11de-8d13-0010c6dffd0f"
+          formUuid="52653a60-8300-4c13-be4d-4b746da06fee"
+          formVersion="3.0"
+          formAddMetadata="yes"
+          formUILocation="patientDashboard.visitActions"
+          formOrder="1"
+          formIcon="icon-medkit"
+          formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; sessionLocation.uuid=='86863db4-6101-4ecf-9a86-5e716d6504e4'"
+          formDisplayStyle="Standard"
+          formLabel="Integrated Postnatal Register">
+
+          <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
+          <encounterProvider required="true"/>
+
+
+          <div class="card text-center">
+              <div class="card-header">
+                    <ul class="nav nav-tabs card-header-tabs">
+
+                         <li class="nav-item">
+                            <a class="nav-link active" href="#">Mother</a>
+                         </li>
+
+                         <li class="nav-item">
+                            <a class="nav-link" href="#">Infant</a>
+                         </li>
+                         
+                    </ul>
+               </div>
+               <div class="card-body">
+                   <div class="row card-spacing">
+                         <div class="col-md-4">
+                         <label>Timing For PNC Visit</label>
+                         <obs conceptId="1732" answerconceptIds=""
+                                   answerLabels="6 Hours, 6 Days, 6 Weeks, 6 Months"
+                                   style="dropdown"/> 
+                         </div>       
+                    </div>
+                    <div class="row card-spacing">
+                         <div class="col-md-12">
+                              <p>Family Planning Method Given</p>
+                         </div>
+                         <div class="row">
+                              <!--  -->
+                              <div class="col-md-4">
+                                   <obs id="no-fp-method" conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                        answerConceptId="aaf150a5-92d2-416f-8254-95d34ed9c4ab"
+                                        answerLabel="No Family Planning Method Given"
+                                        style="checkbox"  class="horizontal-layout-options"/>
+                              </div>
+                              <div class="col-md-4">
+                                   <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                        answerConceptId="38aa1dc0-1aaa-4bdd-b26f-28f960dfb16c"
+                                        answerLabel="Oral:Lo-Femenal"
+                                        style="checkbox" />
+                              </div>
+                              <div class="col-md-4">
+                                   <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                           answerConceptId="4b0899f2-395e-4e0f-8b58-d304b214615e"
+                                           answerLabel="Oral: Microgynon"
+                                           style="checkbox" />
+                              </div>
+                         </div>
+                         <div class="row">
+                              <!-- <p>Family Planning Method Given</p> -->
+                              <div class="col-md-4">
+                                   <obs id="no-fp-method" conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                        answerConceptId="aaf150a5-92d2-416f-8254-95d34ed9c4ab"
+                                        answerLabel="No Family Planning Method Given"
+                                        style="checkbox"  class="horizontal-layout-options"/>
+                              </div>
+                              <div class="col-md-4">
+                                   <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                        answerConceptId="38aa1dc0-1aaa-4bdd-b26f-28f960dfb16c"
+                                        answerLabel="Oral:Lo-Femenal"
+                                        style="checkbox" />
+                              </div>
+                              <div class="col-md-4">
+                                   <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                           answerConceptId="4b0899f2-395e-4e0f-8b58-d304b214615e"
+                                           answerLabel="Oral: Microgynon"
+                                           style="checkbox" />
+                              </div>
+                         </div>
+                         <div class="row">
+                              <!-- <p>Family Planning Method Given</p> -->
+                              <div class="col-md-4">
+                                   <obs id="no-fp-method" conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                        answerConceptId="aaf150a5-92d2-416f-8254-95d34ed9c4ab"
+                                        answerLabel="No Family Planning Method Given"
+                                        style="checkbox"  class="horizontal-layout-options"/>
+                              </div>
+                              <div class="col-md-4">
+                                   <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                        answerConceptId="38aa1dc0-1aaa-4bdd-b26f-28f960dfb16c"
+                                        answerLabel="Oral:Lo-Femenal"
+                                        style="checkbox" />
+                              </div>
+                              <div class="col-md-4">
+                                   <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                           answerConceptId="4b0899f2-395e-4e0f-8b58-d304b214615e"
+                                           answerLabel="Oral: Microgynon"
+                                           style="checkbox" />
+                              </div>
+                         </div>
+                    </div>
+                    
+
+
+                   <div class="row">
+                         <div class="col-md-6">
+                              <label>Status Of Breast</label>
+                              <obs conceptId="1732" answerconceptIds=""
+                                   answerLabels="6 Hours, 6 Days, 6 Weeks, 6 Months"
+                                   style="dropdown"/> 
+                         </div>
+                         <div class="col-md-6">
+                              <label>Status Of Cervix</label>
+                              <obs conceptId="1732" answerconceptIds=""
+                                   answerLabels="6 Hours, 6 Days, 6 Weeks, 6 Months"
+                                   style="dropdown"/> 
+                         </div>
+                         
+                   </div>
+
+                   <div class="row">
+                         <div class="col-md-4" align="left">
+                              <h1>eMTCT</h1>
+                         </div>
+                   </div>
+               </div>
+          </div>
+
+</htmlform>
