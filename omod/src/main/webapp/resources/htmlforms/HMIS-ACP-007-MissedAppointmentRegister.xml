@@ -30,14 +30,14 @@
                 <label><strong> Service Point:</strong> </label>
                 <obs conceptId="164993" answerConceptId="165047" answerLabel="ART Clinic" style="checkbox" class="horizontal-layout-options"/> <br/>
                 <obs conceptId="164993" answerConceptId="165048" answerLabel="TB Clinic" style="checkbox" class="horizontal-layout-options"/> <br/>
-                <obs conceptId="164993" answerConceptId="90002" style="checkbox" class="horizontal-layout-options"/> <br/>
+                <obs conceptId="164993" answerConceptId="90002" style="checkbox" answerLabel="Other Specify:" commentFieldLabel="" class="vertical-layout-options"/> <br/>
             </div>
 
              <div class="col-md-4">
                 <label> <strong> Medications due for Refill: </strong></label>
                 <obs conceptId="160288" answerConceptId="164972" answerLabel="ART Refill" style="checkbox" class="horizontal-layout-options"/> <br/>
                 <obs conceptId="160288" answerConceptId="164971" answerLabel="TB Meds/TPT" style="checkbox" class="horizontal-layout-options"/> <br/>
-                <obs conceptId="160288" answerConceptId="90002" style="checkbox" class="horizontal-layout-options"/> <br/>
+                <obs conceptId="160288" answerConceptId="90002" style="checkbox" answerLabel="Other Specify:" commentFieldLabel="" class="vertical-layout-options"/> <br/>
             </div>
 
          <div class="row">
@@ -79,26 +79,29 @@
          <div class = "row">
             <div class = "col-md-4">
                 <label><strong>Follow Up Action </strong></label>
-            </div>
-            <div class = "col-md-4">
-                <label><strong>Other Action Specify </strong></label>
+                <obs id="phone-call" conceptId="165100" answerConceptId="165102" answerLabel="Phone Call to Client" style="dropdown" class="horizontal-layout-options"/><br/>
+                <obs id="home-visit" conceptId="165100" answerConceptId="165103" answerLabel="Home/Workplace Visit" style="dropdown" class="horizontal-layout-options"/><br/><br/>
+                <obs id="followup-type-other" conceptId="165100" answerConceptId="5622" answerLabel="Other Specify:" commentFieldLabel="" class="vertical-layout-options"/>
             </div>
            <div class = "col-md-4">
                 <label><strong>Follow Up Outcome</strong></label><br/>
             </div>
-
-         </div>
-
-        <div class = "row">
             <div class = "col-md-4">
                 <label><strong>Date Returned </strong></label>
             </div>
+         </div>
+
+        <div class = "row">
             <div class = "col-md-4">
                 <label><strong>Cause of Death </strong></label><br/>
                   <obs conceptId="5002" />
             </div>
            <div class = "col-md-4">
                 <label><strong>Comment</strong></label><br/>
+                <obs conceptId="159395"
+                     class="commenttextarea"
+                     style="textarea"
+                />
             </div>
          </div>
     </div>
