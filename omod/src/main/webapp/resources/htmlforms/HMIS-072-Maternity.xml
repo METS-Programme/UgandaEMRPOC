@@ -336,7 +336,9 @@
                     </div>
     
     </div>
-
+    
+    <div class ="tab-pane fade show active" role="tabpanel" aria-leballebdy="nav-profile-tab" id="care-entry-section">
+    <div class="card">
      <section> 
             <h3>Admission Information</h3>
             <table>
@@ -466,9 +468,82 @@
 
                      <td>
                         <label>Viral Load Results Date:</label>
-                        <obs conceptId="1646" required="false"/>
+                        <i class="icon-calendar small right-addon-row"></i>
+                        <obs conceptId="90267" required="false"/>
                     </td>
         </tr>
                             </table>
+                            </div>
+                            </div>
+
+             <h3>Delivery Information</h3>
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <label>Date of Delivery:</label>
+                        <i class="icon-calendar small right-addon-row"></i>
+                        <obs conceptId="90267" required="false"/>
+                    </td>
+                     <td>
+                        <label>Time of Delivery:</label>
+                        <obs conceptId="1053" required="false"/>
+                    </td>
+                    <td>
+                        <label>Time of Delivery:</label>
+                        <obs conceptId="162983" required="false"/>
+                    </td>
+                </tr>
+                </tbody>
+                </table>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <b>Management of the 3rd stage of labour:</b>
+                        <div class="row ARTSpecialCateogryEnableDisable1">
+                            <div class="col-md-4">
+                                <div class="row">
+                                     <div class="col-md-6">
+                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="3 -  Ergometrine" style="checkbox"  />
+                                     </div>
+                                </div>
+                                <div class="row">
+                                     <div class="col-md-6">
+                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="3 -  Pitocin" style="checkbox"  />
+                                     </div>
+                                </div>
+                                <div class="row">
+                                     <div class="col-md-6">
+                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="3 -  Mistoprotol" style="checkbox"  />
+                                     </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                 <label>Other Treaments Given:</label>
+                                    <obs conceptId="5624" required="false"/>
+                            </div>
+                                <div class="col-md-4">
+                                        <label>eMTCT:</label>
+                                            <obs conceptId="99317" required="false" answerConceptIds="99313,99734,99314,99315,99736" answerLabels="C,T,TR,TRR,TRR+" style="dropdown"/>
+                                            
+                                            <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="162198" answerLabel="1 TR*" style="checkbox" />
+                                          </div>
+                                          <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="159674" answerLabel="2 TRR*" style="checkbox"  />
+                                          </div>
+                                         
+                            </div>
+                          </div>
+                      </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-12">
+
+                        </div>
+
+                      </div>
+                                      
 
 </htmlform>
