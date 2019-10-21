@@ -14,424 +14,484 @@
           <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
           <encounterProvider required="true"/>
 
+<style>
+  .form-section-space {
+    padding-top: 20px;
+    <!-- border-top: solid 1px #f1f1f1; -->
+}
+</style>
+
     <div class="ai-page-frame" id="form-id">
         <div class="headers" style="text-align: center;">
             <h3 style="background: #FFFF7D; padding: 10px;">Integrated Postnatal Register</h3>
         </div>
         <section>
-            <div class="row" style="padding: 15px;">
-                <div class="col-md-12">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#mother-info" role="tab" aria-controls="home" aria-selected="true">Mother Information</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#infant-info" role="tab" aria-controls="profile" aria-selected="false">Infant Information</a>
-                      </li>
-                    </ul>
-                    <div class="tab-content" id="myTabContent">
-                      <div class="tab-pane fade show active tab-content-div" id="mother-info" role="tabpanel" aria-labelledby="home-tab">
-                        <div class="card-spacing">
-                            <div class="card">
-                              <div class="card-body">
-                                  <div class="form-group col-md-4">
-                                    <label for="">Timing For PNC Visit</label>
-                                    <obs conceptId="1732" answerconceptIds="1822,1072,1073,1074"
-                                   answerLabels="6 Hours, 6 Days, 6 Weeks, 6 Months"
-                                   style="dropdown"/>
+          <div class="row" style="padding: 15px;">
+              <div class="col-md-12">
+                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#mother-info" role="tab" aria-controls="home" aria-selected="true">Mother Information</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#infant-info" role="tab" aria-controls="profile" aria-selected="false">Infant Information</a>
+                    </li>
+                  </ul>
+                  <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active tab-content-div" id="mother-info" role="tabpanel" aria-labelledby="home-tab">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="form-section-space">
+                            <h4 class="">PNC Visit</h4>
+                            <div class="form-group col-md-4">
+                              <label for="">Timing For PNC Visit</label>
+                              <obs conceptId="1732" answerconceptIds="1822,1072,1073,1074"
+                            answerLabels="6 Hours, 6 Days, 6 Weeks, 6 Months"
+                            style="dropdown"/>
+                            </div>
+                          </div>
+                          <div class="form-section-space">
+                            <h4 class="">Family Planning</h4>
+                            <label for="">Family Planning Method</label>
+                            <div class="row form-group">
+                              <div class="col-md-4">
+                                <div class="form-check row">
+                                  <obs id="no-fp-method" conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                    answerConceptId="aaf150a5-92d2-416f-8254-95d34ed9c4ab"
+                                    answerLabel="No Family Planning Method Given"
+                                    style="checkbox"  class="horizontal-layout-options"/>
+                                </div>
+                                <div class="form-check row">
+                                  <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                    answerConceptId="38aa1dc0-1aaa-4bdd-b26f-28f960dfb16c"
+                                    answerLabel="Oral:Lo-Femenal"
+                                    style="checkbox" />
+                                </div>
+                                <div class="form-check row">
+                                  <obs id="natural-fp" conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                    answerConceptId="dcb30381-30ab-102d-86b0-7a5022ba4115"
+                                      answerLabel="Natural"
+                                      style="checkbox" class="horizontal-layout-options"/>
+                                </div>
+                                <div class="form-check row">
+                                  <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                    answerConceptId="dcb2fba9-30ab-102d-86b0-7a5022ba4115"
+                                    answerLabel="Female Sterilization"
+                                    style="checkbox" />
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                  <div class="form-check row">
+                                    <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                    answerConceptId="4b0899f2-395e-4e0f-8b58-d304b214615e"
+                                    answerLabel="Oral: Microgynon"
+                                    style="checkbox" />
+                                  </div>
+                                  <div class="form-check row">
+                                    <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                      answerConceptId="dcdd8d8d-30ab-102d-86b0-7a5022ba4115"
+                                      answerLabel="Male Sterilization"
+                                      style="checkbox" />
+                                  </div>
+                                  <div class="form-check row">
+                                    <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                      answerConceptId="dcb30ba3-30ab-102d-86b0-7a5022ba4115"
+                                      answerLabel="Injectable"
+                                      style="checkbox" />
+                                  </div>
+                                  <div class="form-check row">
+                                    <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                      answerConceptId="dcdd91a7-30ab-102d-86b0-7a5022ba4115"
+                                      answerLabel="Tubal Ligation"
+                                      style="checkbox" />
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                  <div class="form-check row">
+                                    <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                      answerConceptId="dc882c84-30ab-102d-86b0-7a5022ba4115"
+                                      answerLabel="Female Condoms"
+                                      style="checkbox" />
+                                  </div>
+                                  <div class="form-check row">
+                                    <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                      answerConceptId="bb83fd9d-24c5-4d49-89c0-97e13c792aaf"
+                                      answerLabel="Implant"
+                                      style="checkbox" />
+                                  </div>
+                                  <div class="form-check row">
+                                    <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
+                                      answerConceptId="670b7048-d71e-483a-b2ec-f10d2326dd84"
+                                      answerLabel="Oral:Others"
+                                      style="checkbox" />
                                   </div>
                               </div>
                             </div>
-                        </div>
-                        <div class="card-spacing">
-                            <div class="card">
-                              <div class="card-body">
-                                <label for="">Family Planning Method</label><br/>
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-check row">
-                                          <obs id="no-fp-method" conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                            answerConceptId="aaf150a5-92d2-416f-8254-95d34ed9c4ab"
-                                            answerLabel="No Family Planning Method Given"
-                                            style="checkbox"  class="horizontal-layout-options"/>
-                                        </div>
-                                        <div class="form-check row">
-                                          <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                            answerConceptId="38aa1dc0-1aaa-4bdd-b26f-28f960dfb16c"
-                                            answerLabel="Oral:Lo-Femenal"
-                                            style="checkbox" />
-                                        </div>
-                                        <div class="form-check row">
-                                          <obs id="natural-fp" conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                            answerConceptId="dcb30381-30ab-102d-86b0-7a5022ba4115"
-                                              answerLabel="Natural"
-                                              style="checkbox" class="horizontal-layout-options"/>
-                                        </div>
-                                        <div class="form-check row">
-                                          <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                            answerConceptId="dcb2fba9-30ab-102d-86b0-7a5022ba4115"
-                                            answerLabel="Female Sterilization"
-                                            style="checkbox" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-check row">
-                                          <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                           answerConceptId="4b0899f2-395e-4e0f-8b58-d304b214615e"
-                                           answerLabel="Oral: Microgynon"
-                                           style="checkbox" />
-                                        </div>
-                                        <div class="form-check row">
-                                          <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                            answerConceptId="dcdd8d8d-30ab-102d-86b0-7a5022ba4115"
-                                            answerLabel="Male Sterilization"
-                                            style="checkbox" />
-                                        </div>
-                                        <div class="form-check row">
-                                          <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                            answerConceptId="dcb30ba3-30ab-102d-86b0-7a5022ba4115"
-                                            answerLabel="Injectable"
-                                            style="checkbox" />
-                                        </div>
-                                        <div class="form-check row">
-                                          <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                            answerConceptId="dcdd91a7-30ab-102d-86b0-7a5022ba4115"
-                                            answerLabel="Tubal Ligation"
-                                            style="checkbox" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-check row">
-                                          <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                            answerConceptId="dc882c84-30ab-102d-86b0-7a5022ba4115"
-                                            answerLabel="Female Condoms"
-                                            style="checkbox" />
-                                        </div>
-                                        <div class="form-check row">
-                                          <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                            answerConceptId="bb83fd9d-24c5-4d49-89c0-97e13c792aaf"
-                                            answerLabel="Implant"
-                                            style="checkbox" />
-                                        </div>
-                                        <div class="form-check row">
-                                          <obs conceptId="dc7620b3-30ab-102d-86b0-7a5022ba4115"
-                                            answerConceptId="670b7048-d71e-483a-b2ec-f10d2326dd84"
-                                            answerLabel="Oral:Others"
-                                            style="checkbox" />
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                              </div>
-                            </div>
-                        </div>
-                        <div class="card-spacing">
-                            <div class="card">
-                              <div class="card-body">
-                                <div class="row">
-                                    <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect1">Status Of The Breast</label>
-                                    <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-                                      <option>FOM: Woman's breats has no swellings</option>
-                                      <option>SS: Woman's breats have abnormal discharge, pus or blood</option>
-                                      <option>ND: Health worker did not asses status of the breats</option>
-                                    </select>
+                          </div>
+                         
+                          <div class="form-section-space">
+                            <h4 class="">Status Of Breast and Cervix</h4>
+                              <div class="row form-group">
+                                  <div class="form-group col-md-6">
+                                    <label for="">Status Of The Breast</label><br/>
+                                    <obs conceptId="99349" answerconceptIds="99348, 99347"
+                                      answerLabels="FOM: (Breast Ok),SS: (Breast Not Ok)"
+                                      style="dropdown"/>
                                   </div>
                                   <div class="form-group col-md-6">
-                                    <label for="exampleFormControlSelect1">Status Of The Cervix</label>
-                                    <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-                                      <option>FOM: Cervix is free of features suggestive of malignacy</option>
-                                      <option>SS: Woman's cervix is suspicious of maligancy</option>
-                                      <option>ND: Health worker did not asses status of the cervix</option>
-                                    </select>
+                                    <label for="">Status Of The Cervix</label><br/>
+                                    <obs conceptId="99349" answerconceptIds="99348, 99347"
+                                    answerLabels="FOM: (Cervix Ok), SS: (Cervix Not Ok)"
+                                    style="dropdown"/> 
                                   </div>
+                              </div>
+                          </div>
+                          <div class="form-section-space">
+                            <h4 class="">Weight and MUAC</h4>
+                            <div class="row form-group">
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">Weight</label>
+                                  <input type="number" class="form-control" id="exampleFormControlInput1" />
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">MUAC(cm)</label>
+                                  <input type="number" class="form-control" id="exampleFormControlInput1" />
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">MUAC Code</label>
+                                  <input type="number" class="form-control" id="exampleFormControlInput1" />
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">INR No.</label>
+                                  <input type="number" class="form-control" id="exampleFormControlInput1" />
                                 </div>
                               </div>
                             </div>
-                        </div>
-                        <div class="card-spacing">
-                            <div class="card">
-                              <div class="card-body">
-                                <h4 class="card-title">Weight and MUAC</h4>
-                                <div class="row">
-                                  <div class="col-md-3">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">Weight</label>
-                                      <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                    </div>
+                          </div>
+                          <div class="form-section-space">
+                            <h4 class="">eMTCT</h4>
+                            <h5 class="card-title">Woman</h5>
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-md-8">
+                                  <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Code</label>
+                                    <obs conceptId="d5b0394c-424f-41db-bc2f-37180dcdbe74" 
+                                      answerConceptIds="6da9b915-8668-4642-8ed4-7d2a346881cb,
+                                              05f16fc5-1d82-4ce8-9b44-a3125fbbf2d7,
+                                              86e394fd-8d85-4cb3-86d7-d4b9bfc3e43a,
+                                              25c448ff-5fe4-4a3a-8c0a-b5aaea9d5465,
+                                              a08d9331-b437-485c-8eff-1923f3d43630,
+                                              60155e4d-1d49-4e97-9689-758315967e0f,
+                                              48723c9c-c931-4fde-81cd-6178c9a9a70b,
+                                              4d301db0-c517-4556-9f7c-d837bac90144"
+                                      answerLabels="C - Counselled but declined HIV testing,
+                                              T - Counselled and tested but didn't receive results,
+                                              TR - Counselled tested and results given - Client tested HIV- in PNC,
+                                              TRR - Counselled tested and results given - Client tested HIV+ in PNC,
+                                              TR+ - Client tested HIV- on a re-test,
+                                              TRR+ - Client tested HIV+ on a re-test,
+                                              TR&#8730; - Clients who were tested for HIV on a previous visit with known HIV Negative status,
+                                              TRR&#8730; - Revisit ANC clients who were tested for HIV on a previous visit with known HIV positive status" 
+                                      style="dropdown" class="emtct-code" id="emtct-code-woman"/>
                                   </div>
-                                  <div class="col-md-3">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">MUAC(cm)</label>
-                                      <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                <div class="form-group">
+                                  <div for="">TFV</div>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
+                                    <label class="custom-control-label" for="customRadio1">TFV</label>
                                   </div>
-                                  <div class="col-md-3">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">MUAC Code</label>
-                                      <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                    </div>
-                                  </div>
-                                  <div class="col-md-3">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">INR No.</label>
-                                      <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                    </div>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" />
+                                    <label class="custom-control-label" for="customRadio2">N/A</label>
                                   </div>
                                 </div>
                               </div>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <div for="">Given STK</div>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio3" name="customRadio2" class="custom-control-input" />
+                                    <label class="custom-control-label" for="customRadio3">Yes</label>
+                                  </div>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio4" name="customRadio2" class="custom-control-input" />
+                                    <label class="custom-control-label" for="customRadio4">No</label>
+                                  </div>
+                                </div>
+                              </div>
+                              </div>
+                              
                             </div>
-                        </div>
-                        <div class="card-spacing">
-                          <div class="card">
-                            <div class="card-body">
-                              <h4 class="card-title">eMTCT</h4>
-                              <h5 class="card-title">Woman</h5>
-                              <div class="row">
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Code</label>
-                                    <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-                                      <option>C</option>
-                                      <option>T</option>
-                                      <option>TR</option>
-                                      <option>TRR&#10003;</option>
-                                      <option>TRRK</option>
-                                      <option>TR+</option>
-                                      <option>TRR+</option>
-                                    </select>
-                                  </div>
+                            <h5 class="card-title">Partner</h5>
+                            <div class="row">
+                              <div class="col-md-8">
+                                <div class="form-group">
+                                  <label for="exampleFormControlSelect1">Code</label>
+                                  <obs conceptId="d5b0394c-424f-41db-bc2f-37180dcdbe74" 
+                                    answerConceptIds="6da9b915-8668-4642-8ed4-7d2a346881cb,
+                                            05f16fc5-1d82-4ce8-9b44-a3125fbbf2d7,
+                                            86e394fd-8d85-4cb3-86d7-d4b9bfc3e43a,
+                                            25c448ff-5fe4-4a3a-8c0a-b5aaea9d5465,
+                                            a08d9331-b437-485c-8eff-1923f3d43630,
+                                            60155e4d-1d49-4e97-9689-758315967e0f,
+                                            48723c9c-c931-4fde-81cd-6178c9a9a70b,
+                                            4d301db0-c517-4556-9f7c-d837bac90144,
+                                            8eab745c-24a5-4ba4-906c-b5087e920b66"
+                                    answerLabels="C - Counselled but declined HIV testing,
+                                            T - Counselled and tested but didn't receive results,
+                                            TR - Counselled tested and results given - Client tested HIV- in PNC,
+                                            TRR - Counselled tested and results given - Client tested HIV+ in PNC,
+                                            TR+ - Client tested HIV- on a re-test,
+                                            TRR+ - Client tested HIV+ on a re-test,
+                                            TR&#8730; - Clients who were tested for HIV on a previous visit with known HIV Negative status,
+                                            TRR&#8730; - Revisit ANC clients who were tested for HIV on a previous visit with known HIV positive status,
+                                            Not Tested" 
+                                    style="dropdown" class="emtct-code" id="emtct-code-man" />
                                 </div>
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <div for="">TFV</div>
-                                    <div class="custom-control custom-radio">
-                                      <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
-                                      <label class="custom-control-label" for="customRadio1">TFV</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                      <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" />
-                                      <label class="custom-control-label" for="customRadio2">N/A</label>
-                                    </div>
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <div for="">TFV</div>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio5" name="customRadio3" class="custom-control-input" />
+                                    <label class="custom-control-label" for="customRadio5">TFV</label>
                                   </div>
-                                </div>
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <div for="">Given STK</div>
-                                    <div class="custom-control custom-radio">
-                                      <input type="radio" id="customRadio3" name="customRadio2" class="custom-control-input" />
-                                      <label class="custom-control-label" for="customRadio3">Yes</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                      <input type="radio" id="customRadio4" name="customRadio2" class="custom-control-input" />
-                                      <label class="custom-control-label" for="customRadio4">No</label>
-                                    </div>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio6" name="customRadio3" class="custom-control-input" />
+                                    <label class="custom-control-label" for="customRadio6">N/A</label>
                                   </div>
                                 </div>
                               </div>
-                              <h5 class="card-title">Partner</h5>
-                              <div class="row">
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Code</label>
-                                    <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-                                      <option>C</option>
-                                      <option>T</option>
-                                      <option>TR</option>
-                                      <option>TRR&#10003;</option>
-                                      <option>TRRK</option>
-                                      <option>TR+</option>
-                                      <option>TRR+</option>
-                                    </select>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <div for="">STK Result</div>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio7" name="customRadio4" class="custom-control-input" />
+                                    <label class="custom-control-label" for="customRadio7">Positive</label>
                                   </div>
-                                </div>
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <div for="">TFV</div>
-                                    <div class="custom-control custom-radio">
-                                      <input type="radio" id="customRadio5" name="customRadio3" class="custom-control-input" />
-                                      <label class="custom-control-label" for="customRadio5">TFV</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                      <input type="radio" id="customRadio6" name="customRadio3" class="custom-control-input" />
-                                      <label class="custom-control-label" for="customRadio6">N/A</label>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <div for="">STK Result</div>
-                                    <div class="custom-control custom-radio">
-                                      <input type="radio" id="customRadio7" name="customRadio4" class="custom-control-input" />
-                                      <label class="custom-control-label" for="customRadio7">Positive</label>
-                                    </div>
-                                    <div class="custom-control custom-radio">
-                                      <input type="radio" id="customRadio8" name="customRadio4" class="custom-control-input" />
-                                      <label class="custom-control-label" for="customRadio8">Negative</label>
-                                    </div>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" id="customRadio8" name="customRadio4" class="custom-control-input" />
+                                    <label class="custom-control-label" for="customRadio8">Negative</label>
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="card-spacing">
-                          <div class="card">
-                            <div class="card-body">
-                              <h4 class="card-title">ART</h4>
-                              <h5 class="card-title">Woman</h5>
-                              <div class="row">
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Code</label>
-                                    <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-                                      <option>ART</option>
-                                      <option>ART&#10003;</option>
-                                      <option>ARTK</option>
-                                      <option>ARTK&#10003;</option>
-                                      <option>N/A</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <label for="exampleFormControlInput1">Pre-ART No.</label>
-                                    <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                  </div>
+                          <div class="form-section-space">
+                            <h4 class="">ART</h4>
+                            <h5 class="card-title">Woman</h5>
+                            <div class="row form-group">
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label for="exampleFormControlSelect1">Code</label>
+                                  <select class="form-control form-control-lg" id="exampleFormControlSelect1">
+                                    <option>ART</option>
+                                    <option>ART&#10003;</option>
+                                    <option>ARTK</option>
+                                    <option>ARTK&#10003;</option>
+                                    <option>N/A</option>
+                                  </select>
                                 </div>
                               </div>
-                              <h5 class="card-title">Partner</h5>
-                              <div class="row">
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <label for="exampleFormControlSelect1">Code</label>
-                                    <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-                                      <option>ART</option>
-                                      <option>ART&#10003;</option>
-                                      <option>ARTK</option>
-                                      <option>ARTK&#10003;</option>
-                                      <option>N/A</option>
-                                    </select>
-                                  </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">Pre-ART No.</label>
+                                  <input type="number" class="form-control" id="exampleFormControlInput1" />
                                 </div>
-                                <div class="col-md-4">
-                                  <div class="form-group">
-                                    <label for="exampleFormControlInput1">Pre-ART No.</label>
-                                    <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                  </div>
+                              </div>
+                            </div>
+                            <h5 class="card-title">Partner</h5>
+                            <div class="row">
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label for="exampleFormControlSelect1">Code</label>
+                                  <select class="form-control form-control-lg" id="exampleFormControlSelect1">
+                                    <option>ART</option>
+                                    <option>ART&#10003;</option>
+                                    <option>ARTK</option>
+                                    <option>ARTK&#10003;</option>
+                                    <option>N/A</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-md-4">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">Pre-ART No.</label>
+                                  <input type="number" class="form-control" id="exampleFormControlInput1" />
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div class="card-spacing">
-                            <div class="card">
-                              <div class="card-body">
-                                <h4 class="card-title">Routine Administration</h4>
-                                <div class="row">
-                                  <div class="col-md-3">
-                                    <label for="exampleFormControlSelect1">Drug</label>
-                                    <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-                                      <option>Iron</option>
-                                      <option>Folic Acid</option>
-                                      <option>Septrine</option>
-                                    </select>
-                                  </div>
-                                  <div class="col-md-2">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">Units Per Day</label>
-                                      <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                      <!-- <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-                                        <option>Tablet</option>
-                                        <option>Capsule</option>
-                                        <option>mls</option>
-                                      </select> -->
-                                    </div>
-                                  </div>
-                                  <div class="col-md-2">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">Dose Per Day</label>
-                                      <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                    </div>
-                                  </div>
-                                  <div class="col-md-2">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">Number</label>
-                                      <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                    </div>
-                                  </div>
-                                  <div class="col-md-2">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">Duration</label>
-                                      <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-                                        <option>Days</option>
-                                        <option>Weeks</option>
-                                        <option>Months</option>
-                                      </select>
+                          <div class="form-section-space">
+                            <h4 class="card-title">Routine Administration</h4>
+                            <div class="row form-group">
+                              <div class="col-md-3">
+                                <label for="exampleFormControlSelect1">Drug</label>
+                                <select class="form-control form-control-lg" id="exampleFormControlSelect1">
+                                  <option>Iron</option>
+                                  <option>Folic Acid</option>
+                                  <option>Septrine</option>
+                                </select>
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">Units Per Day</label>
+                                  <input type="number" class="form-control" id="exampleFormControlInput1" />
+                                  <!-- <select class="form-control form-control-lg" id="exampleFormControlSelect1">
+                                    <option>Tablet</option>
+                                    <option>Capsule</option>
+                                    <option>mls</option>
+                                  </select> -->
+                                </div>
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">Dose Per Day</label>
+                                  <input type="number" class="form-control" id="exampleFormControlInput1" />
+                                </div>
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">Number</label>
+                                  <input type="number" class="form-control" id="exampleFormControlInput1" />
+                                </div>
+                              </div>
+                              <div class="col-md-2">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">Duration</label>
+                                  <select class="form-control form-control-lg" id="exampleFormControlSelect1">
+                                    <option>Days</option>
+                                    <option>Weeks</option>
+                                    <option>Months</option>
+                                  </select>
 
-                                    </div>
-                                  </div>
-                                  <div class="col-md-1">
-                                    <button type="button" class="btn btn-outline-info">+</button>
-                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-md-1">
+                                <button type="button" class="btn btn-outline-info">+</button>
+                              </div>
+                            </div>
+                          </div>   
+                          <div class="form-section-space">
+                            <h4 class="card-title">Diagnosis</h4>
+                            <div class="row form-group">
+                              <div class="col-md-9">
+                                <select class="form-control form-control-lg" id="exampleFormControlSelect1">
+                                  <option>Pneumonia</option>
+                                  <option>Migrains</option>
+                                </select>
+                              </div>
+                              <div class="col-md-3">
+                                <button type="button" class="btn btn-outline-info">+</button>
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="">WHO Clinical Stage</label>
+                                  <obs conceptId="90203" answerconceptIds=""
+                                answerLabels=""
+                                style="dropdown"/>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">CD4 Count</label><br/>
+                                  <obs conceptId="5497" answerconceptIds=""
+                                answerLabels=""
+                                style="dropdown"/>
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">CD4 Date</label>
+                                  <obs conceptId="159376AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowFutureDates="false" />
+                                </div>
+                              </div>
+                              <div class="col-md-3">
+                                <div class="form-group">
+                                  <label for="exampleFormControlInput1">Viral Load</label>
+                                  <input type="number" class="form-control" id="exampleFormControlInput1" />
                                 </div>
                               </div>
                             </div>
-                        </div>   
-                        <div class="card-spacing">
-                            <div class="card">
-                              <div class="card-body">
-                                <h4 class="card-title">Diagnosis</h4>
-                                <div class="row">
-                                  <div class="col-md-9">
-                                    <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-                                      <option>Pneumonia</option>
-                                      <option>Migrains</option>
-                                    </select>
-                                  </div>
-                                  <div class="col-md-3">
-                                    <button type="button" class="btn btn-outline-info">+</button>
-                                  </div>
-                                </div>
-                                <div class="row">
-                                  <div class="col-md-3">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">WHO Stage</label>
-                                      <select class="form-control form-control-lg" id="exampleFormControlSelect1">
-                                        <option>Tablet</option>
-                                        <option>Capsule</option>
-                                        <option>mls</option>
-                                      </select>
-                                    </div>
-                                  </div>
-                                  <div class="col-md-3">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">CD4 Count</label>
-                                      <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                    </div>
-                                  </div>
-                                  <div class="col-md-3">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">CD4 Date</label>
-                                      <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                    </div>
-                                  </div>
-                                  <div class="col-md-3">
-                                    <div class="form-group">
-                                      <label for="exampleFormControlInput1">Viral Load</label>
-                                      <input type="number" class="form-control" id="exampleFormControlInput1" />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                        </div>  
+                          </div>
+                        </div>
                       </div>
-                      <div class="tab-pane fade tab-content-div" id="infant-info" role="tabpanel" aria-labelledby="profile-tab">Infant info content</div>
-                      
                     </div>
-                </div>
-            </div>            
+                    <div class="tab-pane fade tab-content-div" id="infant-info" role="tabpanel" aria-labelledby="profile-tab">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="form-section-space">
+                            <h4 class="">Baby Info</h4>
+                            <div class="row">
+                              <div class="form-group col-md-6">
+                                <label>Status of the baby</label>
+                                  <obs conceptId="dd8a2ad9-16f6-44db-82d7-87d6eef14886"
+                                       answerConceptIds="9d9e6b5a-8b5d-4b8c-8ab7-9fdabb279493,811ff634-8d81-454f-9b9d-2850345796d6,95121db8-6c2a-48e0-b281-cf2dc8229dd1"
+                                       answerLabels="AL - Alive,NND7 - Dead within first seven(7) days,NND28 - Dead between eight(8) and twenty eight(28) Days" />
+                              </div>
+                            </div>
+                            <div class="row">
+                              <div class="form-group col-md-2">
+                                <label>Age(weeks)</label>
+                                <div class="">
+                                    <obs conceptId="164948" style="text" />
+                                </div>
+                              </div>
+                              <div class="form-group col-md-2">
+                                <label>Weight(Kg)</label>
+                                <div class="">
+                                    <obs conceptId="5089"/>
+                                </div>
+                              </div>
+                              <div class="form-group col-md-3">
+                                <label>MUAC</label>
+                                <div class="row">
+                                    <obs conceptId="1343"/>
+                                </div>
+                              </div>
+                              <div class="form-group col-md-3">
+                                <label>MUAC Code</label>
+                                <div class="row">
+                                    <obs conceptId="99030" answerConceptIds="99029, 99028, 99027"/>
+                                </div>
+                              </div>
+                              <div class="form-group col-md-2">
+                                <label>INR No.</label>
+                                <div class="row">
+                                    <obs conceptId="b644c29c-9bb0-447e-9f73-2ae89496a709" id="inrNumber" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-section-space">
+                            <h4 class="">Diagnosis</h4>
+                            <div class="row">
+                              <div class="form-group col-md-6">
+                                <label>Diagnosis</label><br/>
+                                <obs conceptId="dc9a00a2-30ab-102d-86b0-7a5022ba4115"
+                                     answerConceptIds="dcbd637e-30ab-102d-86b0-7a5022ba4115,40fdb5b6-e8ac-424d-988c-f2f2937348db,dcd5487d-30ab-102d-86b0-7a5022ba4115" 
+                                     answerLabels="EBF - Exclusive Breast Feeding,RF - Replacement Feeding,MF - Mixed Feeding"
+                                     style="dropdown" />
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>   
+          </div>         
         </section>
         <section>
             <submit/>
