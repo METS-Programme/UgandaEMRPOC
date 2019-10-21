@@ -1,4 +1,4 @@
-<htmlform formName="HMIS ACP 007 Missed Appointment Tracking Register"
+<htmlform formName="HMIS ACP 007 Missed Appointment Tracking Form"
           formDescription="Record all cleints who missed their appointment"
           formEncounterType="6d88e370-f2ba-476b-bf1b-d8eaf3b1b67e"
           formUuid="59d9341a-f65e-4e86-a98b-415ea54dfa81"
@@ -9,7 +9,7 @@
           formIcon="icon-medkit"
           formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; sessionLocation.uuid=='86863db4-6101-4ecf-9a86-5e716d6504e4'"
           formDisplayStyle="Standard"
-          formLabel="Missed Appointment Tracking Register">
+          formLabel="Missed Appointment Tracking Form">
 
     <div class="poc-page-frame">
         <div class="row">
