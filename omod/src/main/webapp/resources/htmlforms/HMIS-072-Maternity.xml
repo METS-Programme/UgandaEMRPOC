@@ -480,14 +480,14 @@
             <table>
                 <tbody>
                 <tr>
+                 <td>
+                        <label>Mode of Delivery:</label>
+                        <obs conceptId="1053" required="false"/>
+                    </td>
                     <td>
                         <label>Date of Delivery:</label>
                         <i class="icon-calendar small right-addon-row"></i>
                         <obs conceptId="90267" required="false"/>
-                    </td>
-                     <td>
-                        <label>Time of Delivery:</label>
-                        <obs conceptId="1053" required="false"/>
                     </td>
                     <td>
                         <label>Time of Delivery:</label>
@@ -499,51 +499,299 @@
 
             <div class="row">
                 <div class="col-md-12">
-                    <b>Management of the 3rd stage of labour:</b>
+                    <label>Management of the 3rd stage of labour:</label>
                         <div class="row ARTSpecialCateogryEnableDisable1">
-                            <div class="col-md-4">
                                 <div class="row">
-                                     <div class="col-md-6">
-                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="3 -  Ergometrine" style="checkbox"  />
+                                     <div class="col-md-3">
+                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="1 - Ergometrine" style="checkbox"  />
                                      </div>
-                                </div>
-                                <div class="row">
-                                     <div class="col-md-6">
-                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="3 -  Pitocin" style="checkbox"  />
+                                     <div class="col-md-3">
+                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="2 - Pitocin" style="checkbox"  />
                                      </div>
-                                </div>
-                                <div class="row">
-                                     <div class="col-md-6">
-                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="3 -  Mistoprotol" style="checkbox"  />
+                                     <div class="col-md-3">
+                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="3 - Mistoprotol" style="checkbox"  />
                                      </div>
+                                     <div class="col-md-3">
+                                         <label>Other Treaments Given:</label>
+                                        <obs conceptId="5624" required="false"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                 <label>Other Treaments Given:</label>
-                                    <obs conceptId="5624" required="false"/>
-                            </div>
-                                <div class="col-md-4">
+
+                            
+                        
+                            <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3">
                                         <label>eMTCT:</label>
                                             <obs conceptId="99317" required="false" answerConceptIds="99313,99734,99314,99315,99736" answerLabels="C,T,TR,TRR,TRR+" style="dropdown"/>
-                                            
-                                            <div class="col-md-3">
-                                              <obs conceptId="165169" answerConceptId="162198" answerLabel="1 TR*" style="checkbox" />
-                                          </div>
+                                </div>
+                                <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="162198" answerLabel="1- TR*" style="radio" />
+                                        </div>
+                                        
                                           <div class="col-md-3">
-                                              <obs conceptId="165169" answerConceptId="159674" answerLabel="2 TRR*" style="checkbox"  />
-                                          </div>
+                                              <obs conceptId="165169" answerConceptId="159674" answerLabel="2- TRR*" style="radio"  />
+                                        </div>     
                                          
                             </div>
+                            </div>
+                                         
                           </div>
                       </div>
                       </div>
 
                       <div class="row">
+                        <div class="col-md-4">
+                            <label>ARVs to mother:</label>
+                                <obs conceptId="5576" required="false" answerConceptIds="99313,99734,99314,99315,99736" answerLabels="C,T,TR,TRR,TRR+" style="dropdown"/>
+                    </div>
+
                         <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                                <label>VIT A Supplement:</label>
+                                </div>                                            
+                                        <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="162198" answerLabel="Yes" style="radio" />
+                                            </div>
+                                          <div class="col-md-6">
+                                            <obs conceptId="165169" answerConceptId="159674" answerLabel="No" style="radio"  />
+                                    </div>
+                            </div>
+
+                        </div>
+                      </div>
+
+                      
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>MUAC:</label>
+                                <obs conceptId="1343" required="false"/>
+                    </div>
+
+                    <div class="col-md-4">
+                             <label>MUAC Status:</label>
+                                <obs conceptId="99030" required="false" style="dropdown"/> 
+                     </div>
+
+                     <div class="col-md-4">
+                        <label>IRN No.:</label>
+                            <obs conceptId="1646" required="false"/>
+                        </div>
 
                         </div>
 
+                 <h3>Child Information</h3>
+            
+            <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                                <label>Apgar 1st Minute Score:</label>
+                                <obs conceptId="1053" required="false"/>
+                         </div>
+                        <div class="col-md-3">    
+                                <label>Apgar 5th Minute Score:</label>
+                                <i class="icon-calendar small right-addon-row"></i>
+                                <obs conceptId="90267" required="false"/>
+                            </div>
+                        <div class="col-md-6">  
+                                <label>Sex:</label>
+                                        <div class="col-md-12">
+                                              <obs conceptId="165169" answerConceptId="162198" answerLabel="Yes" style="radio" />
+                                            </div>
+                                          <div class="col-md-12">
+                                            <obs conceptId="165169" answerConceptId="159674" answerLabel="No" style="radio"  />
+                                    </div>
+
+                        </div>
+
+                     </div>
+                </div>
+
+
+            
+                      <div class="row">
+                        <div class="col-md-4">
+                            <label>ARVs to mother:</label>
+                                <obs conceptId="5576" required="false" answerConceptIds="99313,99734,99314,99315,99736" answerLabels="C,T,TR,TRR,TRR+" style="dropdown"/>
+                    </div>
+
+                        <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                                <label>Immediate Skin to Skin Contact:</label>
+                                </div>                                            
+                                        <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="162198" answerLabel="Yes" style="radio" />
+                                            </div>
+                                          <div class="col-md-6">
+                                            <obs conceptId="165169" answerConceptId="159674" answerLabel="No" style="radio"  />
+                                    </div>
+                         <div class="col-md-3">
+                                <label>Breatfed in Less than an Hour:</label>
+                                </div>                                            
+                                        <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="162198" answerLabel="Yes" style="radio" />
+                                            </div>
+                                          <div class="col-md-6">
+                                            <obs conceptId="165169" answerConceptId="159674" answerLabel="No" style="radio"  />
+                                    </div>
+                            </div>
+
+                        </div>
                       </div>
-                                      
+                    
+            <div class="row">
+                <div class="col-md-12">
+                    <label>Routine Medication:</label>
+                        <div class="row ARTSpecialCateogryEnableDisable1">
+                                <div class="row">
+                                     <div class="col-md-3">
+                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="Tetraxycline Eye Ointment" style="checkbox"  />
+                                     </div>
+                                     <div class="col-md-3">
+                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="Vitamin K" style="checkbox"  />
+                                     </div>
+                                     <div class="col-md-3">
+                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="Chlorhexidine" style="checkbox"  />
+                                     </div>
+                                     <div class="col-md-3">
+                                         <label>Other Treaments Given:</label>
+                                        <obs conceptId="5624" required="false"/>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+
+                
+                        <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                                <label>Counselling at Discharge:</label>
+                                </div>                                            
+                                        <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="162198" answerLabel="Yes" style="radio" />
+                                            </div>
+                                          <div class="col-md-6">
+                                            <obs conceptId="165169" answerConceptId="159674" answerLabel="No" style="radio"  />
+                                    </div>
+                         <div class="col-md-3">
+                                <label>Maternal Nutrition:</label>
+                                </div>                                            
+                                        <div class="col-md-3">
+                                              <obs conceptId="165169" answerConceptId="162198" answerLabel="Yes" style="radio" />
+                                            </div>
+                                          <div class="col-md-6">
+                                            <obs conceptId="165169" answerConceptId="159674" answerLabel="No" style="radio"  />
+                                    </div>
+                            </div>
+
+                        </div>
+
+
+             <div class="row">
+                <div class="col-md-12">
+                    <label>ICYF:</label>
+                        <div class="row ARTSpecialCateogryEnableDisable1">
+                                <div class="row">
+                                     <div class="col-md-3">
+                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="Yes" style="checkbox"  />
+                                     </div>
+                                     <div class="col-md-3">
+                                         <obs conceptId="165169" answerConceptId="165125" answerLabel="No" style="checkbox"  />
+                                     </div>
+                                     <div class="col-md-3">
+                                         <label>Infant Breastfeeding Option:</label>
+                                        <obs conceptId="163459" required="false" answerConceptIds="5526,99089,6046" answerLabels="EBF, RF, MF" style="dropdown"/>
+                                    </div>
+                                    <div class="col-md-3">
+                                         <label>Infant Breastfeeding Option:</label>
+                                        <obs conceptId="164941" required="false"/>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                 <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-3">
+                                <label>ARVs Administered:</label>
+                                </div>                                            
+                                        <div class="col-md-3">
+                                              <obs conceptId="162935" answerConceptId="162198" answerLabel="Yes" style="radio" />
+                                            </div>
+                                          <div class="col-md-6">
+                                            <obs conceptId="162935" answerConceptId="159674" answerLabel="No" style="radio"  />
+                                    </div>
+                         <div class="col-md-3">
+                                <label>Immunisation:</label>
+                                </div>                                            
+                                        <div class="col-md-3">
+                                              <obs conceptId="162839" answerConceptId="162198" answerLabel="Yes" style="radio" />
+                                            </div>
+                                          <div class="col-md-6">
+                                            <obs conceptId="162839" answerConceptId="159674" answerLabel="No" style="radio"  />
+                                    </div>
+                            </div>
+
+                        </div>
+
+
+            <section> 
+            <h3>Discharge Information</h3>
+            <table>
+                <tbody>
+                <tr>
+                    <td>
+                        <label>Family Planning Method Given:</label>
+                        <obs conceptId="99296" required="false" answerConceptIds="90089,162960,162959,162961," answerLabels="PP-BTL, PP-IUD, PAC-IUD" style="dropdown"/>
+                    </td>
+                    <td>
+                        <label>Other Family Planning Method(Specify):</label>
+                        <obs conceptId="5624" required="false"/>
+                    </td>
+
+                     <td>
+                        <label>Conditon of Mother at Discharge:</label>
+                        <obs conceptId="1053" required="false"/>
+                    </td>
+                    <td>
+                        <label>Condition of Baby at Discharge:</label>
+                        <obs conceptId="162983" required="false"/>
+                    </td>
+
+
+                </tr>
+                <tr>
+
+                    <td>
+                        <label>Delivered By:</label>
+                        <obs conceptId="1646" required="false"/>
+                    </td>
+
+                     <td>
+                        <label>PNC at 6 Hours:</label>
+                        <obs conceptId="99727" required="false"/>
+                    </td>
+                     <td>
+                        <label>Date of Discharge:</label>
+                        <i class="icon-calendar small right-addon-row"></i>
+                        <obs id = "90267" conceptId="90267"/>
+                    </td>
+                    <td>
+                        <label>Dischraged by:</label>
+                        <obs conceptId="99727" required="false"/>
+                    </td>
+
+
+                </tr>
+
+
+                </tbody>
+            </table>
+        </section>
 
 </htmlform>
