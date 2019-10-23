@@ -9,10 +9,13 @@
 
     <div class="poc-page-frame">
         <div class="row">
-            <div class="col-md-12">
-                <h3>
-                    INTEGRATED ANTENATAL REGISTER
-                </h3>
+            <div class="col-md-4 ">
+                <h3>  INTEGRATED ANTENATAL REGISTER</h3>
+            </div>
+            <div class="col-md-6"></div>
+            <div class="col-md-2 ">
+                <submit/>
+                <button type="submit" class="btn btn-info " >Submit</button>
             </div>
         </div>
         <div class="row">
@@ -36,8 +39,8 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="card">
-                                        <div class="card-header">
-                                            CLIENT INFORMATION
+                                        <div class="card-header" style="font-weight:bold">
+                                         Client Information
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -45,7 +48,7 @@
                                                     <obs conceptId="1646" labelText="Serial Number" />
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <obs conceptId="1646" labelText="Client Number" />
+                                                    <obs conceptId="99727" labelText="Client Number" />
                                                 </div>
                                             </div>
                                         </div>
@@ -55,8 +58,8 @@
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <div class="card">
-                                        <div class="card-header">
-                                            TRIAGE
+                                        <div class="card-header" style="font-weight:bold">
+                                            Triage
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -101,37 +104,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-4">
+
+                            <div class="row mt-3">
                                 <div class="col-md-12">
                                     <div class="card">
-                                        <div class="card-header">
-                                            eMTCT Status
+                                        <div class="card-header" style="font-weight:bold">
+                                            Woman eMTCT Status
                                         </div>
                                         <div class="card-body">
-                                            <!--                                            <h7 style="color: black">-->
-                                            <!--                                                Woman-->
-                                            <!--                                            </h7>-->
-                                            <h2 style="color:black">Women</h2>
-                                            <hr></hr>
                                             <div class="row ">
                                                 <div class="col-md-6">
                                                     <obs conceptId="99317" labelText="Initial Result" style="dropdown" class="emtct-code" id="emtct-code-woman" />
-
-                                                    <!--                                                    <label>eMTCT Code: Woman</label>-->
-                                                    <!--                                                        <obs conceptId="99317"-->
-                                                    <!--                                                             answerConceptIds="99313,99734,99314,99315,164962,164963,99737,99738,99739,99736"-->
-                                                    <!--                                                             answerLabels=	"C :Client was counselled but declined HIV testing,-->
-                                                    <!--                                                            T :Client was counselled and tested but didn't receive results,-->
-                                                    <!--                                                            TR : Client was counselled tested and results given - Client tested for the for the first time in ANC this pregnancy and she is HIV Negative,-->
-                                                    <!--                                                            TRR : Counselled tested and results given - Client tested for the first time in ANC this pregnacy  and she is HIV Positive,-->
-                                                    <!--                                                            TR&#8730; : ANC revisit clients with a known HIV Negative (HIV-) Test Result from a previous ANC attendance during this pregnancy,-->
-                                                    <!--                                                            TRR&#8730; : ANC revisit clients with a known HIV Positive (HIV+) Test Result from a previous ANC attendance during this pregnancy,-->
-                                                    <!--                                                            TRK: Clients with a documented HIV Negative (HIV-) test result conducted within 4 weeks prior to their ANC 1st Visit,-->
-                                                    <!--                                                            TRRK: Clients with a documented HIV Positive (HIV+) test result conducted within 4 weeks prior to their ANC 1st Visit,-->
-                                                    <!--                                                            TR+ : Tested HIV- on retest,-->
-                                                    <!--                                                            TRR+ : Clients who tested HIV Positive on a re-test"-->
-                                                    <!--                                                             style="width: 100px;"   class="" id="emtct-code-woman" />-->
-
                                                 </div>
 
                                                 <div class=" col-md-2">
@@ -139,7 +122,9 @@
                                                         STK Given?
                                                     </label>
                                                     <br></br>
-                                                    <obs conceptId="99351" class="ml-5 ml-lg-0" style="radio" answerLabels="Yes, No" />
+                                                    <br></br>
+
+                                                    <obs conceptId="165379" class="ml-5 ml-lg-0" style="radio" answerLabels="Yes, No" />
 
                                                 </div>
                                                 <div class="col-md-2">
@@ -149,7 +134,7 @@
                                                     <obs conceptId="856" labelText="Viral Load" />
                                                 </div>
                                             </div>
-                                            <div class="row mt-5">
+                                            <div class="row mt-4">
                                                 <div class="col-md-3">
                                                     <obs conceptId="163023" labelText="Viral Load Date" allowFutureDates="false" />
                                                 </div>
@@ -161,22 +146,33 @@
                                                         eMTCT Risk Assessment
                                                     </label>
                                                     <br></br>
-                                                    <obs conceptId="99351" style="radio" class="md-4" answerLabels="High, Low" />
+                                                    <br></br>
+                                                    <obs conceptId="165380" style="radio" class="md-4" answerLabels="High, Low" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label>
                                                         Referred for ART?
                                                     </label>
                                                     <br></br>
-                                                    <obs conceptId="99430" style="radio"  />
+                                                    <br></br>
+                                                    <obs conceptId="99430" style="radio"  answerLabels="Yes,No" />
                                                 </div>
                                             </div>
-                                            <div class="row mt-3">
-                                                <h2 style="color:black">Partner</h2>
-                                            </div>
+                                    </div>
+                                 </div>
+                            </div>
 
-                                            <div class="row  ">
-                                                <div class="col-md-2">
+                        </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-header" style="font-weight:bold">
+                                            Partner eMTCT Status
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-1">
                                                     <obs conceptId="99074" labelText="Age" />
                                                 </div>
                                                 <div class="col-md-2">
@@ -185,47 +181,50 @@
                                                 <div class="col-md-6">
                                                     <obs conceptId="99317" labelText="Facility Result" />
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     <label>
-                                                        Are you linked to ART?
+                                                        Linked to ART?
                                                     </label>
+                                                    <br></br>
+                                                    <br></br>
                                                     <obs conceptId="99351" style="radio" answerLabels="Yes, No, N/A" />
                                                 </div>
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row mt-4">
 
-                                                <div class="col-md-6">
+                                                <div class="col-md-5">
                                                     <obs conceptId="99317" labelText="TFV" style="dropdown" class="emtct-code" id="tfv-man" />
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <obs conceptId="99081" labelText="Where" />
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <obs conceptId="99431" labelText="Pre-ART Number" />
+                                                <div class="col-md-2">
+                                                    <obs conceptId="99431" labelText="Pre-ART No:" />
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <obs conceptId="99431" labelText="ART Number(Client ID)" />
+                                                <div class="col-md-2">
+                                                    <obs conceptId="99431" labelText="ART No:" />
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+
+
                             </div>
-                        </div>
+
+                    </div>
                         <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-profile-tab" id="investigations-section">
-                            <div class="row">
+                            <div class="row ">
                                 <div class="col-md-12">
                                     <div class="card">
-                                        <div class="card-header">
-                                            INVESTIGATIONS
+                                        <div class="card-header" style="font-weight:bold">
+                                            Investigations
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-6">
-                                                    <obs conceptId="dce02aa1-30ab-102d-86b0-7a5022ba4115" answerConceptIds="dcdaccc1-30ab-102d-86b0-7a5022ba4115,
+                                                <div class="col-md-5">
+                                                    <obs conceptId="90216" answerConceptIds="dcdaccc1-30ab-102d-86b0-7a5022ba4115,
                             dcdaaf0f-30ab-102d-86b0-7a5022ba4115,
                             dcdac38b-30ab-102d-86b0-7a5022ba4115,
                             dcdaa6b4-30ab-102d-86b0-7a5022ba4115" answerLabels="1. No Signs - No signs or symptoms of TB,
@@ -233,40 +232,41 @@
                             3. TB Diagnosed - Diagnosed with TB,
                             4. TB Rx - Currently on TB treatment" style="dropdown" labelText="TB Status" />
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <obs conceptId="845" labelText="WOA Ultrasound Scan" />
-                                                </div>
-                                            </div>
-                                            <div class="row">
                                                 <div class="col-md-3">
+                                                    <obs conceptId="852" labelText="WOA U/S Scan Done" />
+                                                </div>
+                                                <div class="col-md-2">
                                                     <obs conceptId="717" labelText="Protein in Urine" />
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <obs conceptId="887" labelText="Glucose in Urine" />
                                                 </div>
+                                            </div>
+
+                                            <div class="row mt-4">
+
                                                 <div class="col-md-3">
                                                     <obs conceptId="21" labelText="Haemoglobin(Hb)" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="300" labelText="Blood Group" />
                                                 </div>
+                                                <div class="col-md-3">
+                                                    <obs conceptId="1429" labelText="Rhesus Factor" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <obs conceptId="165383" labelText="Sickle Cell" />
+                                                </div>
                                             </div>
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <obs conceptId="300" labelText="Rhesus Factor" />
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <obs conceptId="21" labelText="Sickle Cell" />
-                                                </div>
-                                                <div class="col-md-3">
+                                            <div class="row mt-4">
+
+                                                <div class="col-md-2">
                                                     <obs conceptId="99493" labelText="HIV Test" />
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <obs conceptId="5497" labelText="CD4 Count" />
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-3">
+                                                <div class="col-md-2">
                                                     <obs conceptId="856" labelText="Viral Load" />
                                                 </div>
                                                 <div class="col-md-3">
@@ -276,26 +276,30 @@
                                                     <obs conceptId="90203" labelText="WHO HIV CLINICAL STAGE" />
                                                 </div>
                                             </div>
+                                            <div class="row mt-4">
+                                                <div class="col-md-6">
+                                                    <h4>Women</h4>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <h4>Partner</h4>
+                                                </div>
+
+
+                                            </div>
                                             <div class="row">
-                                                <h7 style="color:black">
-                                                    Woman
-                                                </h7>
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <obs conceptId="299" labelText="Syphillis" id="syphillis-woman" />
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <obs conceptId="1321" labelText="Hepatitis B" id="hepatitis-b-woman" />
+                                                <div class="col-md-6">
+                                                    <obs conceptId="299" labelText="Syphillis" id="syphillis-woman" />
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <h7 style="color:black">
-                                                    Partner
-                                                </h7>
-                                                <div class="col-md-4">
-                                                    <obs conceptId="299" labelText="Syphillis" id="syphillis-man" />
+                                                <div class="col-md-6">
+                                                    <obs conceptId="1321" labelText="Hepatitis B" id="hepatitis-b-woman" />
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <obs conceptId="1321" labelText="Hepatitis B" id="hepatitis-b-man" />
+                                                <div class="col-md-6">
+                                                    <obs conceptId="1321" labelText="Hepatitis B" id="hepatitis-b-woman" />
                                                 </div>
                                             </div>
                                         </div>
@@ -304,11 +308,11 @@
                             </div>
                         </div>
                         <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-profile-tab" id="clinical-assessment-section">
-                            <div class="row">
+                            <div class="row ">
                                 <div class="col-md-12">
                                     <div class="card">
-                                        <div class="card-header">
-                                            CLINICAL ASSESSMENT
+                                        <div class="card-header"  style="font-weight:bold">
+                                            Clinical Assessment
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -390,9 +394,11 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
+                   </div>
+
         </div>
     </div>
+    </div>
+    </div>
+
 </htmlform>
