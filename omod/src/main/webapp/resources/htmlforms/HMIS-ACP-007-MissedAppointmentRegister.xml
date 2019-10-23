@@ -17,143 +17,252 @@
                 <h3>Missed Appointment Register</h3>
             </div>
             <div class="col-md-4"></div>
-            <div class="col-md-2"><submit/></div>
-        </div>
-        <div class="card col-md-12" style="padding:0px !important; margin-bottom:10px !important;">
-            <div class="card-header">
-                Registration Information
+            <div class="col-md-2">
+                <submit class="confirm" submitLabel="Save Form"/>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Missed Appointment Date: </label><br/>
-                        <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
-                        <br/>
-                    </div>
-                </div>
+        </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <label>Service Point:</label>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <obs conceptId="164993" answerConceptId="165047" answerLabel="ART Clinic" style="checkbox" class="horizontal-layout-options"/>
+        <ul class="nav nav-tabs row" id="myTab" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" id="registration-tab" data-toggle="tab" href="#registration" role="tab" aria-controls="registration" aria-selected="true">Registration Information</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="tracking-tab" data-toggle="tab" href="#tracking" role="tab" aria-controls="tracking" aria-selected="false">Tracking Information</a>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <!--      Registration Information      -->
+            <div class="tab-pane fade show active" id="registration" role="tabpanel" aria-labelledby="registration-tab">
+
+                <div class="row mt-3">
+                    <div class="card col-md-12" style="padding:0px !important; margin-bottom:10px !important;">
+                        <!--<div class="card-header">
+                            Registration Information
+                        </div>-->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Missed Appointment Date: </label><br/>
+                                    <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
+                                    <br/>
+                                </div>
                             </div>
-                            <div class="col-md-2">
-                                <obs conceptId="164993" answerConceptId="165048" answerLabel="TB Clinic" style="checkbox" class="horizontal-layout-options"/>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Service Point:</label>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <obs conceptId="164993" answerConceptId="165047" answerLabel="ART Clinic" style="checkbox" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <obs conceptId="164993" answerConceptId="165048" answerLabel="TB Clinic" style="checkbox" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <obs conceptId="164993" answerConceptId="165348" answerLabel="MCH/MBCP" style="checkbox" class="horizontal-layout-options"/>
+                                            <div class="row">
+                                                <div>
+                                                    <obs conceptId="164993" answerConceptId="90041" answerLabel="Pregnant" style="checkbox" class="horizontal-layout-options"/>
+                                                </div>
+                                                <div>
+                                                    <obs conceptId="164993" answerConceptId="5632" answerLabel="Breastfeeding" style="checkbox" class="horizontal-layout-options"/>
+                                                </div>
+                                                <div>
+                                                    <obs conceptId="164993" answerConceptId="99087" answerLabel="Infant Exposed" style="checkbox" class="horizontal-layout-options"/>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-7">
+                                            <obs conceptId="164993" answerConceptId="90002" style="checkbox" answerLabel="Other (Specify):" commentFieldLabel="" class="horizontal-layout-options"/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-7">
-                                <obs conceptId="164993" answerConceptId="90002" style="checkbox" answerLabel="Other Service Delivery Point (Specify):" commentFieldLabel="" class="horizontal-layout-options"/>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Service Point:</label>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <obs conceptId="164993" answerConceptId="165047" answerLabel="ART Clinic" style="checkbox" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <obs conceptId="164993" answerConceptId="165348" answerLabel="MCH/MBCP" style="checkbox" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <obs conceptId="164993" answerConceptId="90041" answerLabel="Pregnant" style="checkbox" class="horizontal-layout-options"/>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <obs conceptId="164993" answerConceptId="5632" answerLabel="Breastfeeding" style="checkbox" class="horizontal-layout-options"/>
+                                                </div>
+
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <obs conceptId="164993" answerConceptId="99087" answerLabel="Infant Exposed" style="checkbox" class="horizontal-layout-options"/>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <!-- TO DO: Get concept id for Infant Infected -->
+                                                    <obs conceptId="164993" answerConceptId="99087" answerLabel="Infant Infected" style="checkbox" class="horizontal-layout-options"/>
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="col-md-3">
+                                            <obs conceptId="164993" answerConceptId="165048" answerLabel="TB Clinic" style="checkbox" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-7">
+                                            <obs conceptId="164993" answerConceptId="90002" style="checkbox" answerLabel="Other (Specify):" commentFieldLabel="" class="horizontal-layout-options"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Medications due for Refill: </label>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <obs conceptId="160288" answerConceptId="164972" answerLabel="ART" style="checkbox" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <obs conceptId="160288" answerConceptId="164971" answerLabel="TB Meds/TPT" style="checkbox" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <obs conceptId="164993" answerConceptId="165347" answerLabel="Infant NVP/CTX" style="checkbox" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <obs conceptId="164993" answerConceptId="5271" answerLabel="FP" style="checkbox" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <obs conceptId="160288" answerConceptId="90002" style="checkbox" answerLabel="Other (Specify):" commentFieldLabel="" class="horizontal-layout-options"/> <br/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Mode of Care:</label><br/>
+                                    <obs conceptId="165143" answerConceptIds="165138,165140,165139,165142,165141"
+                                         answerLabels="1-FBIM, 2-FBG, 3-FTDR, 4-CDDP, 5-CCLAD"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Client Telephone:</label> <br/>
+                                    <obs conceptId="165052" />
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Next of Kin Telephone:</label> <br/>
+                                    <obs conceptId="165052" />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <label>Medications due for Refill: </label>
-                        <div class="row">
-                            <div class="col-md-2">
-                                <obs conceptId="160288" answerConceptId="164972" answerLabel="ART Refill" style="checkbox" class="horizontal-layout-options"/>
+            </div>
+
+
+            <!--      Tracking Information      -->
+            <div class="tab-pane fade" id="tracking" role="tabpanel" aria-labelledby="tracking-tab">
+                <div class="row mt-3">
+                    <div class="card col-md-12" style="padding:0px;!important">
+                        <!--<div class="card-header">
+                            Tracking Information
+                        </div>-->
+                        <div class="card-body">
+                            <div class = "row">
+                                <div class = "col-md-4">
+                                    <label>Follow Up Attempt</label><br/>
+                                    <!--<obs conceptId=":watch" answerConceptIds="165338,165339,165340,165341,165342,165343"
+                                         answerLabels="1-Follow Up 1, 2-Follow Up 2, 3-Follow Up 3, 4-Follow Up 4, 5-Follow Up 5,
+                                            6-Follow Up 6"/>-->
+                                </div>
+                                <div class = "col-md-4">
+                                    <label>Follow Up Date</label><br/>
+                                </div>
+                                <div class = "col-md-4">
+                                    <label>Follow Up Person<span class="required">*</span></label><br/>
+                                    <encounterProvider required="true"/>
+                                </div>
                             </div>
-                            <div class="col-md-2">
-                                <obs conceptId="160288" answerConceptId="164971" answerLabel="TB Meds/TPT" style="checkbox" class="horizontal-layout-options"/>
+
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Follow Up Action</label>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <obs id="phone-call" conceptId="165100" answerConceptId="165102" answerLabel="Phone Call to Client" style="dropdown" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <obs id="home-visit" conceptId="165100" answerConceptId="165103" answerLabel="Home/Workplace Visit" style="dropdown" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <obs id="facility-call" conceptId="165100" answerConceptId="165336" answerLabel="Facility to Facility phone call" style="dropdown" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <obs id="facility-visit" conceptId="165100" answerConceptId="165337" answerLabel="Facility to Facility visit" style="dropdown" class="horizontal-layout-options"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <obs id="followup-type-other" conceptId="165100" answerConceptId="5622" answerLabel="Other:" commentFieldLabel="" class="horizontal-layout-options"/>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-md-2">
-                                <obs conceptId="164993" answerConceptId="165347" answerLabel="Infant NVP/CTX" style="checkbox" class="horizontal-layout-options"/>
+
+
+                            <div class = "row">
+                                <div class = "col-md-4">
+                                    <label>Follow Up Outcome</label><br/>
+                                    <obs conceptId="165104" answerConceptIds="165334,165335,1363"
+                                         answerLabels="1-Returned to care, 2-Self transferred, 3-Stopped/Refused"/>
+                                </div>
+                                <div class = "col-md-4">
+                                    <label>Outcome By End of Quarter</label><br/>
+                                    <obs conceptId="165104" answerConceptIds="165334,165335,1363"
+                                         answerLabels="1-Returned to care, 2-Self transferred, 3-Stopped/Refused"/>
+                                </div>
+                                <div class = "col-md-4">
+                                    <label>Outcome By End of next Quarter</label><br/>
+                                    <obs conceptId="165104" answerConceptIds="165334,165335,1363"
+                                         answerLabels="1-Returned to care, 2-Self transferred, 3-Stopped/Refused"/>
+                                </div>
                             </div>
-                            <div class="col-md-5">
-                                <obs conceptId="160288" answerConceptId="90002" style="checkbox" answerLabel="Other Drug Refill (Specify):" commentFieldLabel="" class="horizontal-layout-options"/> <br/>
+
+                            <div class = "row">
+                                <div class = "col-md-4">
+                                    <label>Date Returned</label>
+                                    <obs conceptId="165378" />
+                                </div>
+                                <div class = "col-md-4">
+                                    <label>Cause of Death</label><br/>
+                                    <obs conceptId="5002" />
+                                </div>
+                                <div class = "col-md-4">
+                                    <label>Comment</label><br/>
+                                    <obs conceptId="159395"
+                                         class="commenttextarea"
+                                         style="textarea"
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-4">
-                        <label>Mode of Care:</label><br/>
-                        <obs conceptId="165143" answerConceptIds="165138,165140,165139,165142,165141"
-                             answerLabels="1-FBIM, 2-FBG, 3-FTDR, 4-CDDP, 5-CCLAD"/>
-                    </div>
-                    <div class="col-md-4">
-                        <label>Client Telephone:</label> <br/>
-                        <obs conceptId="165052" />
-                    </div>
-                    <div class="col-md-4">
-                        <label>Next of Kin Telephone:</label> <br/>
-                        <obs conceptId="165052" />
-                    </div>
-                </div>
             </div>
+
         </div>
 
 
-        <div class="card col-md-12" style="padding:0px;!important">
-            <div class="card-header">
-                Tracking Information
-            </div>
-            <div class="card-body">
-                <div class = "row">
-                    <div class = "col-md-4">
-                        <label>Follow Up Attempt</label><br/>
-                    </div>
-                    <div class = "col-md-4">
-                        <label>Follow Up Date</label><br/>
-                    </div>
-                    <div class = "col-md-4">
-                        <label>Follow Up Person<span class="required">*</span></label><br/>
-                        <encounterProvider required="true"/>
-                    </div>
-                </div>
 
-
-                <div class="row">
-                    <div class="col-md-12">
-                        <label>Follow Up Action</label>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <obs id="phone-call" conceptId="165100" answerConceptId="165102" answerLabel="Phone Call to Client" style="dropdown" class="horizontal-layout-options"/>
-                            </div>
-                            <div class="col-md-4">
-                                <obs id="home-visit" conceptId="165100" answerConceptId="165103" answerLabel="Home/Workplace Visit" style="dropdown" class="horizontal-layout-options"/>
-                            </div>
-                            <div class="col-md-4">
-                                <obs id="followup-type-other" conceptId="165100" answerConceptId="5622" answerLabel="Other Specify:" commentFieldLabel="" class="vertical-layout-options"/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class = "row">
-                    <div class = "col-md-4">
-                        <label>Follow Up Outcome</label><br/>
-                    </div>
-                    <div class = "col-md-4">
-                        <label>Outcome By End of Quarter</label><br/>
-                    </div>
-                    <div class = "col-md-4">
-                        <label>Outcome By End of next Quarter</label><br/>
-                    </div>
-                </div>
-
-                <div class = "row">
-                    <div class = "col-md-4">
-                        <label>Date Returned</label>
-                    </div>
-                    <div class = "col-md-4">
-                        <label>Cause of Death</label><br/>
-                        <obs conceptId="5002" />
-                    </div>
-                    <div class = "col-md-4">
-                        <label>Comment</label><br/>
-                        <obs conceptId="159395"
-                             class="commenttextarea"
-                             style="textarea"
-                        />
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </htmlform>
