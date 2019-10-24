@@ -46,7 +46,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label>Missed Appointment Date: </label><br/>
+                                            <label>Missed Appointment Date: </label>
                                             <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
                                             <br/>
                                         </div>
@@ -90,7 +90,7 @@
                                                 <div class="col-md-3">
                                                     <obs conceptId="164993" answerConceptId="165048" answerLabel="TB Clinic" style="checkbox" class="horizontal-layout-options"/>
                                                 </div>
-                                                <div class="col-md-5">
+                                                <div class="col-md-4">
                                                     <obs conceptId="164993" answerConceptId="90002" style="checkbox" answerLabel="Other (Specify):" commentFieldLabel="" class="horizontal-layout-options"/>
                                                 </div>
                                             </div>
@@ -184,21 +184,21 @@
                                                 <div class="col-md-4">
                                                     <obs id="facility-visit" conceptId="165100" answerConceptId="165337" answerLabel="Facility to Facility visit" style="dropdown" class="horizontal-layout-options"/>
                                                 </div>
-                                                <div class="col-md-8">
-                                                    <obs id="followup-type-other" conceptId="165100" answerConceptId="5622" answerLabel="Other:" commentFieldLabel="" class="vertical-layout-options"/>
+                                                <div class="col-md-4">
+                                                    <obs id="followup-type-other" conceptId="165100" answerConceptId="5622" answerLabel="Other:" commentFieldLabel="" class="horizontal-layout-options"/>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class = "row">
-                                        <div class = "col-md-4">
+                                        <div class = "col-md-11">
                                             <label>Follow Up Outcome:</label>
                                             <obs conceptId="165104" answerConceptIds="165334,165335,1363,165367,160034,165368,165369,165370,165371"
                                                 answerLabels="1 - Returned to care, 2 - Self transferred, 3 - Stopped/Refused, 4 - Migrated/Relocated, 5 - Died, 6 - Unable to be traced, 7 - Tracing attempts initiated but incomplete, 8 - No attempt to trace, 9 - Misclassified as missed appointment"/>
                                         </div>
 
-                                        <div class = "col-md-8 offset-md-8">
+                                        <div class = "col-md-1">
                                          <div class="text-nowrap">
                                                             <a href="#" class="add  add-more-link"><i class= "icon-plus-sign"></i></a>
                                                             <a href="#" class="remove remove-more-link required"> <i class="icon-minus"></i></a>
