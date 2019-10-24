@@ -1,21 +1,30 @@
 <htmlform formName="HMIS ANTANATAL" formDescription="HIV Testing Services Client Card" formEncounterType="264daIZd-f80e-48fe-nba9-P37f2W1905Pv" formUuid="b5c62a98-84d3-43e8-a9be-972185070dd4" formVersion="1.2" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="6" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false" formDisplayStyle="Standard" formLabel="HMIS-071-IntegratedAntenatalRegister">
-    <encounterDate default="today" disallowMultipleEncountersOnDate="block" />
-    <encounterProvider required="true" />
+<!--    <encounterDate default="today" disallowMultipleEncountersOnDate="block" />-->
+<!--    <encounterProvider required="true" />-->
     <span style="display:none;">
         <encounterLocation default="629d78e9-93e5-43b0-ad8a-48313fd99117" order="629d78e9-93e5-43b0-ad8a-48313fd99117" />
     </span>
     <!-- Beging of HTML Form -->
 
+    <style>
+        <!--To do: This class needs to be added in the css general file-->
+        span.long-value-select select{
+        width: 100%;
+        overflow: hidden;
+        white-space: pre;
+        text-overflow: ellipsis;
+        -webkit-appearance: none;
+        }
+    </style>
 
     <div class="poc-page-frame">
         <div class="row">
-            <div class="col-md-4 ">
-                <h3>  INTEGRATED ANTENATAL REGISTER</h3>
+            <div class="col-md-9 ">
+                <h3>Integrated Antanatal Register</h3>
             </div>
-            <div class="col-md-6"></div>
-            <div class="col-md-2 ">
-                <submit/>
-                <button type="submit" class="btn btn-info " >Submit</button>
+
+            <div class="col-md-3">
+              <submit class="confirm sm" submitLabel="Save" submitStyle="customSubmit"/>
             </div>
         </div>
         <div class="row">
@@ -79,7 +88,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <obs conceptId="5596" labelText="	Expected Date of Delivery" />
+                                                    <obs conceptId="5596" labelText="Expected Date of Delivery" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="5089" labelText="Weight(kg)" />
@@ -88,13 +97,38 @@
                                                     <obs conceptId="5090" labelText="Height(cm)" />
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <obs conceptId="1343" labelText="MUAC(cm)" />
+                                                    <obs conceptId="99654" labelText="Blood Pressure" />
                                                 </div>
+
                                             </div>
 
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <obs conceptId="99654" labelText="Blood Pressure" />
+                                                    <obs conceptId="1343" labelText="MUAC(cm)" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>MUAC Color Code</label>
+                                                    <includeIf velocityTest="$patient.age &lt; 5">
+                                                        <obs conceptId="5f86d19d-9546-4466-89c0-6f80c101191b"
+                                                             answerConceptIds="de330d01-5586-4eed-a645-e04b6bd13701,a3b1734c-4743-4b9d-8e71-08d0459d29b9,8846c03f-67bf-4aeb-8ca7-39bf79b4ebf3"
+                                                             answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm" id="muac-qualitative" />
+                                                    </includeIf>
+                                                    <includeIf velocityTest="$patient.age &lt; 10 &amp;&amp; $patient.age &gt;=5">
+                                                        <obs conceptId="5f86d19d-9546-4466-89c0-6f80c101191b"
+                                                             answerConceptIds="de330d01-5586-4eed-a645-e04b6bd13701,a3b1734c-4743-4b9d-8e71-08d0459d29b9,8846c03f-67bf-4aeb-8ca7-39bf79b4ebf3"
+                                                             answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm" id="muac-qualitative" />
+                                                    </includeIf>
+                                                    <includeIf velocityTest="$patient.age &lt; 18 &amp;&amp; $patient.age &gt;=10">
+                                                        <obs conceptId="5f86d19d-9546-4466-89c0-6f80c101191b"
+                                                             answerConceptIds="de330d01-5586-4eed-a645-e04b6bd13701,a3b1734c-4743-4b9d-8e71-08d0459d29b9,8846c03f-67bf-4aeb-8ca7-39bf79b4ebf3"
+                                                             answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm" id="muac-qualitative" />
+                                                    </includeIf>
+
+                                                    <includeIf velocityTest="$patient.age &gt;=18">
+                                                        <obs conceptId="5f86d19d-9546-4466-89c0-6f80c101191b"
+                                                             answerConceptIds="de330d01-5586-4eed-a645-e04b6bd13701,a3b1734c-4743-4b9d-8e71-08d0459d29b9,8846c03f-67bf-4aeb-8ca7-39bf79b4ebf3"
+                                                             answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm" id="muac-qualitative" />
+                                                    </includeIf>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="b644c29c-9bb0-447e-9f73-2ae89496a709" labelText="INR No:" />
@@ -112,12 +146,26 @@
                                             Woman eMTCT Status
                                         </div>
                                         <div class="card-body">
+
                                             <div class="row ">
-                                                <div class="col-md-6">
-                                                    <obs conceptId="99317" labelText="Initial Result" style="dropdown" class="emtct-code" id="emtct-code-woman" />
+                                                <div class="col-md-3">
+                                                    <label>eMTCT Code: Woman</label>
+                                                    <obs conceptId="99317"
+                                                         answerConceptIds="99313,99734,99314,99315,164962,164963,99737,99738,99739,99736"
+                                                         answerLabels=	"C :Client was counselled but declined HIV testing,
+                                                        T :Client was counselled and tested but didn't receive results,
+                                                       TR : Client was counselled tested and results given - Client tested for the for the first time in ANC this pregnancy and she is HIV Negative,
+                                                        TRR : Counselled tested and results given - Client tested for the first time in ANC this pregnacy  and she is HIV Positive,
+                                                        TR&#8730; : ANC revisit clients with a known HIV Negative (HIV-) Test Result from a previous ANC attendance during this pregnancy,
+                                                        TRR&#8730; : ANC revisit clients with a known HIV Positive (HIV+) Test Result from a previous ANC attendance during this pregnancy,
+                                                        TRK: Clients with a documented HIV Negative (HIV-) test result conducted within 4 weeks prior to their ANC 1st Visit,
+                                                        TRRK: Clients with a documented HIV Positive (HIV+) test result conducted within 4 weeks prior to their ANC 1st Visit,
+                                                        TR+ : Tested HIV- on retest,
+                                                        TRR+ : Clients who tested HIV Positive on a re-test"  class="long-value-select"
+                                                         labelText="Initial Result"  style="dropdown"  id="emtct-code-woman" />
                                                 </div>
 
-                                                <div class=" col-md-2">
+                                                <div class=" col-md-3">
                                                     <label>
                                                         STK Given?
                                                     </label>
@@ -127,20 +175,43 @@
                                                     <obs conceptId="165379" class="ml-5 ml-lg-0" style="radio" answerLabels="Yes, No" />
 
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
+                                                    <obs conceptId="90203" labelText="WHO Clinical Stage"/>
+                                                </div>
+                                                <div class="col-md-3">
                                                     <obs conceptId="5497" labelText="CD4 " />
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <obs conceptId="856" labelText="Viral Load" />
-                                                </div>
                                             </div>
-                                            <div class="row mt-4">
+                                            <div class="row mt-3">
                                                 <div class="col-md-3">
                                                     <obs conceptId="163023" labelText="Viral Load Date" allowFutureDates="false" />
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <obs conceptId="90203" labelText="WHO  CLINICAL STAGE" />
+                                                <div class="col-md-2">
+                                                    <obs conceptId="dc8d83e3-30ab-102d-86b0-7a5022ba4115" labelText="Viral Load (copies/ml)" id="viral-load" />
                                                 </div>
+                                                <div class="col-md-4">
+                                                    <obs conceptId="dca12261-30ab-102d-86b0-7a5022ba4115"
+                                                         answerConceptIds="dca1269d-30ab-102d-86b0-7a5022ba4115,dca10c94-30ab-102d-86b0-7a5022ba4115,dca11907-30ab-102d-86b0-7a5022ba4115"
+                                                         answerLabels="Not Detected,Detected,Sample Rejected" style="dropdown" id="viral-load-results" labelText="Viral Load Results" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <obs 	conceptId="fcb5ef91-ad8f-44bc-ac5f-9ffb29881e59"
+                                                            answerConceptIds="a4089d8e-9ea6-4fff-b273-415c6640203a,f56e8d46-5b2f-488b-861a-94a89d16adf6"
+                                                            answerLabels="Suppressed,Non-suppressed" id="viral-load-status" labelText="Viral Load Status" />
+                                                </div>
+
+                                            </div>
+                                            <div class="row mt-4">
+                                                <div class="col-md-3">
+                                                <obs conceptId="99431" labelText="ART Code" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <obs conceptId="165382" labelText="Linkage ART NO: " />
+                                                </div>
+                                                <div class="col-md-3">
+                                                 <obs conceptId="165389" labelText="Linkage ARV Prophylaxis"/>
+                                                </div>
+
                                                 <div class="col-md-3">
                                                     <label>
                                                         eMTCT Risk Assessment
@@ -149,21 +220,11 @@
                                                     <br></br>
                                                     <obs conceptId="165380" style="radio" class="md-4" answerLabels="High, Low" />
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <label>
-                                                        Referred for ART?
-                                                    </label>
-                                                    <br></br>
-                                                    <br></br>
-                                                    <obs conceptId="99430" style="radio"  answerLabels="Yes,No" />
-                                                </div>
+                                    </div>
                                             </div>
                                     </div>
                                  </div>
                             </div>
-
-                        </div>
-
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <div class="card">
@@ -187,16 +248,17 @@
                                                     </label>
                                                     <br></br>
                                                     <br></br>
-                                                    <obs conceptId="99351" style="radio" answerLabels="Yes, No, N/A" />
+                                                    <obs conceptId="99351" style="radio"  answerLabels="Yes, No" />
                                                 </div>
                                             </div>
 
                                             <div class="row mt-4">
 
-                                                <div class="col-md-5">
-                                                    <obs conceptId="99317" labelText="TFV" style="dropdown" class="emtct-code" id="tfv-man" />
+                                                <div class="col-md-4">
+                                                    <obs conceptId="99317"  answerConceptIds="99315,99736"  answerLabels="TRR : Counselled tested and results given - Client tested for the first time in ANC this pregnacy  and she is HIV Positive,
+                                                    TRR+ : Clients who tested HIV Positive on a re-test"	 labelText="TFV" style="dropdown" class="long-value-select" id="tfv-man"/>
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-4">
                                                     <obs conceptId="99081" labelText="Where" />
                                                 </div>
                                                 <div class="col-md-2">
@@ -212,8 +274,9 @@
 
 
                             </div>
+                        </div>
 
-                    </div>
+
                         <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-profile-tab" id="investigations-section">
                             <div class="row ">
                                 <div class="col-md-12">
@@ -259,24 +322,6 @@
                                                 </div>
                                             </div>
                                             <div class="row mt-4">
-
-                                                <div class="col-md-2">
-                                                    <obs conceptId="99493" labelText="HIV Test" />
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <obs conceptId="5497" labelText="CD4 Count" />
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <obs conceptId="856" labelText="Viral Load" />
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <obs conceptId="0b434cfa-b11c-4d14-aaa2-9aed6ca2da88" labelText="Viral Load Date" allowFutureDates="false" />
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <obs conceptId="90203" labelText="WHO HIV CLINICAL STAGE" />
-                                                </div>
-                                            </div>
-                                            <div class="row mt-4">
                                                 <div class="col-md-6">
                                                     <h4>Women</h4>
                                                 </div>
@@ -317,7 +362,9 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-12">
-                                                    <obs conceptId="99321" labelText="Diagnosis" />
+
+                                                    <encounterDiagnoses required="false" selectedDiagnosesTarget="" preferredCodingSource="ICD-10-WHO"/>
+
                                                 </div>
                                             </div>
                                             <h4 style="color:black">
@@ -394,10 +441,11 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+
                    </div>
 
         </div>
-    </div>
     </div>
     </div>
 
