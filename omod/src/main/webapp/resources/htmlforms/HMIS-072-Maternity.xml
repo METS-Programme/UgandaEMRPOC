@@ -1,5 +1,14 @@
 <htmlform formName="HMIS-072-Maternity" formDescription="HIV Testing Services Client Card" formEncounterType="264daIZd-f80e-48fe-nba9-P37f2W1905Pv" formUuid="0b946c41-957c-4aeb-9b1a-da3983c0d163" formVersion="1.2" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="6" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; patient.person.gender=='F'" formDisplayStyle="Standard" formLabel="HMIS Maternity Form">
 
+
+    <style type="text/css">
+        form input, form select, form textarea, form ul.select, .form input, .form select, .form textarea, .form ul.select {
+    
+     display: inline-block;
+     
+   
+    } 
+    </style>
     <div class="poc-page-frame" id="form-id">
         <div class="headers" style="text-align: center;">
             <h3 style="background: #FFFF7D; padding: 10px;">072 Maternity Form</h3>
@@ -17,449 +26,466 @@
 
     </div>
 
-    <div class ="tab-pane fade show active" role="tabpanel" aria-leballebdy="nav-profile-tab" id="care-entry-section">
-        <div class="card mt-4">
-            <section>
-                <div class="card-header">Admission Information</div>
+    <div class="tab-content art-care-card" id="nav-tabContent">
+        <div class="tab-pane fade show active" role="tabpanel" aria-leballebdy="nav-profile-tab" id="care-entry-section">
+            <div class="card mt-4">
+                <section>
+                    <div class="card-header">Admission Information</div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="col-md-12">
+                                        <label>Date:</label>
+                                        <encounterDate default="today" disallowMultipleEncountersOnDate="block" />
+                                        <span style="display: none;">
+                                            <encounterLocation default="629d78e9-93e5-43b0-ad8a-48313fd99117" order="629d78e9-93e5-43b0-ad8a-48313fd99117" />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Gravida:</label>
+                                    <obs conceptId="5624" required="false" />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Parity:</label>
+                                    <obs conceptId="1053" required="false" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Weeks of gestation:</label>
+                                    <obs conceptId="162983" required="false" />
+                                </div>
+
+
+                            </div>
+                            <div class="row mb-3">
+
+                                <div class="col-md-3">
+                                    <div class="col-md-12">
+                                        <label>IPA:</label>
+                                        <obs conceptId="1646" required="false" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>ANC:</label>
+                                    <obs conceptId="99727" required="false" />
+                                </div>
+                                <div class="col-md-3">
+                                   <label><span class="required">*</span>Ref No.</label>
+                                    <obs conceptId="99767" required="false" />
+                                </div>
+                                <div></div>
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-12">
+                            Final Diagnosis:
+                        </div>
+                        </div>
+                        <table id="final-diagnosis" class="table table-borderless">
+                            <tbody>
+
+                                <tr>
+                                    <td>
+                                        <obs conceptId="1284" answerConceptId="162277" answerLabel="1 - Abortions" style="checkbox" />
+                                    </td>
+                                    <td>
+                                        <obs conceptId="1284" answerConceptId="160666" answerLabel="2 - APH" style="checkbox" />
+                                    </td>
+                                    <td>
+                                        <obs conceptId="1284" answerConceptId="165125" answerLabel="3 -  PPH" style="checkbox" />
+                                    </td>
+                                    <td>
+                                        <obs conceptId="1284" answerConceptId="165126" answerLabel="4 -  Malaria in Pregnancy" style="checkbox" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <obs conceptId="1284" answerConceptId="162198" answerLabel="5 - Highblood Pressure in Pregnancy" style="checkbox" />
+                                    </td>
+                                    <td>
+                                        <obs conceptId="1284" answerConceptId="159674" answerLabel="6 -  Obstructed Labour" style="checkbox" />
+                                    </td>
+                                    <td>
+                                        <obs conceptId="1284" answerConceptId="165127" answerLabel="7 - Puerperal Sepsis" style="checkbox" />
+                                    </td>
+                                    <td>
+                                        <obs conceptId="1284" answerConceptId="90041" answerLabel="8 - Sepsis related to pregnancy" style="checkbox" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <obs conceptId="1284" answerConceptId="99601" answerLabel="9 - Anaemia in pregnancy" style="checkbox" />
+                                    </td>
+                                    <td>
+                                        <obs conceptId="1284" answerConceptId="165132" answerLabel="10 - Reptured uterus" style="checkbox" />
+                                    </td>
+                                    <td>
+                                        <obs conceptId="1284" answerConceptId="162558" answerLabel="11 -   Ectopic Pregnancy" style="checkbox" />
+                                    </td>
+                                    <td>
+                                        <label>Other Complications of Pregnancy:</label>
+                                        <obs conceptId="5624" required="false" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+
+                        <div class=" row mb-4">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="col-md-12">
+                                        <label>WHO Clinical Stage:</label>
+                                        <obs conceptId="90203" answerConceptIds="90033,90034,90035,90036,90293,90294,90295,90296"  style="dropdown" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>CD4 Count:</label>
+                                    <obs conceptId="1646" required="false" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>CD4 Count Date:</label>
+                                    <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 35%;"></i>
+                                    <obs id="90267" conceptId="90267" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="col-md-12">
+                                        <label>Viral Load Results:</label>
+                                        <obs conceptId="5624" required="false" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Viral Load Date:</label>
+                                    <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 50%;"></i>
+                                    <obs id="90267" conceptId="90267" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Viral Load (copies/ml):</label>
+                                    <obs conceptId="5624" required="false" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Viral Load Status:</label>
+                                    <obs conceptId="5624" required="false" />
+                                </div>
+
+                                <div></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+
+
+        <div class="tab-pane fade show" role="tabpanel" aria-leballebdy="nav-profile-tab" id="art-care-cohort-section">
+            <div class="card mt-4">
+                <div class="card-header">Delivery Information</div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>Date:</label>
-                                <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
-                                <span style="display: none;">
-                                    <encounterLocation default="629d78e9-93e5-43b0-ad8a-48313fd99117" order="629d78e9-93e5-43b0-ad8a-48313fd99117"/>
-                                </span>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Gravida:</label>
-                                <obs conceptId="5624" required="false"/>
-                            </div>
+                        
+                            <div class="col-md-4">
 
-                            <div class="col-md-3">
-                                <label>Parity:</label>
-                                <obs conceptId="1053" required="false"/>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Weeks of gestation:</label>
-                                <obs conceptId="162983" required="false"/>
+                                    <label>Mode of Delivery:</label>
+                                    <obs conceptId="5630" required="false" answerConceptIds="1170,99734,1171,1637,164920" answerLabels="Normal Vaginal Delivery,Vaccum Extraction,
+                                Caesarean Section,Manual Vaccum Aspiration(MVA),Dilatation and Curettage(D &amp; C), laparatomy, hysterectomy" style="dropdown" />
                             </div>
 
 
-                        </div>
-                        <div class="row mb-3">
-
-                            <div class="col-md-3">
-                                <label>IPA:</label>
-                                <obs conceptId="1646" required="false"/>
+                            <div class="col-md-4">
+                                    <label>Date of Delivery:</label>
+                                    <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 35%;"></i>
+                                    <obs conceptId="90267" required="false" />
                             </div>
-
-                            <div class="col-md-3">
-                                <label>ANC:</label>
-                                <obs conceptId="99727" required="false"/>
+                            
+                            <div class="col-md-4">
+                                    <label>Time of Delivery:</label>
+                                    <!-- <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 50%;"></i> -->
+                                    <obs conceptId="99543" required="false" />
                             </div>
-                            <div class="col-md-3">
-                                <span class="required">*</span>
-                                <obs conceptId="99767" required="false" labelText="Ref no.:"/>
-                            </div>
-                            <div>
-
-                            </div>
-                        </div>
-
-
                     </div>
-
 
                     <div class="row">
                         <div class="col-md-12">
-                            <b>Final Diagnosis:</b>
+                            Management of the 3rd stage of labour:
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <obs conceptId="1284" answerConceptId="162277" answerLabel="1 - Abortions" style="checkbox"/>
-                        </div>
-                        <div class="col-md-3">
-                            <obs conceptId="1284" answerConceptId="160666" answerLabel="2 - APH" style="checkbox" />
-                        </div>
-                        <div class="col-md-3">
-                            <obs conceptId="1284" answerConceptId="165125" answerLabel="3 -  PPH" style="checkbox" />
-                        </div>
-                        <div class="col-md-3">
-                            <obs conceptId="1284" answerConceptId="165126" answerLabel="4 -  Malaria in Pregnancy" style="checkbox" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <obs conceptId="1284" answerConceptId="162198" answerLabel="5 - Highblood Pressure in Pregnancy" style="checkbox" />
-                        </div>
-                        <div class="col-md-3">
-                            <obs conceptId="1284" answerConceptId="159674" answerLabel="6 -  Obstructed Labour" style="checkbox" />
-                        </div>
-                        <div class="col-md-3">
-                            <obs conceptId="1284" answerConceptId="165127" answerLabel="7 - Puerperal Sepsis" style="checkbox" />
-                        </div>
-                        <div class="col-md-3">
-                            <obs conceptId="1284" answerConceptId="90041" answerLabel="8 - Sepsis related to pregnancy" style="checkbox" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <obs conceptId="1284" answerConceptId="99601" answerLabel="9 - Anaemia in pregnancy" style="checkbox" />
-                        </div>
-                        <div class="col-md-3">
-                            <obs conceptId="1284" answerConceptId="165132" answerLabel="10 - Reptured uterus" style="checkbox" />
-                        </div>
-                        <div class="col-md-3">
-                            <obs conceptId="1284" answerConceptId="162558" answerLabel="11 -   Ectopic Pregnancy" style="checkbox" />
-                        </div>
-                        <div class="col-md-3 mb-4">
-                            <label>Other Complications of Pregnancy:</label>
-                            <obs conceptId="5624" required="false"/>
-                        </div>
-                    </div>
+                    <table id="management_of_the_3rd_stage_of_labour" class="table table-borderless">
+                        <tbody>
 
-                    <div class=" row mb-4">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>WHO Clinical Stage:</label>
-                                <obs conceptId="5624" required="false"/>
-                            </div>
+                            <tr>
+                                <td>
+                                    <obs conceptId="165169" answerConceptId="165125" answerLabel="1 - Ergometrine" style="checkbox" />
+                                </td>
+                                <td>
+                                    <obs conceptId="165169" answerConceptId="165125" answerLabel="2 - Pitocin" style="checkbox" />
+                                </td>
+                                <td>
+                                    <obs conceptId="165169" answerConceptId="165125" answerLabel="3 - Mistoprotol" style="checkbox" />
+                                </td>
+                                <td>
+                                    <label>Other Treaments Given:</label>
+                                    <obs conceptId="5624" required="false" />
+                                </td>
+                            </tr>
 
-                            <div class="col-md-4">
-                                <label>CD4 Count:</label>
-                                <obs conceptId="1646" required="false"/>
-                            </div>
-                            <div class="col-md-4">
-                                <label>CD4 Count Date:</label>
-                                <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 50%;"></i>
-                                <obs id = "90267" conceptId="90267" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <label>Viral Load Results:</label>
-                                <obs conceptId="5624" required="false"/>
-                            </div>
+                            <tr>
+                                <td>
+                                    <label>eMTCT:</label>
+                                    <obs conceptId="99317" required="false" answerConceptIds="99313,99734,99314,99315,99736" answerLabels="C - Counseled but declined HIV testing,T - Counseled and tested but didn't recieve results
+                                    ,TR - Counseled tested and results given,TRR - Counseled tested and results given,TRR+ - Client was originally negative but sero-converted at this test" style="dropdown" />
+                                </td>
+                                <td>
+                                    <obs id="99881_{n}" conceptId="99317" answerConceptIds="164962,164963" style="radio" class="horizontal" />
+                                </td>
+                                <td>
+                                    <label>ARVs to mother:</label>
+                                    <obs conceptId="99344" required="false" answerConceptIds="99745,99747,1175,1118" answerLabels="ART,ART√,NA,ND" style="dropdown" />
+                                </td>
+                                <td>
 
-                            <div class="col-md-4">
-                                <label>Viral Load Date:</label>
-                                <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 50%;"></i>
-                                <obs id = "90267" conceptId="90267" />
-                            </div>
-                            <div>
-                            </div>
+                                    <label>VIT A Supplement:</label>
+
+                                    <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
+
+                                </td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label>M.U.A.C (cm):</label>
+                            <obs conceptId="1343" required="false" />
                         </div>
+
+                        <div class="col-md-4">
+                            <label>MUAC Status:</label>
+                            <obs conceptId="99030" required="false" style="dropdown" />
+                        </div>
+
+                        <div class="col-md-4">
+                            <label>IRN No.:</label>
+                            <obs conceptId="1646" required="false" />
+                        </div>
+
                     </div>
                 </div>
-            </section>
+            </div>
         </div>
 
-    </div>
-
-
-    <div class="card mt-4">
-        <div class="card-header">Delivery Information</div>
-        <div class="card-body">
-                <div class="row">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label>Mode of Delivery:</label>
-                            <obs conceptId="5630" required="false" answerConceptIds="1170,99734,1171,1637,164920" answerLabels="Normal Vaginal Delivery,Vaccum Extraction,
-                                Caesarean Section,Manual Vaccum Aspiration(MVA),Dilatation and Curettage(D &amp; C), laparatomy, hysterectomy" style="dropdown"/>
-                        </div>
-                        <div class="col-md-4">
-                                <label>Date of Delivery:</label>
-                                <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 50%;"></i>
-                                <obs id = "90267" conceptId="90267" />
-                            </div>
-                        <div class="col-md-4">
-                            <label>Time of Delivery:</label>
-                            <obs conceptId="162983" required="false"/>
-                        </div>
-                    </div>
-                </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <label>Management of the 3rd stage of labour:</label>
-                    <div class="row ARTSpecialCateogryEnableDisable1">
+        <div class="tab-pane fade show" role="tabpanel" aria-leballebdy="nav-profile-tab" id="prior-art-section">
+            <div class="card mt-4">
+                <div class="card-header">Child Information</div>
+                <div class="card-body">
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-3">
-                                <obs conceptId="165169" answerConceptId="165125" answerLabel="1 - Ergometrine" style="checkbox" />
+                                <label>Apgar 1st Minute Score:</label>
+                                <obs conceptId="1053" required="false" />
                             </div>
                             <div class="col-md-3">
-                                <obs conceptId="165169" answerConceptId="165125" answerLabel="2 - Pitocin" style="checkbox" />
+                                <label>Apgar 5th Minute Score:</label>
+                                <obs conceptId="90267" required="false" />
                             </div>
+                            <div class="col-md-3 d-flex">
+                                <label>Sex:</label>
+                                <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Male,Female" style="radio" class="horizontal" />
+
+                            </div>
+
                             <div class="col-md-3">
-                                <obs conceptId="165169" answerConceptId="165125" answerLabel="3 - Mistoprotol" style="checkbox" />
+                                <label>ARVs Administered to Baby:</label>
+                                <obs conceptId="162935" required="false" answerConceptIds="1175,162934" answerLabels="NA,NVP Syrup" style="dropdown" />
                             </div>
-                            <div class="col-md-3">
-                                <label>Other Treaments Given:</label>
-                                <obs conceptId="5624" required="false"/>
-                            </div>
+
                         </div>
+                    </div>
 
 
+                    <div class="row">
 
                         <div class="col-md-12">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <label>eMTCT:</label>
-                                    <obs conceptId="99317" required="false" answerConceptIds="99313,99734,99314,99315,99736" answerLabels="C,T,TR,TRR,TRR+" style="dropdown"/>
-                                </div>
-                                <div class="col-md-3">
-                                    <obs id="99881_{n}" conceptId="99317" answerConceptIds="164962,164963" answerLabels="1 - TR*,2 - TRR*" style="radio" class="horizontal" />
+                                <div class="col-md-6 d-flex">
+                                    <label>Immediate Skin to Skin Contact:</label>
+                                    <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
+
                                 </div>
 
+                                <div class="col-md-6 d-flex">
+                                    <label>Breastfed in Less than an Hour:</label>
+                                    <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
+
+                                </div>
 
                             </div>
-                        </div>
 
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-4">
-                    <label>ARVs to mother:</label>
-                    <obs conceptId="99344" required="false" answerConceptIds="99745,99747,1175,1118," answerLabels="ART,ART*,NA,ND" style="dropdown"/>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label>VIT A Supplement:</label>
-                        </div>
-                        <div class="col-md-3">
-                            <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal"/>
                         </div>
                     </div>
 
-                </div>
-            </div>
-
-
-            <div class="row">
-                <div class="col-md-4">
-                    <label>MUAC:</label>
-                    <obs conceptId="1343" required="false"/>
-                </div>
-
-                <div class="col-md-4">
-                    <label>MUAC Status:</label>
-                    <obs conceptId="99030" required="false" style="dropdown"/>
-                </div>
-
-                <div class="col-md-4">
-                    <label>IRN No.:</label>
-                    <obs conceptId="1646" required="false"/>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <div class="card mt-4">
-        <div class="card-header">Child Information</div>
-        <div class="card-body">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-3">
-                        <label>Apgar 1st Minute Score:</label>
-                        <obs conceptId="1053" required="false"/>
-                    </div>
-                    <div class="col-md-3">
-                        <label>Apgar 5th Minute Score:</label>
-                        <obs conceptId="90267" required="false"/>
-                    </div>
-                    <div class="col-md-6">
-                        <label>Sex:</label>
+                    <div class="row mt-3">
                         <div class="col-md-12">
-                            <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Male,Female" style="radio" class="horizontal"/>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-
-
-            <div class="row">
-                <div class="col-md-4">
-                    <label>ARVs Administered to Baby:</label>
-                    <obs conceptId="162935" required="false" answerConceptIds="1175,162934" answerLabels="NA,NVP Syrup" style="dropdown"/>
-                </div>
-
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label>Immediate Skin to Skin Contact:</label>
-                        </div>
-                        <div class="col-md-3">
-                            <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal"/>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label>Breastfed in Less than an Hour:</label>
-                        </div>
-                        <div class="col-md-3">
-                            <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal"/>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <label>Routine Medication:</label>
-                    <div class="row ARTSpecialCateogryEnableDisable1">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <obs conceptId="165169" answerConceptId="165125" answerLabel="Tetraxycline Eye Ointment" style="checkbox" />
-                            </div>
-                            <div class="col-md-3">
-                                <obs conceptId="165169" answerConceptId="165125" answerLabel="Vitamin K" style="checkbox" />
-                            </div>
-                            <div class="col-md-3">
-                                <obs conceptId="165169" answerConceptId="165125" answerLabel="Chlorhexidine" style="checkbox" />
-                            </div>
-                            <div class="col-md-3">
-                                <label>Other Treaments Given:</label>
-                                <obs conceptId="5624" required="false"/>
+                            <label>Routine Medication:</label>
+                            <div class="row ARTSpecialCateogryEnableDisable1">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <obs conceptId="165169" answerConceptId="165125" answerLabel="Tetraxycline Eye Ointment" style="checkbox" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <obs conceptId="165169" answerConceptId="165125" answerLabel="Vitamin K" style="checkbox" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <obs conceptId="165169" answerConceptId="165125" answerLabel="Chlorhexidine" style="checkbox" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Other Treaments Given:</label>
+                                        <obs conceptId="5624" required="false" />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
 
 
+                    <div class="row mt-3">
 
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-3">
-                        <label>Counselling at Discharge:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <obs id="162938_{n}" conceptId="162938" answerConceptIds="162936,162937" answerLabels="Counselled(C),Not Counselled(NC)" style="radio" class="horizontal"/>
-                    </div>
+                        <div class="col-md-6 d-flex">
+                            <label>Counselling at Discharge:</label>
+                            <obs id="162938_{n}" conceptId="162938" answerConceptIds="162936,162937" answerLabels="Counselled,Not Counselled" style="radio" class="horizontal" />
+                        </div>
 
-                    <div class="col-md-3">
-                        <label>Maternal Nutrition Counselling:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal"/>
+                        <div class="col-md-6 d-flex">
+                            <label>Maternal Nutrition Counselling:</label>
+                            <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
+                        </div>
+
                     </div>
 
-                </div>
 
-            </div>
+                    <div class="row mt-3">
+                        <div class="col-md-12">
+                            <div class="row ARTSpecialCateogryEnableDisable1">
 
+                                <div class="col-md-3 d-flex">
+                                    <label>ICYF:</label>
+                                    <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
+                                </div>
 
-            <div class="row">
-                <div class="col-md-12">
-                    <label>ICYF:</label>
-                    <div class="row ARTSpecialCateogryEnableDisable1">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal"/>
-                            </div>
-
-                            <div class="col-md-3">
-                                <label>Infant Breastfeeding Option:</label>
-                                <obs conceptId="163459" required="false" answerConceptIds="5526,99089,6046" answerLabels="EBF, RF, MF" style="dropdown"/>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Infant Breastfeeding Option:</label>
-                                <obs conceptId="164941" required="false"/>
+                                <div class="col-md-3">
+                                    <label>Infant Breastfeeding Option:</label>
+                                    <obs conceptId="163459" required="false" answerConceptIds="5526,99089,6046" answerLabels="EBF, RF, MF" style="dropdown" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Infant Breastfeeding Option:</label>
+                                    <obs conceptId="164941" required="false" />
+                                </div>
                             </div>
                         </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="row mt-3">
+                            <div class="col-md-3">
+                                <label>ARVs Administered:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Immunisation:</label>
+                            </div>
+                            <div class="col-md-3">
+                                <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
+                            </div>
+
+                        </div>
+
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-3">
-                        <label>ARVs Administered:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal"/>
-                    </div>
 
-                    <div class="col-md-3">
-                        <label>Immunisation:</label>
-                    </div>
-                    <div class="col-md-3">
-                        <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal"/>
-                    </div>
+        <div class="tab-pane fade show " role="tabpanel" aria-leballebdy="nav-profile-tab" id="drug-allergies-and-art-care">
 
-                </div>
+            <div class="col-md-2 offset-md-9">
+                <submit class="col-md-5 confirm" submitLabel="confirm " />
+            </div>
+            <div class="card mt-4">
 
+                <section>
+                    <div class="card-header">Discharge Information</div>
+
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Family Planning Method Given:</label>
+                                    <obs conceptId="99296" required="false" answerConceptIds="90089,162960,162959,162961,,162962,162963" answerLabels="PP-BTL, PP-IUD, PAC-IUD, Implant, Oral Pills, Depo" style="dropdown" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Other Family Planning Method(Specify):</label>
+                                    <obs conceptId="5624" required="false" />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Conditon of Mother at Discharge:</label>
+                                    <obs conceptId="1053" required="false" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Condition of Baby at Discharge:</label>
+                                    <obs conceptId="162983" required="false" />
+                                </div>
+
+
+                            </div>
+                            <div class="row">
+
+                                <div class="col-md-3">
+                                    <label>Delivered By:</label>
+                                    <obs conceptId="1646" required="false" />
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>PNC at 6 Hours:</label>
+                                    <obs conceptId="99727" required="false" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Date of Discharge:</label>
+                                    <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 50%;"></i>
+                                    <obs id="90267" conceptId="90267" />
+                                </div>
+                                <div class="col-md-3">
+                                    <label>Dischraged by:</label>
+                                    <obs conceptId="99727" required="false" />
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
-
-    <div class="card mt-4">
-        <section>
-            <div class="card-header">Discharge Information</div>
-            <div class="card-body">
-                <div class="row mb-4">
-                    <div class="row">
-                        <div class="col-md-3">
-                            <label>Family Planning Method Given:</label>
-                            <obs conceptId="99296" required="false" answerConceptIds="90089,162960,162959,162961,,162962,162963" answerLabels="PP-BTL, PP-IUD, PAC-IUD, Implant, Oral Pills, Depo" style="dropdown"/>
-                        </div>
-                        <div class="col-md-3">
-                            <label>Other Family Planning Method(Specify):</label>
-                            <obs conceptId="5624" required="false"/>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label>Conditon of Mother at Discharge:</label>
-                            <obs conceptId="1053" required="false"/>
-                        </div>
-                        <div class="col-md-3">
-                            <label>Condition of Baby at Discharge:</label>
-                            <obs conceptId="162983" required="false"/>
-                        </div>
-
-
-                    </div>
-                    <div class="row">
-
-                        <div class="col-md-3">
-                            <label>Delivered By:</label>
-                            <obs conceptId="1646" required="false"/>
-                        </div>
-
-                        <div class="col-md-3">
-                            <label>PNC at 6 Hours:</label>
-                            <obs conceptId="99727" required="false"/>
-                        </div>
-                        <div class="col-md-3">
-                            <label>Date of Discharge:</label>
-                            <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 50%;"></i>
-                            <obs id = "90267" conceptId="90267" />
-                        </div>
-                        <div class="col-md-3">
-                            <label>Dischraged by:</label>
-                            <obs conceptId="99727" required="false"/>
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <submit/>
 
 
 </htmlform>
