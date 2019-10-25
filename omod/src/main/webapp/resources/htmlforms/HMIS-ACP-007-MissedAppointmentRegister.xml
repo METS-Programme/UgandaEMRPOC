@@ -11,7 +11,8 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="card">
+        <div class="col-md-12">
+        <div class="card">
 				<div class="card-header">
 					<ul class="nav nav-tabs row " id="myTab" role="tablist">
 						<li class="nav-item">
@@ -118,6 +119,7 @@
 												<label>
 													Client Telephone:
 												</label>
+                                                <br />
 												<obs conceptId="165052" />
 											</div>
 											<div class="col-md-4">
@@ -149,6 +151,7 @@
 													Follow Up Date:
 												</label>
 												<br />
+                                                <!-- TO DO ADD STYLING TO THE DATE PICKER ICON -->
 												<obs conceptId="165373" class="Vertical-layout-options">
 													<i class="icon-calendar small right-addon-row position-absolute" style="right: 50%; top: 39%;">
 													</i>
@@ -241,6 +244,7 @@
 													Date Returned:
 												</label>
 												<br />
+                                                 <!-- TO DO ADD STYLING TO THE DATE PICKER ICON -->
 												<i class="icon-calendar small right-addon-row position-absolute" style="right: 50%; top: 39%;">
 												</i>
 												<obs conceptId="165378" class="Vertical-layout-options" />
@@ -269,6 +273,8 @@
 					</div>
 				</div>
 			</div>
+        </div>
+			
 		</div>
 	</div>
 </htmlform>
