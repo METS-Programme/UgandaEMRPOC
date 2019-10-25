@@ -2,15 +2,14 @@
           formDescription="Encounter form for patients enrolled for PNC services"
           formEncounterType="fa6f3ff5-b784-43fb-ab35-a08ab7dbf074"
           formUuid="a6c5a8c3-c414-449f-a077-c2f6acbdd8b1"
-          formVersion="1.2"
+          formVersion="3.0.0"
           formAddMetadata="yes"
           formUILocation="patientDashboard.visitActions"
           formOrder="6"
           formIcon="icon-medkit"
-          formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false"
+          formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false&amp;&amp; patient.person.gender=='F'&amp;&amp; sessionLocation.uuid=='e9bc61b5-69ff-414b-9cf0-0c22d6dfca2b'"
           formDisplayStyle="Standard"
           formLabel="Postnatal Visit Form">
-          <!-- &definitionUiResource=ugandaemrpoc:htmlforms/test.xml -->
     <style>
         <!--To do: This class needs to be added in the css general file-->
         span.long-value-select select{
@@ -22,15 +21,18 @@
         }
     </style>
 
-    <div class="row">
-        <div class="col-md-6">
+    <div class="">
+     <div class="row">
+        <div class="col-md-10">
             <h3>Integrated Postnatal Register</h3>
         </div>
-        <div class="col-md-1 offset-md-5">
-            <submit class="confirm" submitLabel="save" submitStyle="customSubmit"/>
+        <div class="col-md-2">
+            <submit class="confirm float-right" submitLabel="Save" submitStyle="customSubmit"/>
         </div>
     </div>
-    <div class="card mt-2">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mt-2">
         <div class="card-header">
             <ul class="nav nav-tabs card-header-tabs nav-fill">
                 <li class="nav-item">
@@ -53,6 +55,7 @@
                                 <div class="col-md-3">
                                     <label>Date</label>
                                     <encounterDate default="today" disallowMultipleEncountersOnDate="block" />
+
                                 </div>
                                 <div class="col-md-3">
                                     <label>Serial No.</label>
@@ -69,7 +72,7 @@
                                                                1072AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,
                                                                1073AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,
                                                                1074AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                            		answerLabels="6 Hours, 6 Days, 6 Weeks, 6 Months" style="dropdown" />
+                                    answerLabels="24 Hours, 6 Days, 6 Weeks, 6 Months" style="dropdown" />
                                 </div>
                                 <span class="hidden">
                                     <encounterLocation default="629d78e9-93e5-43b0-ad8a-48313fd99117"
@@ -202,7 +205,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <label>INR No.</label>
-	                                    <obs conceptId="b644c29c-9bb0-447e-9f73-2ae89496a709" id="inrNumber" />
+                                        <obs conceptId="b644c29c-9bb0-447e-9f73-2ae89496a709" id="inrNumber" />
                                 </div>
                             </div>
                         </div>
@@ -212,7 +215,7 @@
                             eMTCT
                         </div>
                         <div class="card-body">
-                        <h6>Woman</h6>
+                        <h4>Woman</h4>
                             <div class="row">
                                 <div class="col-md-5">
                                     <label>eMTCT Code</label>
@@ -243,14 +246,14 @@
                                             style="radio" class="horizontal" />
                                 </div>
                                 <div class="col-md-3">
-                                    <label>STK Given?</label>
-                                        <obs conceptId="5d993591-9334-43d9-a208-11b10adfad85"
-                                            answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                    <label>STK Given?</label><!--Concept id caused erros so this is not the correct one-->
+                                        <obs conceptId="90253"
+                                            answerConceptIds="90166,90167"
                                             answerLabels="Yes, No"
                                             style="radio" class="horizontal" />
                                 </div>
                             </div>
-                            <h6>Partner</h6>
+                            <h4>Partner</h4>
                             <div class="row">
                                 <div class="col-md-5">
                                     <label>eMTCT Code</label>
@@ -282,10 +285,10 @@
                                             style="radio" class="horizontal" />
                                 </div>
                                 <div class="col-md-3">
-                                    <label>STK Given?</label>
-                                        <obs conceptId="5d993591-9334-43d9-a208-11b10adfad85"
-                                            answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
-                                            answerLabels="Yes, No"
+                                    <label>STK Result</label><!--Not the correct concept id-->
+                                        <obs conceptId="90253"
+                                            answerConceptIds="90166,90167"
+                                            answerLabels="Positive, Negative"
                                             style="radio" class="horizontal" />
                                 </div>
                             </div>
@@ -296,7 +299,7 @@
                             Art
                         </div>
                         <div class="card-body">
-                        <h6>Woman</h6>
+                        <h4>Woman</h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Art Code</label><!--To do. METS needs to add a description for each of these.-->
@@ -316,7 +319,7 @@
                                     </span>
                                 </div>
                             </div>
-                            <h6>Partner</h6>
+                            <h4>Partner</h4>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label>Art Code</label>
@@ -344,30 +347,36 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-3" >
-                                    <label>Drug</label>
-                                        <obs conceptId="99352"
-                                            />
+                                <div class="col-md-2" >
+                                    <label>Drug</label><!--Need a concept id that groups iron, folic and septrine as a dropdown for this drug-->
+                                        <obs conceptId="1193"  class="long-value-select"/>
                                 </div>  
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label>Units</label>
-                                        <obs conceptId="160856"/><!--concept id got-->
+                                        <obs conceptId="160856"/>
                                 </div> 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label>Dose</label>
                                         <obs conceptId="160855" class="long-value-select" />
                                 </div> 
-                                
+                                <div class="col-md-1">
+                                    <label>Period</label>
+                                        <obs conceptId="159368"/>
+                                </div> 
                                 <div class="col-md-2">
                                     <label>Duration</label>
                                         <obs conceptId="1732" 
-                                            answerConceptIds="162583, 1733, 1822, 1072, 1073, 1074, 1734"
-                                            answerLabels="seconds, Minutes, Hours, Days, Weeks, Months,years"
+                                            answerConceptIds="1733, 1822, 1072, 1073, 1074, 1734"
+                                            answerLabels="Minutes, Hours, Days, Weeks, Months,years"
                                             style="dropdown"/>
+                                </div>  
+                                <div class="col-md-1">
+                                    <label></label><br/>
+                                    <button type="button" class="btn btn-outline-info">+</button>
                                 </div> 
                                 <div class="col-md-1">
-                                <label>Add</label>    
-                                    <button type="button" class="btn btn-outline-info">+</button>
+                                    <label></label><br/>
+                                    <button type="button" class="btn btn-outline-info">-</button>
                                 </div> 
                             </div>
                         </div>
@@ -394,18 +403,18 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label>CD4 Count</label>
-	                                        <obs conceptId="dcbcba2c-30ab-102d-86b0-7a5022ba4115" />
+                                            <obs conceptId="dcbcba2c-30ab-102d-86b0-7a5022ba4115" />
                                     </div>
                                     <div class="col-md-4">
                                         <label>CD4 Date</label>
-	                                        <obs conceptId="159376AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowFutureDates="false" />
+                                            <obs conceptId="159376AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" allowFutureDates="false" />
                                     </div>
                                 </div>
-                                <h6>Viral Load</h6>
+                                <h4>Viral Load</h4>
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label>Viral Load Date</label>
-	                                        <obs conceptId="0b434cfa-b11c-4d14-aaa2-9aed6ca2da88" allowFutureDates="false"/>
+                                            <obs conceptId="0b434cfa-b11c-4d14-aaa2-9aed6ca2da88" allowFutureDates="false"/>
                                     </div>
                                     <div class="col-md-3">
                                         <label>Viral Load Results</label>
@@ -415,7 +424,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label>Viral Load (copies/ml)</label>
-	                                        <obs conceptId="dc8d83e3-30ab-102d-86b0-7a5022ba4115" id="viral-load" />
+                                            <obs conceptId="dc8d83e3-30ab-102d-86b0-7a5022ba4115" id="viral-load" />
                                     </div>
                                     <div class="col-md-3">
                                         <label>Viral Load Status</label>
@@ -492,6 +501,7 @@
                             <div class="card-body">
                                 <div class="row">
                                     <encounterDiagnoses required="false" selectedDiagnosesTarget="" preferredCodingSource="ICD-10-WHO"/>
+
                                 </div>
                             </div>
                         </div>
@@ -538,7 +548,7 @@
                                     <obs conceptId="dc918618-30ab-102d-86b0-7a5022ba4115"
                                         answerConceptId="782AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" answerLabel="DPT-HepB" class="col-md-2"/>
                                     <obs conceptId="dc918618-30ab-102d-86b0-7a5022ba4115"
-                                        answerConceptId="	680f7f8d-eac6-44b4-8899-101fa2c4f873" answerLabel="Vitamin A" class="col-md-2"/>
+                                        answerConceptId="   680f7f8d-eac6-44b4-8899-101fa2c4f873" answerLabel="Vitamin A" class="col-md-2"/>
                                     <obs conceptId="dc918618-30ab-102d-86b0-7a5022ba4115"
                                         answerConceptId="62d87122-0a08-4e04-b57c-7e1b2f821854" answerLabel="PCV" class="col-md-2"/>
                                 </div>
@@ -574,11 +584,11 @@
                                                 style="dropdown"/>
                                     </div>  
                                     <div class="col-md-1">
-                                        <label>Add</label>
+                                        <label></label><br/>
                                         <button type="button" class="btn btn-outline-info">+</button>
                                     </div> 
                                     <div class="col-md-1">
-                                        <label>Remove</label>
+                                        <label></label><br/>
                                         <button type="button" class="btn btn-outline-info">-</button>
                                     </div> 
                                 </div>
@@ -589,7 +599,7 @@
                                 Baby Referral Information
                             </div>
                             <div class="card-body">
-                                <h6>Refered From</h6>
+                                <h4>Refered From</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                             <label>Facility Name</label>
@@ -603,7 +613,7 @@
                                                 style="dropdown" />
                                     </div>
                                 </div>
-                                <h6>Refered To</h6>
+                                <h4>Refered To</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Facility Name</label>
@@ -624,7 +634,7 @@
                                 Mother Referral Information
                             </div>
                             <div class="card-body">
-                                <h6>Refered From</h6>
+                                <h4>Refered From</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Facility Name</label>
@@ -638,7 +648,7 @@
                                                 style="dropdown" id="mother-referred-from-facilty-type" />
                                     </div>
                                 </div>
-                                <h6>Refered To</h6>
+                                <h4>Refered To</h4>
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label>Facility Name</label>
@@ -659,13 +669,26 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label>HIV+?</label>
-                                            <obs conceptId="99315" style="checkbox"/>
+                                            <obs conceptId="90253"
+                                            answerConceptIds="90166,90167"
+                                            answerLabels="Yes, No"
+                                            style="radio" class="horizontal" />
                                     </div>
                                     <div class="col-md-4">
-                                        <label>FSG Enrollment</label>
+                                        <label>FSG Enrollment</label><!--No ids-->
+                                            <select class="long-select">
+                                            <option></option>
+                                            <option value="1">FSG</option>
+                                            <option value="2">FFSG&#10004;</option>
+                                            <option value="3">FSGK</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-4">
-                                        <label>Erolled at the MBCP?</label>
+                                        <label>Erolled at the MBCP?</label><!--Not the correct id-->
+                                            <obs conceptId="5d993591-9334-43d9-a208-11b10adfad85"
+                                            answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                            answerLabels="Yes, No"
+                                            style="radio" class="horizontal" />
                                     </div>
                                 </div>
                             </div>
@@ -673,5 +696,9 @@
                     </div>
             </div>
         </div>
+    </div>
+        </div>
+    </div>
+    
     </div>
 </htmlform>
