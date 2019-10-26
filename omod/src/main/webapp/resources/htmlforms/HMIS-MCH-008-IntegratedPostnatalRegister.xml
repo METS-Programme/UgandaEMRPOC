@@ -246,9 +246,9 @@
                                             style="radio" class="horizontal" />
                                 </div>
                                 <div class="col-md-3">
-                                    <label>STK Given?</label><!--Concept id caused erros so this is not the correct one-->
-                                        <obs conceptId="90253"
-                                            answerConceptIds="90166,90167"
+                                    <label>STK Given?</label>
+                                        <obs conceptId="165379"
+                                            answerConceptIds="1065,1066"
                                             answerLabels="Yes, No"
                                             style="radio" class="horizontal" />
                                 </div>
@@ -285,9 +285,9 @@
                                             style="radio" class="horizontal" />
                                 </div>
                                 <div class="col-md-3">
-                                    <label>STK Result</label><!--Not the correct concept id-->
-                                        <obs conceptId="90253"
-                                            answerConceptIds="90166,90167"
+                                    <label>STK Result</label>
+                                        <obs conceptId="165385"
+                                            answerConceptIds="703,664"
                                             answerLabels="Positive, Negative"
                                             style="radio" class="horizontal" />
                                 </div>
@@ -349,7 +349,13 @@
                             <div class="row">
                                 <div class="col-md-2" >
                                     <label>Drug</label><!--Need a concept id that groups iron, folic and septrine as a dropdown for this drug-->
-                                        <obs conceptId="1193"  class="long-value-select"/>
+                                        <!-- <obs conceptId="1193"  class="long-value-select"/> -->
+                                        <select class="long-select">
+                                            <option></option>
+                                            <option value="1">Folic</option>
+                                            <option value="2">Iron</option>
+                                            <option value="3">Septrine</option>
+                                        </select>
                                 </div>  
                                 <div class="col-md-2">
                                     <label>Units</label>
@@ -489,7 +495,7 @@
                                     </div>
                                     <div class="col-md-3">
                                         <label>INR No.</label>
-                                            <obs conceptId="b644c29c-9bb0-447e-9f73-2ae89496a709" id="inrNumber" />
+                                            <obs conceptId="99733" id="inrNumber" />
                                     </div>
                                 </div>
                             </div>
@@ -513,8 +519,8 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <label>Infant Feeding Options</label>
-                                            <obs conceptId="dc9a00a2-30ab-102d-86b0-7a5022ba4115"
-                                                    answerConceptIds="dcbd637e-30ab-102d-86b0-7a5022ba4115,40fdb5b6-e8ac-424d-988c-f2f2937348db,dcd5487d-30ab-102d-86b0-7a5022ba4115" 
+                                            <obs conceptId="1151"
+                                                    answerConceptIds="5526,99089,6046," 
                                                     answerLabels="EBF - Exclusive Breast Feeding,RF - Replacement Feeding,MF - Mixed Feeding"
                                                     style="dropdown" />
                                     </div>
@@ -527,8 +533,8 @@
                                     </div>
                                     <div class="col-md-4">
                                         <label>Maternal Nutrition Counseling Done?</label>
-                                            <obs conceptId="af7dccfd-4692-4e16-bd74-5ac4045bb6bf"
-                                                answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                            <obs conceptId="99750"
+                                                answerConceptIds="90003,90004"
                                                 answerLabels="Yes, No"
                                                 style="radio" class="horizontal" />
                                     </div>
@@ -675,18 +681,15 @@
                                             style="radio" class="horizontal" />
                                     </div>
                                     <div class="col-md-4">
-                                        <label>FSG Enrollment</label><!--No ids-->
-                                            <select class="long-select">
-                                            <option></option>
-                                            <option value="1">FSG</option>
-                                            <option value="2">FFSG&#10004;</option>
-                                            <option value="3">FSGK</option>
-                                        </select>
+                                        <label>FSG Enrollment</label><!--Need to add descriptions-->
+                                            <obs conceptId="165353"
+                                            style="dropdown" />
+                                            
                                     </div>
                                     <div class="col-md-4">
-                                        <label>Erolled at the MBCP?</label><!--Not the correct id-->
-                                            <obs conceptId="5d993591-9334-43d9-a208-11b10adfad85"
-                                            answerConceptIds="1065AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA,1066AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+                                        <label>Erolled at the MBCP?</label>
+                                            <obs conceptId="165348"
+                                            answerConceptIds="1065,1066"
                                             answerLabels="Yes, No"
                                             style="radio" class="horizontal" />
                                     </div>
