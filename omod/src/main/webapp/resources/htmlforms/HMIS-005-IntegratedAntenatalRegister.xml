@@ -1,4 +1,4 @@
-<htmlform formName="HMIS ANTANATAL"
+<htmlform formName="HMIS ANTENATAL"
           formDescription="Entry form for patients enrolled for ANC services"
           formEncounterType="044daI6d-f80e-48fe-aba9-037f241905Pe"
           formUuid="362e296b-1315-48a9-8de6-5f4cc3cad314"
@@ -28,6 +28,7 @@
     </style>
 
     <div class="poc-page-frame">
+        <encounterDate default="today" disallowMultipleEncountersOnDate="block" />
         <div class="row">
             <div class="col-md-9 ">
                 <h3>Integrated Antanatal Register</h3>
@@ -78,7 +79,7 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            Visit Infornmation and Vitals
+                                            Visit Information and Vitals
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -177,7 +178,7 @@
                                                          labelText="Initial Result"  style="dropdown"  id="emtct-code-woman" />
                                                 </div>
 
-                                                <div class=" col-md-3">F
+                                                <div class=" col-md-3">
                                                     <label>
                                                         STK Given?
                                                     </label>
@@ -198,10 +199,10 @@
                                                 <div class="col-md-3">
                                                     <obs conceptId="163023" labelText="Viral Load Date" allowFutureDates="false" />
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     <obs conceptId="dc8d83e3-30ab-102d-86b0-7a5022ba4115" labelText="Viral Load (copies/ml)" id="viral-load" />
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <obs conceptId="dca12261-30ab-102d-86b0-7a5022ba4115"
                                                          answerConceptIds="dca1269d-30ab-102d-86b0-7a5022ba4115,dca10c94-30ab-102d-86b0-7a5022ba4115,dca11907-30ab-102d-86b0-7a5022ba4115"
                                                          answerLabels="Not Detected,Detected,Sample Rejected"  style="dropdown" id="viral-load-results" labelText="Viral Load Results" />
@@ -232,7 +233,7 @@
                                                     <br></br>
                                                     <obs conceptId="165380" style="radio" class="md-4" answerLabels="High, Low" />
                                                 </div>
-                                    </div>
+                                            </div>
                                             </div>
                                     </div>
                                  </div>
@@ -269,17 +270,17 @@
 
                                             <div class="row mt-4">
 
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <obs conceptId="99317"  answerConceptIds="99315,99736"  answerLabels="TRR : Counselled tested and results given - Client tested for the first time in ANC this pregnacy  and she is HIV Positive,
                                                     TRR+ : Clients who tested HIV Positive on a re-test"	 labelText="TFV" style="dropdown" class="long-value-select" id="tfv-man"/>
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <obs conceptId="99081" labelText="Where" />
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     <obs conceptId="99431" labelText="Pre-ART No:" />
                                                 </div>
-                                                <div class="col-md-2">
+                                                <div class="col-md-3">
                                                     <obs conceptId="99431" labelText="ART No:" />
                                                 </div>
                                             </div>
@@ -311,7 +312,7 @@
                             4. TB Rx - Currently on TB treatment" style="dropdown"  class="long-value-select" labelText="TB Status" />
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <obs conceptId="852" labelText="WOA U/S Scan Done" />
+                                                    <obs conceptId="717" labelText="WOA U/S Scan Done" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="717" labelText="Protein in Urine" />
@@ -337,31 +338,38 @@
                                                 </div>
                                             </div>
                                             <div class="row mt-4">
-                                                <div class="col-md-6">
+                                                <div class="col-md-3">
                                                     <h4>Women</h4>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-3">
+
+                                                </div>
+                                                <div class="col-md-3">
                                                     <h4>Partner</h4>
                                                 </div>
+                                                <div class="col-md-3">
+
+                                                </div>
 
 
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-3">
                                                     <obs conceptId="299" labelText="Syphillis" id="syphillis-woman" />
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-3">
+                                                    <obs conceptId="1321" labelText="Hepatitis B" id="hepatitis-b-woman" />
+                                                </div>
+                                                <div class="col-md-3">
                                                     <obs conceptId="299" labelText="Syphillis" id="syphillis-woman" />
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-3">
                                                     <obs conceptId="1321" labelText="Hepatitis B" id="hepatitis-b-woman" />
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <obs conceptId="1321" labelText="Hepatitis B" id="hepatitis-b-woman" />
-                                                </div>
+
+
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -372,7 +380,7 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            Diagnoses
+                                            Diagnosis
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -463,8 +471,8 @@
                                                 <div class="col-md-3">
                                                 <label>GBV/Risk Type</label>
                                                     <obs conceptId="dca12261-30ab-102d-86b0-7a5022ba4115"
-                                                         answerConceptIds="dca1269d-30ab-102d-86b0-7a5022ba4115,dca10c94-30ab-102d-86b0-7a5022ba4115,dca11907-30ab-102d-86b0-7a5022ba4115"
-                                                         answerLabels="P:Physical Violence,SX:Sexual Violence,PSY:Psychological Violence:No History,Signs and Symptoms of GBV" style="dropdown" id="viral-load-results"  />
+                                                        answerConceptIds="dca1269d-30ab-102d-86b0-7a5022ba4115,dca10c94-30ab-102d-86b0-7a5022ba4115,dca11907-30ab-102d-86b0-7a5022ba4115,dca11907-30ab-102d-86b0-7a5022ba4115"
+                                                         answerLabels="P:Physical Violence,SX:Sexual Violence,PSY:Psychological Violence,NIL:No History Signs and Symptoms of GBV" class="long-value-select" style="dropdown" id="viral-load-results"  />
 
                                                 </div>
                                                 <div class="col-md-3">
@@ -482,7 +490,7 @@
 
                                             </div>
 
-                                            <div class="row">
+                                            <div class="row mt-2">
                                                 <div class="col-md-6">
                                                     <obs conceptId="99322"
                                                          answerConceptIds="6442c9f6-25e8-4c8e-af8a-e9f6845ceaed,14714862-6c78-49da-b65b-f249cccddfb6,03997d45-f6f7-4ee2-a6fe-b16985e3495d,3af0aae4-4ea7-489d-a5be-c5339f7c5a77"
