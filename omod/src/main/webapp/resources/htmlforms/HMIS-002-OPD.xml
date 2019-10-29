@@ -15,7 +15,7 @@
             <div class="col-md-12">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-demographics-tab" data-toggle="tab" href="#nav-demographics" role="tab" aria-controls="nav-demographics">Vitals and Follow-up Information</a>
+                        <a class="nav-item nav-link active" id="nav-demographics-tab" data-toggle="tab" href="#nav-demographics" role="tab" aria-controls="nav-demographics">Encounter, Vitals and Follow-up Information</a>
                         <a class="nav-item nav-link" id="nav-tests-tab" data-toggle="tab" href="#nav-tests" role="tab" aria-controls="nav-tests">Investigations</a>
                         <a class="nav-item nav-link" id="nav-diagnosis-tab" data-toggle="tab" href="#nav-diagnosis" role="tab" aria-controls="nav-diagnosis">Diagnosis</a>
                         <a class="nav-item nav-link" id="nav-prescription-tab" data-toggle="tab" href="#nav-prescription" role="tab" aria-controls="nav-prescription">Prescription</a>
@@ -27,6 +27,23 @@
         <div class="tab-content">
             <!-- Vitals Tab -->
             <div class="tab-pane active" id="nav-demographics" role="tabpanel" aria-labelledby="nav-demographics-tab">
+                <div class="card">
+                    <div class="card-header">
+                        Encounter Details
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md">
+                                <label>Encounter Date:</label>
+                                <encounterDate disallowMultipleEncountersOnDate="block" class="long-value-select"/>
+                            </div>
+                            <div class="col-md">
+                                <label> Service provider:</label>
+                                <encounterProviderAndRole encounterRole="240b26f9-dd88-4172-823d-4a8bfeb7841f" required="required"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card">
                     <div class="card-header">
                         Next of Kin Information
