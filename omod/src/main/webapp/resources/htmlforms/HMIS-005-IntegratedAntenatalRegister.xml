@@ -16,19 +16,8 @@
     </span>
     <!-- Beging of HTML Form -->
 
-    <style>
-        <!--To do: This class needs to be added in the css general file-->
-        span.long-value-select select{
-        width: 100%;
-        overflow: hidden;
-        white-space: pre;
-        text-overflow: ellipsis;
-        -webkit-appearance: none;
-        }
-    </style>
-
     <div class="poc-page-frame">
-        <encounterDate default="today" disallowMultipleEncountersOnDate="block" />
+
         <div class="row">
             <div class="col-md-9 ">
                 <h3>Integrated Antanatal Register</h3>
@@ -60,14 +49,17 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                         Client Information
+                                         Visit & Client Information
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
+                                                    <encounterDate default="today" disallowMultipleEncountersOnDate="block" />
+                                                </div>
+                                                <div class="col-md-4">
                                                     <obs conceptId="1646" labelText="Serial Number" />
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-4">
                                                     <obs conceptId="99727" labelText="Client Number" />
                                                 </div>
                                             </div>
