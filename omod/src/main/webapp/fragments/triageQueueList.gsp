@@ -89,16 +89,16 @@
                 var dataRowTable = "";
                 var vitalsPageLocation = "";
                 if (element.status !== "completed") {
-                    vitalsPageLocation = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId=" + patientQueueListElement.patientId +"&formUuid=d514be1d-8a95-4f46-b8d8-9b8485679f47&returnUrl=/openmrs/patientqueueing/clinicianDashboard.page";
+                    vitalsPageLocation = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId=" + patientQueueListElement.patientId +"&formUuid=d514be1d-8a95-4f46-b8d8-9b8485679f47&returnUrl=/openmrs/patientqueueing/providerDashboard.page";
                 } else {
-                    vitalsPageLocation = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId=" + patientQueueListElement.patientId +"&formUuid=d514be1d-8a95-4f46-b8d8-9b8485679f47&encounterId=" + patientQueueListElement.encounterId + "&returnUrl=/openmrs/patientqueueing/clinicianDashboard.page";
+                    vitalsPageLocation = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId=" + patientQueueListElement.patientId +"&formUuid=d514be1d-8a95-4f46-b8d8-9b8485679f47&encounterId=" + patientQueueListElement.encounterId + "&returnUrl=/openmrs/patientqueueing/providerDashboard.page";
                 }
 
                 var action = "<i style=\"font-size: 25px;\" class=\"icon-edit edit-action\" title=\"Capture Vitals\" onclick=\" location.href = '" + vitalsPageLocation + "'\"></i>";
 
                 var waitingTime = getWaitingTime(patientQueueListElement.dateCreated);
                 dataRowTable += "<tr>";
-                dataRowTable += "<td>" + patientQueueListElement.queueNumber.substring(15) + "</td>";
+                dataRowTable += "<td>" + patientQueueListElement.visitNumber.substring(15) + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.patientNames + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.gender + "</td>";
                 dataRowTable += "<td>" + patientQueueListElement.age + "</td>";
@@ -114,11 +114,11 @@
                 dataRowTable += "<td>" + waitingTime + "</td>";
                 dataRowTable += "<td>" + action + "</td>";
                 dataRowTable += "</tr>";
-                if (element.status === "pending") {
+                if (element.status === "PENDING") {
                     stillInQueue += 1;
                     stillInQueueDataRows += dataRowTable;
 
-                } else if (element.status === "completed") {
+                } else if (element.status === "COMPLETED") {
                     completedQueue += 1;
                     completedDataRows += dataRowTable;
                 }

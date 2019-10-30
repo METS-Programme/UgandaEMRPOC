@@ -49,7 +49,7 @@
             checkInData += "<table>";
             checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Check In Date:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.dateCreated);
             checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Patient Names:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.patientNames);
-            checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Visit No.:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.queueNumber.substring(15));
+            checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Visit No.:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.visitNumber.substring(15));
             checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Gender:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.gender);
             checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Entry Point:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.locationFrom.substring(0, 3));
             checkInData += "<tr><th width=\"50%\" style=\"text-align: left\">Registration Attendant:</th><td>%s</td></tr>".replace("%s", dataToPrint.patientTriageQueue.creatorNames);
