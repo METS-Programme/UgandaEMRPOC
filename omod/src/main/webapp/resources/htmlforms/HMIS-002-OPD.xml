@@ -11,14 +11,19 @@
         $encounterDateField.attr('disabled', 'disabled')
     }
 
-    
-
     jQuery(document).ready(function(jq) {
         //Disable Malalaria test results when the form loads
         disable_fields(164434)
 
         // Disable TB Test results when the form loads
         disable_fields(165291)
+
+        //Disable Unit TB Number
+        disable_fields(164955)
+
+        //Disable disability prescription tools
+        disableContainer("." + 164945)
+        disableContainer("." + 164204)
        
         //Disable encounter date field
         disableEncounterDate()
@@ -104,6 +109,18 @@
             disable_fields(164434)
         }
     })   
+
+    // Enable prescription disability tools
+
+    jq('#disability').find("input[type='radio']").change(function(){
+        if ($(this).is(':checked') &amp;&amp;  $(this).val() == '1065') {
+            enableContainer("." + 164945)
+            enableContainer("." + 164204)
+        }else{
+            disableContainer("." + 164945)
+            disableContainer("." + 164204)
+        }
+    })
 
     });
 
@@ -406,7 +423,7 @@
                                                 <obs conceptId="164435" style="radio" class="horizontal" answerLabels="Yes,No" />
                                             </td>
                                             <td>
-                                                <obs conceptId="164955" labelText="Unit TB Number:" />
+                                                <obs conceptId="164955" id="164955" labelText="Unit TB Number:" />
                                             </td>
                                         </tr>
                                     </tr>
@@ -488,7 +505,7 @@
                                             <label class="font-weight-bold">Disability?</label>
                                         </div>
                                         <div class="col-md-9">
-                                            <obs conceptId="162558" answerConceptIds="1065,1066" answerLabels="Yes,No" style="radio" class="horizontal"/>
+                                            <obs conceptId="162558" id="disability" answerConceptIds="1065,1066" answerLabels="Yes,No" style="radio" class="horizontal"/>
                                         </div>
                                     </div>
                                 </td>
@@ -499,16 +516,16 @@
                                     <div class="row">
 
                                         <div class="col-md-6">
-                                            <obs conceptId="164945" answerConceptId="118939" answerLabel="Visual impairement" style="checkbox" />
+                                            <obs conceptId="164945" class="164945" answerConceptId="118939" answerLabel="Visual impairement" style="checkbox" />
                                         </div>
                                         <div class="col-md-6">
-                                            <obs conceptId="164945" answerConceptId="119483" answerLabel="Speech disorder" style="checkbox" />
+                                            <obs conceptId="164945" class="164945" answerConceptId="119483" answerLabel="Speech disorder" style="checkbox" />
                                         </div>
                                         <div class="col-md-6">
-                                            <obs conceptId="164945" answerConceptId="122936" answerLabel="Walking disability" style="checkbox" />
+                                            <obs conceptId="164945" class="164945" answerConceptId="122936" answerLabel="Walking disability" style="checkbox" />
                                         </div>
-                                        <div class="col-md-6">
-                                            <obs conceptId="164945" answerConceptId="156923" answerLabel="Mental/ Intellectual disabilities" style="checkbox" />
+                                        <div class="col-md-6"> 
+                                            <obs conceptId="164945" class="164945" answerConceptId="156923" answerLabel="Mental/ Intellectual disabilities" style="checkbox" />
                                         </div>
                                     </div>
                                 </td>
@@ -518,19 +535,19 @@
                                     <label class="font-weight-bold">Device provided:</label>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <obs conceptId="164204" answerConceptId="164204" answerLabel="Spectacles" style="checkbox" class="horizontal-layout-options"/>
+                                            <obs conceptId="164204" answerConceptId="164204" answerLabel="Spectacles" style="checkbox" class="horizontal-layout-options 164204"/>
                                         </div>
                                         <div class="col-md-6">
-                                            <obs conceptId="164204" answerConceptId="161241" answerLabel="Wheelchair" style="checkbox" />
+                                            <obs conceptId="164204" answerConceptId="161241" answerLabel="Wheelchair" style="checkbox" class="164204" />
                                         </div>
                                         <div class="col-md-6">
-                                            <obs conceptId="164204" answerConceptId="164202" answerLabel="Walking stick" style="checkbox" class="horizontal-layout-options"/>
+                                            <obs conceptId="164204" answerConceptId="164202" answerLabel="Walking stick" style="checkbox" class="horizontal-layout-options 164204"/>
                                         </div>
                                         <div class="col-md-6">
-                                            <obs conceptId="164204" answerConceptId="156560" answerLabel="Hearing Aid" style="checkbox" />
+                                            <obs conceptId="164204" answerConceptId="156560" answerLabel="Hearing Aid" style="checkbox" class="164204" />
                                         </div>
                                         <div class="col-md-6">
-                                            <obs conceptId="164204" answerConceptId="164203" answerLabel="Walker" style="checkbox" />
+                                            <obs conceptId="164204" answerConceptId="164203" answerLabel="Walker" style="checkbox" class="164204" />
                                         </div>
                                     </div>
                                 </td>
