@@ -14,8 +14,15 @@
     
 
     jQuery(document).ready(function(jq) {
+        //Disable Malalaria test results when the form loads
         disable_fields(164434)
+
+        // Disable TB Test results when the form loads
+        disable_fields(165291)
+       
+        //Disable encounter date field
         disableEncounterDate()
+
         jq("#99030").find("select").attr("style", "pointer-events: none;");
         
         
@@ -91,10 +98,12 @@
     })
 
     jq('.164433').find("input[type='checkbox']").change(function() {
-            if ($(this).is(':checked')) {
-                enable_fields(164434)
-        } 
-        })   
+        if ($(this).is(':checked')) {
+            enable_fields(164434)
+        } else{
+            disable_fields(164434)
+        }
+    })   
 
     });
 
@@ -381,11 +390,11 @@
                                         </td>
                                         <td>
                                             <label>Patient sent to lab?</label>
-                                            <obs conceptId="165178" style="radio" class="horizontal" answerLabels="Yes,No" />
+                                            <obs conceptId="165178" id="165291-sent-to-lab" style="radio" class="horizontal" answerLabels="Yes,No" />
                                         </td>
                                         <td>
                                             <label >Lab TB Results:</label>
-                                            <obs conceptId="165291" class="horizontal"/>
+                                            <obs conceptId="165291" id="165291" class="horizontal"/>
                                         </td>
                                         <tr>
                                             <td>
