@@ -1,7 +1,104 @@
-<htmlform formName="HMIS OPD 002 - Outpatient Register" formDescription="Outpatient Register" formEncounterType="ee4780f5-b5eb-423b-932f-00b5879df5ab" formUuid="8c2f8378-51c7-4407-85a0-cb2832accfcf" formVersion="4.0.0" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="1" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; sessionLocation.uuid=='11d5d2b8-0fdd-42e0-9f53-257c760bb9a3'" formDisplayStyle="Standard" formLabel="Outpatient(OPD) Form">
+<htmlform formName="HMIS OPD 002 - Outpatient Register" formDescription="Outpatient Register" formEncounterType="ee4780f5-b5eb-423b-932f-00b5879df5ab" formUuid="8c2f8378-51c7-4407-85a0-cb2832accfcf" formVersion="3.0.0" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="1" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; sessionLocation.uuid=='11d5d2b8-0fdd-42e0-9f53-257c760bb9a3'" formDisplayStyle="Standard" formLabel="Outpatient(OPD) Form">
 
     <style type="text/css">
     </style>
+    <script type="text/javascript">
+
+    //Disable encounter date field.
+    var disableEncounterDate = function() {
+        $encounterDateField = jq('span#encounterDate').find('input[type="text"]');
+        $encounterDateField.addClass('disabled')
+        $encounterDateField.attr('disabled', 'disabled')
+    }
+
+    
+
+    jQuery(document).ready(function(jq) {
+        disable_fields(164434)
+        disableEncounterDate()
+        jq("#99030").find("select").attr("style", "pointer-events: none;");
+        
+        
+       
+        jq("#99030").find("input[type$='text']").keyup(function() {
+
+            var age      =  <lookup complexExpression="$patient.age"/>;
+
+            var muacScore = jq(this).val();
+
+            if(age &lt; 5) {
+
+                if(muacScore &lt; 11.5) {
+                    jq("#99030").find("select").val(99028).attr('selected', 'selected')
+                }
+
+                if(muacScore &gt;= 11.5 &amp;&amp; muacScore &lt; 12.5) {
+                    jq("#99030").find("select").val(99029).attr('selected', 'selected')
+                }
+
+                if(muacScore &gt;=12.5) {
+                        jq("#99030").find("select").val(99027).attr('selected', 'selected')
+                    }
+                }
+
+                if(age &gt;= 5 &amp;&amp; age &lt; 10) {
+
+                    if(muacScore &lt; 13.5) {
+                        jq("#99030").find("select").val(99028).attr('selected', 'selected')
+                    }
+
+                    if(muacScore &gt;=13.5 &amp;&amp; muacScore &lt; 14.5) {
+                        jq("#99030").find("select").val(99029).attr('selected', 'selected')
+                    }
+
+                    if(muacScore &gt;=14.5) {
+                        jq("#99030").find("select").val(99027).attr('selected', 'selected')
+                    }
+
+                }
+
+                if(age &gt;=10 &amp;&amp; age &lt; 18) {
+
+                    if(muacScore &lt; 16.5) {
+                        jq("#99030").find("select").val(99028).attr('selected', 'selected')
+                    }
+
+                    if(muacScore &gt;=16.5 &amp;&amp; muacScore &lt; 19) {
+                        jq("#99030").find("select").val(99029).attr('selected', 'selected')
+                    }
+
+                    if(muacScore &gt;=19) {
+                        jq("#99030").find("select").val(99027).attr('selected', 'selected')
+                    }
+
+                }
+
+                if(age &gt;=18) {
+
+                    if(muacScore &lt; 19) {
+                        jq("#99030").find("select").val(99028).attr('selected', 'selected')
+                    }
+
+                    if(muacScore &gt;=19 &amp;&amp; muacScore &lt; 22) {
+                        jq("#99030").find("select").val(99029).attr('selected', 'selected')
+                    }
+
+                    if(muacScore &gt;=22) {
+                        jq("#99030").find("select").val(99027).attr('selected', 'selected')
+                    }
+                }
+
+    })
+
+    jq('.164433').find("input[type='checkbox']").change(function() {
+            if ($(this).is(':checked')) {
+                enable_fields(164434)
+        } 
+        })   
+
+    });
+
+    </script>
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
@@ -75,16 +172,42 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <obs conceptId="1343" labelText="M.U.A.C (cm):"/>
+                                        <label>MUAC Score</label>
+                                        <obs conceptId="CIEL:1343" id="muac_score" />
+                                        <!-- <obs conceptId="1343" labelText="M.U.A.C (cm):"/> -->
                                     </div>
                                     <div class="col-md-3">
-                                        <obs conceptId="99030" labelText="MUAC Code:"/>
+                                        <span class="muac">
+                                            <includeIf velocityTest="$patient.age &lt; 5">
+                                                <label>MUAC Code</label>
+                                                <obs id="muac_code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm"/>
+                                            </includeIf>
+                                            <includeIf velocityTest="$patient.age &lt; 10 &amp;&amp; $patient.age &gt;=5">
+                                                <label>MUAC</label>
+                                                <obs id= "muac_code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm" />
+                                            </includeIf>
+                                            <includeIf velocityTest="$patient.age &lt; 18 &amp;&amp; $patient.age &gt;=10">
+                                                <label>MUAC</label>
+                                                <obs id= "muac_code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm" />
+                                            </includeIf>
+
+                                            <includeIf velocityTest="$patient.age &gt;=18">
+                                                <label>MUAC</label>
+                                                <obs id= "muac_code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm" />
+                                            </includeIf>
+                                        </span>
+                                    </div>
+                                    <excludeIf velocityTest="$patient.age &gt; 11">
+                                    <div class="col-md-3">
+                                        <label>Z-Scores</label>
+                                        <obs conceptId="99800" answerConceptIds="99803,99804,99805,99806,99807" answerLabels="&#60;-3,-3_&#60;-1,-1_1,&#62;1_3,&#62;3"/>
+                                    </div>
+                                    </excludeIf>
+                                    <div class="col-md-3">
+                                        <obs conceptId="5089" labelText="Weight(kg):" id="5089"/>
                                     </div>
                                     <div class="col-md-3">
-                                        <obs conceptId="5089" labelText="Weight(kg):"/>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <obs conceptId="5090" labelText="Height(cm):"/>
+                                        <obs conceptId="5090" labelText="Height(cm):" id="5090"/>
                                     </div>
                                     <div class="col-md-3">
                                         <obs conceptId="1854" answerConceptIds="1115,114413,123814,1067,134722,126598,134723,123815" answerLabels="Normal,Overweight,Underweight,unknown,Malnutrition of moderate degree (Gomez: 60% to Less than 75% of Standard Weight),Severe protein-calorie malnutrition (Gomez: Less than 60% of Standard Weight),Malnutrition of mild degree (Gomez: 75% to Less than 90% of Standard Weight),Undernourished" style="dropdown" labelText="Weight for Age Z-score:" class="long-value-select"/>
@@ -93,7 +216,7 @@
                                         <obs conceptId="164088" labelText="Height for Age Z-score:"/>
                                     </div>
                                     <div class="col-md-3">
-                                        <obs conceptId="1342" labelText="BMI Score:"/>
+                                        <obs conceptId="1342" labelText="BMI Score:" id="1342"/>
                                     </div>
                                     <div class="col-md-3">
                                         <obs conceptId="1342" labelText="Measure:"/>
@@ -223,23 +346,21 @@
                                 <label>Tests done:</label>
                                 <div class="row">
                                     <div class="col-md-3">
-                                        <obs conceptId="164433" answerConceptId="32" answerLabel="Malaria Smear test" style="checkbox" class="horizontal-layout-options"/>
+                                        <obs conceptId="164433" answerConceptId="32" answerLabel="Malaria Smear test" style="checkbox" class="horizontal-layout-options 164433"/>
                                     </div>
                                     <div class="col-md-3">
-                                        <obs conceptId="164433" answerConceptId="1643" answerLabel="Rapid Malaria test" style="checkbox" class="horizontal-layout-options"/>
+                                        <obs conceptId="164433" answerConceptId="1643" answerLabel="Rapid Malaria test" style="checkbox" class="horizontal-layout-options 164433"/>
                                     </div>
                                     <div class="col-md-3">
-                                        <obs conceptId="164433" answerConceptId="165360" answerLabel="B/S Microscopy" style="checkbox" class="horizontal-layout-options"/>
+                                        <obs conceptId="164433" answerConceptId="165360" answerLabel="B/S Microscopy" style="checkbox" class="horizontal-layout-options 164433"/>
                                     </div>
                                     <div class="col-md-3">
                                         <obs conceptId="164433" answerConceptId="1118" answerLabel="Not done" style="checkbox" class="horizontal-layout-options"/>
                                     </div>
                                 </div>
-                                <!-- 
-                                    <obs conceptId="164433" labelText="Test Done:" /> -->
                             </div>
                             <div class="col-md">
-                                <obs conceptId="164434" labelText="Result:" answerConceptIds="703, 664, 1118"/>
+                                <obs conceptId="164434" id="164434" labelText="Result:" answerConceptIds="703, 664, 1118"/>
                             </div>
 
                         </div>
