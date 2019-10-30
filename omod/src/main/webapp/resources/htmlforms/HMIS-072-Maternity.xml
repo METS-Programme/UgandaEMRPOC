@@ -215,7 +215,7 @@
 
                                 <div class="card">
                                     <div class="card-header">
-                                                Active Management of the 3rd stage of labour:
+                                                Active Management of the 3rd stage of labour
                                             </div>
                                     <div class="card-body">
                                         <div class="row">
@@ -275,7 +275,7 @@
                                             </div>
 
                                             <div class="col-md-4">
-                                                <label>IRN No.:</label>
+                                                <label>INR No.</label>
                                                 <obs conceptId="1646" required="false" />
                                             </div>
 
