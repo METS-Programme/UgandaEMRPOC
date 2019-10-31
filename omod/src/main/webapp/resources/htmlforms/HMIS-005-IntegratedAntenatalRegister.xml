@@ -1,4 +1,4 @@
-<htmlform formName="HMIS ANTENATAL"
+<htmlform formName="HMIS 005 Integrated Antenatal Register"
           formDescription="Entry form for patients enrolled for ANC services"
           formEncounterType="044daI6d-f80e-48fe-aba9-037f241905Pe"
           formUuid="362e296b-1315-48a9-8de6-5f4cc3cad314"
@@ -31,13 +31,13 @@
             <div class="col-md-12">
                 <nav>
                     <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="client-information-section-tab" data-toggle="tab" href="#client-information-section" role="tab" aria-controls="nav-home" aria-selected="true">
+                        <a class="nav-item nav-link active" id="client-information-section-tab" data-toggle="tab" href="#client-information-section" role="tab" aria-controls="nav-client-nformation" aria-selected="true">
                             Client Information
                         </a>
-                        <a class="nav-item nav-link" id="investigations-tab" data-toggle="tab" href="#investigations-section" role="tab" aria-controls="nav-contact" aria-selected="false">
+                        <a class="nav-item nav-link" id="investigations-tab" data-toggle="tab" href="#investigations-section" role="tab" aria-controls="nav-investigations" aria-selected="false">
                             Investigations
                         </a>
-                        <a class="nav-item nav-link" id="clinical-assessment-tab" data-toggle="tab" href="#clinical-assessment-section" role="tab" aria-controls="nav-contact" aria-selected="false">
+                        <a class="nav-item nav-link" id="clinical-assessment-tab" data-toggle="tab" href="#clinical-assessment-section" role="tab" aria-controls="nav-clinical-assessment" aria-selected="false">
                             Clinical Assessment
                         </a>
                     </div>
@@ -49,7 +49,7 @@
                                 <div class="col-md-12">
                                     <div class="card">
                                         <div class="card-header">
-                                         Visit & Client Information
+                                         Visit  Client Information
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
@@ -285,7 +285,7 @@
                         </div>
 
 
-                        <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-profile-tab" id="investigations-section">
+                        <div class="tab-pane " role="tabpanel" aria-labelledby="nav-profile-tab" id="investigations-section">
                             <div class="row mt-3 ">
                                 <div class="col-md-12">
                                     <div class="card">
@@ -367,7 +367,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane fade show active" role="tabpanel" aria-labelledby="nav-profile-tab" id="clinical-assessment-section">
+                        <div class="tab-pane" role="tabpanel" aria-labelledby="nav-profile-tab" id="clinical-assessment-section">
                             <div class="row mt-3">
                                 <div class="col-md-12">
                                     <div class="card">
