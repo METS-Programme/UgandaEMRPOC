@@ -57,7 +57,7 @@
                                     <div class="col-md-3">
                                         <label>Timing for PNC Visit</label>
                                             <obs conceptId="1732" 
-                                                answerConceptIds="1822,1072,1073,1074"
+                                                answerConceptIds="1822, 1072, 1073, 1074"
                                         answerLabels="24 Hours, 6 Days, 6 Weeks, 6 Months" style="dropdown" />
                                     </div>
                                     <span class="hidden">
