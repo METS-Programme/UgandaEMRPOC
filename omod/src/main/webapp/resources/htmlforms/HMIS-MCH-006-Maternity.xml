@@ -185,7 +185,7 @@
 
                                             <div class="col-md-4">
                                                 <label>Date of Delivery:</label>
-                                                <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 35%;"></i>
+                                                <i class="icon-calendar small right-addon-row position-absolute" style="right: 23%; top: 47%;"></i>
                                                 <obs conceptId="90267" required="false" />
                                             </div>
 
