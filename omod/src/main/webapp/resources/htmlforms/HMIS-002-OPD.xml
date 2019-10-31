@@ -17,8 +17,9 @@
 
         // Disable TB Test results when the form loads
         disable_fields(165291)
+        disableContainer("#" + 165291)
 
-        //Disable Unit TB Number
+        //Disable Unit TB Number and Lab TB results
         disable_fields(164955)
 
         //Disable disability prescription tools
@@ -27,6 +28,15 @@
        
         //Disable encounter date field
         disableEncounterDate()
+
+        //Disable linked to TB clinic option
+        disableContainer("#" + 164435)
+
+        //Disable screened for HIV option
+        disableContainer("#" + 99550)
+
+        // Disable patient sent to lab
+        disableContainer("#" + 165178)
 
         jq("#99030").find("select").attr("style", "pointer-events: none;");
         
@@ -120,6 +130,55 @@
             disableContainer("." + 164945)
             disableContainer("." + 164204)
         }
+
+        // Uncheck all checked checkboxes if a user clicks No disability. 
+        // This is applicable if a user had initially selected yes to disability and checked some disability prescription tools.
+
+        if ($(this).is(':checked') &amp;&amp;  $(this).val() === '1066') {
+           jq('.164945').find("input[type='checkbox']").each(function(){
+               if(this.checked){
+                   this.checked = false
+               }
+           })
+           jq('.164204').find("input[type='checkbox']").each(function(){
+               if(this.checked){
+                   this.checked = false
+               }
+           })
+        }
+    })
+
+    //Enable patient sent to lab and screened for HIV when a new presumed TB case is Yes
+    jq('#99498').find("input[type='radio']").change(function(){
+        if(this.checked &amp;&amp; this.value === '1066'){
+            enableContainer("#" + 165178)
+            enableContainer("#" + 99550)
+        }else{
+            disableContainer("#" + 165178)
+            disableContainer("#" + 99550)
+        }
+    })
+
+    //Enable Lab TB results when patient sent to the lab is YES
+    jq('#165178').find("input[type='radio']").change(function(){
+        if(this.checked &amp;&amp; this.value === '90004'){
+            enableContainer("#" + 165291)
+        }else{
+            disableContainer("#" + 165291)
+        }
+    })
+
+    //Enable linked to TB clinic and unit TB Number when the TB Results are positive
+    jq('#165291').find("select").change(function(){
+        const selectedOption = $(this).children("option:selected").val()
+        if(selectedOption === '703'){
+            enableContainer("#164435")
+            enableContainer("#164955")
+        }else{
+            disableContainer("#164435")
+            disableContainer("#164955")
+        }
+
     })
 
     });
@@ -156,7 +215,7 @@
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md">
+                            <div class="col-md-4">
                                 <label>Encounter Date:</label>
                                 <encounterDate disallowMultipleEncountersOnDate="block" class="long-value-select"/>
                             </div>
@@ -331,9 +390,6 @@
                                         <td>
                                             <obs conceptId="159449" answerConceptId="1090" answerLabel="Never" style="checkbox" class="horizontal-layout-options"/>
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
 
                                     </tr>
                                     <tr>
@@ -343,11 +399,7 @@
                                         <td>
                                             <obs conceptId="70d0c3e5-20c6-48f7-ab82-4ecdd86874d4" answerConceptIds="1065,1066" answerLabels="Yes,No" style="radio" class="horizontal"/>
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        
                                     </tr>
                                 </table>
                             </div>
@@ -402,12 +454,12 @@
                                 <table class="table table-borderless">
                                     <tr>
                                         <td>
-                                            <label>Presumed TB case?</label>
-                                            <obs conceptId="165178" style="radio" class="horizontal" answerLabels="Yes,No" />
+                                            <label>New presumed TB case?</label>
+                                            <obs conceptId="99498" id="99498" style="radio" class="horizontal" answerLabels="Yes,No, T.B Follow-up" />
                                         </td>
                                         <td>
                                             <label>Patient sent to lab?</label>
-                                            <obs conceptId="165178" id="165291-sent-to-lab" style="radio" class="horizontal" answerLabels="Yes,No" />
+                                            <obs conceptId="165178" id="165178" style="radio" class="horizontal" answerLabels="Yes,No" />
                                         </td>
                                         <td>
                                             <label >Lab TB Results:</label>
@@ -416,11 +468,11 @@
                                         <tr>
                                             <td>
                                                 <label>Screened for HIV?</label>
-                                                <obs conceptId="99550" style="radio" class="horizontal" answerLabels="Yes,No"/>
+                                                <obs conceptId="99550" id="99550" style="radio" class="horizontal" answerLabels="Yes,No"/>
                                             </td>
                                             <td>
                                                 <label>Linked to TB Clinic?</label>
-                                                <obs conceptId="164435" style="radio" class="horizontal" answerLabels="Yes,No" />
+                                                <obs conceptId="164435" id="164435" style="radio" class="horizontal" answerLabels="Yes,No" />
                                             </td>
                                             <td>
                                                 <obs conceptId="164955" id="164955" labelText="Unit TB Number:" />
@@ -483,8 +535,7 @@
                                         <obs conceptId="159368" labelText="Duration:" />
                                     </div>
                                     <div class="col-md">
-                                        <br/>
-                                        <obs conceptId="1732" class="long-value-select"/>
+                                        <obs conceptId="1732" class="long-value-select" labelText="Duration Units:"/>
                                     </div>
                                 </div>
 
