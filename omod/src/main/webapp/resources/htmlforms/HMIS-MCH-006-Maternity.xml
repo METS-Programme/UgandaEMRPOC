@@ -1,8 +1,10 @@
 <htmlform formName="HMIS-MCH-006-Maternity" formDescription="Admission into a clinic for a pregnant woman to give birth" formEncounterType="264daIZd-f80e-48fe-nba9-P37f2W1905Pv" formUuid="0b946c41-957c-4aeb-9b1a-da3983c0d163" formVersion="3.0.0" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="6" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; patient.person.gender=='F'" formDisplayStyle="Standard" formLabel="HMIS-MCH-006-Maternity Form">
 
-
-    
-
+    <style type="text/css">
+        form select {
+            display: inline-block;
+        }
+    </style>
 
     <div>
         <div class="row">
@@ -23,7 +25,7 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#admission-information-section">Admission Information</a>
+                                <a class="nav-link active" data-toggle="tab" href="#admission-information-section">Admission Information</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#delivery-information-section">Delivery Information</a>
@@ -201,7 +203,7 @@
                                             <div class="col-md-4">
                                                 <label>Time of Delivery:</label>
                                                 <span class="time-box-horizontal">
-                                                    <obs conceptId="99543" required="false"/>
+                                                    <obs conceptId="99543" required="false" />
                                                 </span>
                                             </div>
                                         </div>
@@ -507,7 +509,7 @@
                                                         <obs conceptId="99296" required="false" answerConceptIds="5526,99089,6046" answerLabels="Y - Attendance at 6Hrs,N - Attendance not in 6HRS,NA - Mothers from C-Section" style="dropdown" />
                                                     </div>
                                                     <div class="col-md-3">
-                                                        <label>ICYF:</label>
+                                                        <label>IYCF:</label>
                                                         <obs conceptId="99296" required="false" answerConceptIds="5526,99089,6046" answerLabels="EBF - Exclusive Breastfeeding,RF - Replacement Feeding,MF - Mixed Feeding" style="dropdown" />
                                                         <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
                                                     </div>
