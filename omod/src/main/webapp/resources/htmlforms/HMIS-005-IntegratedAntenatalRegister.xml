@@ -43,6 +43,7 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-4">
+                                                    <label>Encounter Date</label>
                                                     <encounterDate default="today" disallowMultipleEncountersOnDate="block" />
                                                 </div>
                                                 <div class="col-md-4">
@@ -100,21 +101,23 @@
                                                 <div class="col-md-3">
                                                     <label>MUAC Color Code</label>
                                                     <includeIf velocityTest="$patient.age &lt; 5">
-                                                        <obs conceptId="5f86d19d-9546-4466-89c0-6f80c101191b" answerConceptIds="de330d01-5586-4eed-a645-e04b6bd13701,a3b1734c-4743-4b9d-8e71-08d0459d29b9,8846c03f-67bf-4aeb-8ca7-39bf79b4ebf3" answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm" id="muac-qualitative" />
+                                                        <obs conceptId="99030" 
+                                                        answerConceptIds="99028,99029,99027" 
+                                                        answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm" id="muac-qualitative" />
                                                     </includeIf>
                                                     <includeIf velocityTest="$patient.age &lt; 10 &amp;&amp; $patient.age &gt;=5">
-                                                        <obs conceptId="5f86d19d-9546-4466-89c0-6f80c101191b" answerConceptIds="de330d01-5586-4eed-a645-e04b6bd13701,a3b1734c-4743-4b9d-8e71-08d0459d29b9,8846c03f-67bf-4aeb-8ca7-39bf79b4ebf3" answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm" id="muac-qualitative" />
+                                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm" id="muac-qualitative" />
                                                     </includeIf>
                                                     <includeIf velocityTest="$patient.age &lt; 18 &amp;&amp; $patient.age &gt;=10">
-                                                        <obs conceptId="5f86d19d-9546-4466-89c0-6f80c101191b" answerConceptIds="de330d01-5586-4eed-a645-e04b6bd13701,a3b1734c-4743-4b9d-8e71-08d0459d29b9,8846c03f-67bf-4aeb-8ca7-39bf79b4ebf3" answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm" id="muac-qualitative" />
+                                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm" id="muac-qualitative" />
                                                     </includeIf>
 
                                                     <includeIf velocityTest="$patient.age &gt;=18">
-                                                        <obs conceptId="5f86d19d-9546-4466-89c0-6f80c101191b" answerConceptIds="de330d01-5586-4eed-a645-e04b6bd13701,a3b1734c-4743-4b9d-8e71-08d0459d29b9,8846c03f-67bf-4aeb-8ca7-39bf79b4ebf3" answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm" id="muac-qualitative" />
+                                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm" id="muac-qualitative" />
                                                     </includeIf>
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <obs conceptId="b644c29c-9bb0-447e-9f73-2ae89496a709" labelText="INR No:" />
+                                                    <obs conceptId="99733" labelText="INR No:" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="99732" labelText="ANC 1 Timing" style="dropdown" />
@@ -166,13 +169,13 @@
                                                     <obs conceptId="163023" labelText="Viral Load Date" allowFutureDates="false" />
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <obs conceptId="dc8d83e3-30ab-102d-86b0-7a5022ba4115" labelText="Viral Load (copies/ml)" id="viral-load" />
+                                                    <obs conceptId="856" labelText="Viral Load (copies/ml)" id="viral-load" />
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <obs conceptId="dca12261-30ab-102d-86b0-7a5022ba4115" answerConceptIds="dca1269d-30ab-102d-86b0-7a5022ba4115,dca10c94-30ab-102d-86b0-7a5022ba4115,dca11907-30ab-102d-86b0-7a5022ba4115" answerLabels="Not Detected,Detected,Sample Rejected" style="dropdown" id="viral-load-results" labelText="Viral Load Results" />
+                                                    <obs conceptId="1305" answerConceptIds="1306,1301,1304" answerLabels="Not Detected,Detected,Sample Rejected" style="dropdown" id="viral-load-results" labelText="Viral Load Results" />
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <obs conceptId="fcb5ef91-ad8f-44bc-ac5f-9ffb29881e59" answerConceptIds="a4089d8e-9ea6-4fff-b273-415c6640203a,f56e8d46-5b2f-488b-861a-94a89d16adf6" answerLabels="Suppressed,Non-suppressed" id="viral-load-status" labelText="Viral Load Status" />
+                                                    <obs conceptId="164910" answerConceptIds="164908,163159" answerLabels="Suppressed,Non-suppressed" id="viral-load-status" labelText="Viral Load Status" />
                                                 </div>
 
                                             </div>
@@ -239,8 +242,6 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
                         </div>
 
@@ -254,14 +255,10 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-3">
-                                                    <obs conceptId="90216" answerConceptIds="dcdaccc1-30ab-102d-86b0-7a5022ba4115,
-                            dcdaaf0f-30ab-102d-86b0-7a5022ba4115,
-                            dcdac38b-30ab-102d-86b0-7a5022ba4115,
-                            dcdaa6b4-30ab-102d-86b0-7a5022ba4115" answerLabels="1. No Signs - No signs or symptoms of TB,
-                            2. Presumptive (Suspect) - TB refer or sputum sent,
-                            3. TB Diagnosed - Diagnosed with TB,
-                            4. TB Rx - Currently on TB treatment" style="dropdown" class="long-value-select" labelText="TB Status" />
+                                                <div class="col-md-3"> 
+                                                    <obs conceptId="90216" answerConceptIds="90079,90073,90078,90071" answerLabels="1. No Signs - No signs or symptoms of TB,
+                                                     2. Presumptive (Suspect) - TB refer or sputum sent,3. TB Diagnosed - Diagnosed with TB,4. TB Rx - Currently on TB treatment" 
+                                                     style="dropdown" class="long-value-select" labelText="TB Status" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="717" labelText="WOA U/S Scan Done" />
@@ -405,12 +402,16 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label>GBV/Risk Type</label>
-                                                    <obs conceptId="dca12261-30ab-102d-86b0-7a5022ba4115" answerConceptIds="dca1269d-30ab-102d-86b0-7a5022ba4115,dca10c94-30ab-102d-86b0-7a5022ba4115,dca11907-30ab-102d-86b0-7a5022ba4115,dca11907-30ab-102d-86b0-7a5022ba4115" answerLabels="P:Physical Violence,SX:Sexual Violence,PSY:Psychological Violence,NIL:No History Signs and Symptoms of GBV" class="long-value-select" style="dropdown" id="viral-load-results" />
+                                                    <obs conceptId="165400" 
+                                                    answerConceptIds="1490,165262,165401,165186" 
+                                                    answerLabels="P: Physical Violence,SX: Sexual Violence,PSY: Psychological Violence,NIL: No History Signs and Symptoms of GBV" class="long-value-select" style="dropdown" id="viral-load-results" />
 
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label>Family Planing Counselling</label>
-                                                    <obs conceptId="99296" answerConceptIds="99294,99295" answerLabels="C:Counselling Done,C/D:Counselling and Provided with Condoms" class="long-value-select" style="dropdown" id="viral-load-results" />
+                                                    <obs conceptId="99296" answerConceptIds="99294,99295" 
+                                                    answerLabels="C:Counselling Done,C/D:Counselling and Provided with Condoms" 
+                                                    class="long-value-select" style="dropdown" id="viral-load-results" />
 
                                                 </div>
 
@@ -419,7 +420,10 @@
 
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <obs conceptId="99322" answerConceptIds="6442c9f6-25e8-4c8e-af8a-e9f6845ceaed,14714862-6c78-49da-b65b-f249cccddfb6,03997d45-f6f7-4ee2-a6fe-b16985e3495d,3af0aae4-4ea7-489d-a5be-c5339f7c5a77" answerLabels="REFOUT - Referred Out,REF IN - Referred In,C/REF IN - Referred in from community,FSG - Referred to family support groups" style="dropdown" id="referral" labelText="Referred In/Out" />
+                                                    <obs conceptId="99322" 
+                                                    answerConceptIds="99763,99764,99765,99766" 
+                                                    answerLabels="REFOUT - Referred Out,REF IN - Referred In,C/REF IN - Referred in from community,FSG - Referred to family support groups" 
+                                                    style="dropdown" id="referral" labelText="Referred In/Out" />
 
                                                 </div>
 
