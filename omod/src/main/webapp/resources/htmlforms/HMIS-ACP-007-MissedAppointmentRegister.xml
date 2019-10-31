@@ -3,6 +3,7 @@
 
 
         if (jQuery) {
+
 			jq(document).ready(function () {
 				//Block Multiple encounter entry on same date
         		blockEncounterOnSameDateEncounter(jq("#encounterDate").find("input[type=hidden]"),"block");
@@ -51,7 +52,6 @@
 
 				<!-- Disable future dates for date returned and follow up date fields -->
 				jq('#165373').click(function () {
-					console.log("@@@@@: ", getValue('165373.value');
 				});
 			});
         }
@@ -212,7 +212,7 @@
 												</label>
 												<br />
                                                 <!-- TO DO ADD STYLING TO THE DATE PICKER ICON -->
-												<obs id="165373" conceptId="165373" class="Vertical-layout-options">
+												<obs id="165373" conceptId="165373" allowFutureDates="false" class="Vertical-layout-options">
 													<i class="icon-calendar small right-addon-row position-absolute" style="right: 50%; top: 39%;">
 													</i>
 												</obs>
@@ -308,7 +308,7 @@
                                                  <!-- TO DO ADD STYLING TO THE DATE PICKER ICON -->
 												<i class="icon-calendar small right-addon-row position-absolute" style="right: 50%; top: 39%;">
 												</i>
-												<obs conceptId="165378" class="Vertical-layout-options" />
+												<obs conceptId="165378" allowFutureDates="false" class="Vertical-layout-options" />
 											</div>
 											<div class="col-md-6">
 												<label>
