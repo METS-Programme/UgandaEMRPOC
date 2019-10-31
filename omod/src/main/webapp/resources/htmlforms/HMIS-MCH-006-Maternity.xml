@@ -1,16 +1,4 @@
-<htmlform 
-formName="HMIS-MCH-006-Maternity" 
-formDescription="Admission into a clinic for a pregnant woman to give birth" 
-formEncounterType="264daIZd-f80e-48fe-nba9-P37f2W1905Pv" 
-formUuid="0b946c41-957c-4aeb-9b1a-da3983c0d163" 
-formVersion="3.0.0" 
-formAddMetadata="yes" 
-formUILocation="patientDashboard.visitActions" 
-formOrder="6" 
-formIcon="icon-medkit" 
-formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; patient.person.gender=='F'" 
-formDisplayStyle="Standard" 
-formLabel="HMIS-MCH-006-Maternity Form">
+<htmlform formName="HMIS-MCH-006-Maternity" formDescription="Admission into a clinic for a pregnant woman to give birth" formEncounterType="264daIZd-f80e-48fe-nba9-P37f2W1905Pv" formUuid="0b946c41-957c-4aeb-9b1a-da3983c0d163" formVersion="3.0.0" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="6" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; patient.person.gender=='F'" formDisplayStyle="Standard" formLabel="HMIS-MCH-006-Maternity Form">
 
 
     <div>
@@ -231,14 +219,14 @@ formLabel="HMIS-MCH-006-Maternity Form">
                                             </div>
                                             <div class="col-md-6">
                                                 <obs conceptId="165169" answerConceptId="165125" answerLabel="4 - Other Treaments Given:" style="checkbox" />
-                                                <obs conceptId="5624" required="false" />
+                                                <obs conceptId="1646" required="false" />
                                             </div>
                                         </div>
                                         <div class="row">
 
                                             <div class="col-md-4">
                                                 <label>Management Procedure for a Complication:</label>
-                                                <obs conceptId="5624" required="false" />
+                                                <obs conceptId="1646" required="false" />
                                             </div>
 
                                         </div>
@@ -277,7 +265,7 @@ formLabel="HMIS-MCH-006-Maternity Form">
 
                                             <div class="col-md-4">
                                                 <label>INR No.</label>
-                                                <obs conceptId="1646" required="false" />
+                                                <obs conceptId="5624" required="false" />
                                             </div>
 
                                         </div>
@@ -385,18 +373,18 @@ formLabel="HMIS-MCH-006-Maternity Form">
 
                                         </div>
 
-                                        
+
                                     </div>
                                 </div>
                                 <div class="row">
-                                        <div class="col-md-8"></div>
-                                        <div class="col-md-2 float-right">
-                                            <button type="button" class="btn btn-outline-info">Add Baby</button>
-                                        </div>
-                                        <div class="col-md-2 float-right">
-                                            <button type="button" class="btn btn-outline-info">Remove Baby</button>
-                                        </div>
+                                    <div class="col-md-8"></div>
+                                    <div class="col-md-2 float-right">
+                                        <button type="button" class="btn btn-outline-info">Add Baby</button>
                                     </div>
+                                    <div class="col-md-2 float-right">
+                                        <button type="button" class="btn btn-outline-info">Remove Baby</button>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="tab-pane" role="tabpanel" aria-leballebdy="nav-profile-tab" id="discharge-information-section">
