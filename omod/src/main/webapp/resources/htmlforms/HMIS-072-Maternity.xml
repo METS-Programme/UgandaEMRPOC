@@ -27,23 +27,23 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#care-entry-section">Admission Information</a>
+                                <a class="nav-link" data-toggle="tab" href="#admission-information-section">Admission Information</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#art-care-cohort-section">Delivery Information</a>
+                                <a class="nav-link" data-toggle="tab" href="#delivery-information-section">Delivery Information</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#prior-art-section">Child Information</a>
+                                <a class="nav-link" data-toggle="tab" href="#child-information-section">Child Information</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#drug-allergies-and-art-care">Discharge Information</a>
+                                <a class="nav-link" data-toggle="tab" href="#discharge-information-section">Discharge Information</a>
                             </li>
                         </ul>
                     </div>
 
                     <div class="card-body">
                         <div class="tab-content">
-                            <div class="tab-pane active" id="care-entry-section">
+                            <div class="tab-pane active" id="admission-information-section">
                                 <div class="card">
                                     <div class="card-header">Admission Information</div>
                                     <div class="card-body">
@@ -146,7 +146,7 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane" role="tabpanel" aria-leballebdy="nav-profile-tab" id="art-care-cohort-section">
+                            <div class="tab-pane" role="tabpanel" aria-leballebdy="nav-profile-tab" id="delivery-information-section">
                                 <div class="card">
                                     <div class="card-header">
                                                  EMTCT And ART Codes
@@ -285,7 +285,7 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane" role="tabpanel" aria-leballebdy="nav-profile-tab" id="prior-art-section">
+                            <div class="tab-pane" role="tabpanel" aria-leballebdy="nav-profile-tab" id="child-information-section">
                                 <div class="card">
                                     <div class="card-header">
                                                         Baby #1
@@ -398,7 +398,7 @@
                                 </div>
                             </div>
 
-                            <div class="tab-pane" role="tabpanel" aria-leballebdy="nav-profile-tab" id="drug-allergies-and-art-care">
+                            <div class="tab-pane" role="tabpanel" aria-leballebdy="nav-profile-tab" id="discharge-information-section">
 
 
                                 <div class="card">
