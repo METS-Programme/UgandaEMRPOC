@@ -1,4 +1,63 @@
 <htmlform formName="HMIS ACP 007 Missed Appointment Tracking Form" formDescription="Record all clients who missed their appointment" formEncounterType="6d88e370-f2ba-476b-bf1b-d8eaf3b1b67e" formUuid="59d9341a-f65e-4e86-a98b-415ea54dfa81" formVersion="3.0" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="2" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; sessionLocation.uuid=='86863db4-6101-4ecf-9a86-5e716d6504e4'" formDisplayStyle="Standard" formLabel="Missed Appointment Tracking Form">
+	<script type="text/javascript">
+
+
+        if (jQuery) {
+			jq(document).ready(function () {
+				//Block Multiple encounter entry on same date
+        		blockEncounterOnSameDateEncounter(jq("#encounterDate").find("input[type=hidden]"),"block");
+
+				disableContainer('#90041');
+				disableContainer('#165398');
+				disableContainer('#164975');
+				disableContainer('#165399');
+
+				<!-- Disable the text box for Other(Specify) option if this option is not checked -->
+				<!-- Other Service Point -->
+				jq('#164993').click(function () {
+					if (getValue('164993.value') == 90002) {
+					enableContainer('#' + 165398);
+					} else {
+					disableContainer('#165398');
+					}
+				});
+
+				<!-- Other Medications due for Refill -->
+				jq('#160288').click(function () {
+					if (getValue('160288.value') == 90002) {
+					enableContainer('#' + 164975);
+					} else {
+					disableContainer('#164975');
+					}
+				});
+
+				<!-- Other Follow up Action -->
+				jq('#165100').click(function () {
+					if (getValue('165100.value') == 90002) {
+					enableContainer('#' + 165399);
+					} else {
+					disableContainer('#165399');
+					}
+				});
+
+				<!-- Disble the options under MCH/MBCP if this option is not checked -->
+				jq('#165348').click(function () {
+					if (getValue('165348.value') == 165348) {
+					enableContainer('#' + 90041);
+					} else {
+					disableContainer('#90041');
+					}
+				});
+
+				<!-- Disable future dates for date returned and follow up date fields -->
+				jq('#165373').click(function () {
+					console.log("@@@@@: ", getValue('165373.value');
+				});
+			});
+        }
+
+    </script>
+
 	<div class="poc-page-frame">
 		<div class="row">
 			<div class="col-md-6">
@@ -53,9 +112,9 @@
 														<obs conceptId="164993" answerConceptId="165047" answerLabel="ART Clinic" style="checkbox" class="horizontal-layout-options" />
 													</div>
 													<div class="col-md-3">
-														<obs conceptId="164993" answerConceptId="165348" answerLabel="MCH/MBCP" style="checkbox" class="horizontal-layout-options" />
+														<obs id="165348" conceptId="164993" answerConceptId="165348" answerLabel="MCH/MBCP" style="checkbox" class="horizontal-layout-options" />
 													</div>
-													<div class="col-md-6">
+													<div  id ="90041" class="col-md-6">
 														<div class="row">
 															<div class="col-sm-6">
 																<obs conceptId="164993" answerConceptId="90041" answerLabel="Pregnant" style="checkbox" class="horizontal-layout-options" />
@@ -77,7 +136,8 @@
 														<obs conceptId="164993" answerConceptId="165048" answerLabel="TB Clinic" style="checkbox" class="horizontal-layout-options" />
 													</div>
 													<div class="col-md-4">
-														<obs conceptId="164993" answerConceptId="90002" style="checkbox" answerLabel="Other (Specify):" commentFieldLabel="" class="horizontal-layout-options" />
+														<obs id="164993" conceptId="164993" answerConceptId="90002" style="checkbox" answerLabel="Other (Specify):" class="horizontal-layout-options" />
+														<obs id="165398" conceptId="165398" />
 													</div>
 												</div>
 											</div>
@@ -101,8 +161,8 @@
 														<obs conceptId="160288" answerConceptId="165386" answerLabel="FP" style="checkbox" class="horizontal-layout-options" />
 													</div>
 													<div class="col-md-3">
-														<obs conceptId="160288" answerConceptId="90002" style="checkbox" answerLabel="Other (Specify):" commentFieldLabel="" class="horizontal-layout-options" />
-														<br />
+														<obs id="160288" conceptId="160288" answerConceptId="90002" style="checkbox" answerLabel="Other (Specify):" class="horizontal-layout-options" />
+														<obs id="164975" conceptId="164975" />
 													</div>
 												</div>
 											</div>
@@ -152,7 +212,7 @@
 												</label>
 												<br />
                                                 <!-- TO DO ADD STYLING TO THE DATE PICKER ICON -->
-												<obs conceptId="165373" class="Vertical-layout-options">
+												<obs id="165373" conceptId="165373" class="Vertical-layout-options">
 													<i class="icon-calendar small right-addon-row position-absolute" style="right: 50%; top: 39%;">
 													</i>
 												</obs>
@@ -189,7 +249,8 @@
 														<obs id="facility-visit" conceptId="165100" answerConceptId="165337" answerLabel="Facility to Facility visit" style="dropdown" class="horizontal-layout-options" />
 													</div>
 													<div class="col-md-4">
-														<obs id="followup-type-other" conceptId="165100" answerConceptId="5622" answerLabel="Other:" commentFieldLabel="" class="horizontal-layout-options" />
+														<obs id="165100" conceptId="165100" answerConceptId="90002" answerLabel="Other(Specify):" class="horizontal-layout-options" />
+														<obs id="165399" conceptId="165399" />
 													</div>
 												</div>
 											</div>
