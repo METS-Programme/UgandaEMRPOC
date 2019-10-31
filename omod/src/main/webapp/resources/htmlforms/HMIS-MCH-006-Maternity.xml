@@ -1,10 +1,5 @@
 <htmlform formName="HMIS-MCH-006-Maternity" formDescription="Admission into a clinic for a pregnant woman to give birth" formEncounterType="264daIZd-f80e-48fe-nba9-P37f2W1905Pv" formUuid="0b946c41-957c-4aeb-9b1a-da3983c0d163" formVersion="3.0.0" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="6" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; patient.person.gender=='F'" formDisplayStyle="Standard" formLabel="HMIS-MCH-006-Maternity Form">
 
-    <style type="text/css">
-        form select {
-            display: inline-block;
-        }
-    </style>
 
     <div>
         <div class="row">
@@ -120,35 +115,29 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <div class="col-md-12">
-                                                        <label>WHO Clinical Stage:</label>
-                                                        <obs conceptId="90203" answerConceptIds="90033,90034,90035,90036,90293,90294,90295,90296" style="dropdown" />
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <label>CD4 Count:</label>
-                                                    <obs conceptId="1646" required="false" />
-                                                </div>
-
-                                                <div class="col-md-3">
-                                                    <label>CD4 Count Date:</label>
-                                                    <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 35%;"></i>
-                                                    <obs id="90267" conceptId="90267" />
-                                                </div>
+                                            <div class="col-md-3">
+                                                <label>WHO Clinical Stage:</label>
+                                                <obs conceptId="90203" answerConceptIds="90033,90034,90035,90036,90293,90294,90295,90296" style="dropdown" />
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>CD4 Count:</label>
+                                                <obs conceptId="1646" required="false" />
                                             </div>
 
+                                            <div class="col-md-3">
+                                                <label>CD4 Count Date:</label>
+                                                <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 47%;"></i>
+                                                <obs id="90267" conceptId="90267" />
+                                            </div>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
 
                             <div class="tab-pane" role="tabpanel" aria-leballebdy="nav-profile-tab" id="delivery-information-section">
                                 <div class="card">
-                                    <div class="card-header">
-                                                 EMTCT And ART Codes
-                                             </div>
+                                    <div class="card-header">EMTCT And ART Codes</div>
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-6">
@@ -384,18 +373,18 @@
 
                                         </div>
 
-                                        <div class="row mt-3">
-                                            <div class="col-md-8"></div>
-                                            <div class="col-md-2 float-right">
-                                                <button type="button" class="btn btn-outline-info">Add Baby</button>
-                                            </div>
-                                            <div class="col-md-2 float-right">
-                                                <button type="button" class="btn btn-outline-info">Remove Baby</button>
-                                            </div>
-
-                                        </div>
+                                        
                                     </div>
                                 </div>
+                                <div class="row mt-3">
+                                        <div class="col-md-8"></div>
+                                        <div class="col-md-2 float-right">
+                                            <button type="button" class="btn btn-outline-info">Add Baby</button>
+                                        </div>
+                                        <div class="col-md-2 float-right">
+                                            <button type="button" class="btn btn-outline-info">Remove Baby</button>
+                                        </div>
+                                    </div>
                             </div>
 
                             <div class="tab-pane" role="tabpanel" aria-leballebdy="nav-profile-tab" id="discharge-information-section">
@@ -407,53 +396,47 @@
                                         <div class="card-header">Discharge Information</div>
 
                                         <div class="card-body">
-                                            <div class="row mb-4">
-                                                <div class="row">
-                                                    <div class="col-md-3">
-                                                        <label>Family Planning Method Given:</label>
-                                                        <obs conceptId="99296" required="false" answerConceptIds="90089,162960,162959,162961,,162962,162963" answerLabels="PP-BTL, PP-IUD, PAC-IUD, Implant, Oral Pills, Depo" style="dropdown" />
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label>Other Family Planning Method(Specify):</label>
-                                                        <obs conceptId="5624" required="false" />
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label>Treatment Offered To the Baby:</label>
-                                                        <obs conceptId="1053" required="false" />
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label>Final Diagnosis For the Baby:</label>
-                                                        <obs conceptId="1053" required="false" />
-                                                    </div>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>Family Planning Method Given:</label>
+                                                    <obs conceptId="99296" required="false" answerConceptIds="90089,162960,162959,162961,,162962,162963" answerLabels="PP-BTL, PP-IUD, PAC-IUD, Implant, Oral Pills, Depo" style="dropdown" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Other Family Planning Method(Specify):</label>
+                                                    <obs conceptId="5624" required="false" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Treatment Offered To the Baby:</label>
+                                                    <obs conceptId="1053" required="false" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Final Diagnosis For the Baby:</label>
+                                                    <obs conceptId="1053" required="false" />
+                                                </div>
+                                            </div>
 
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>PNC at 6 Hours:</label>
+                                                    <obs id="99881_{n}" conceptId="99881" answerConceptIds="99355,99355,99355" answerLabels="Y,N,NA" style="radio" class="horizontal" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>LLINs Given to Baby:</label>
+                                                    <obs id="99881_{n}" conceptId="99881" answerConceptIds="99355,99355" answerLabels="Yes,No" style="radio" class="horizontal" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Conditon of Mother at Discharge:</label>
+                                                    <obs conceptId="99334" required="false" answerConceptIds="99333,99331,99332,162953,162954" answerLabels="AL - Live Baby,MSB - Macerated Still Bath,NND - Neonantal Death,FSB - Fresh Still Birth,BDF - Baby Born With Defect" style="dropdown" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Condition of Baby at Discharge:</label>
+                                                    <obs conceptId="99334" required="false" answerConceptIds="99327,99331,99332,162953,162954" answerLabels="D - Woman Discharged Alive,MSB - Macerated Still Bath,NND - Neonantal Death,FSB - Fresh Still Birth,BDF - Baby Born With Defect" style="dropdown" />
                                                 </div>
 
-                                                <div class="row mt-3">
-                                                    <div class="col-md-3">
-                                                        <label>PNC at 6 Hours:</label>
-                                                        <obs conceptId="99727" required="false" />
-                                                        <obs id="99881_{n}" conceptId="99881" answerConceptIds="99355,99355,99355" answerLabels="Y,N,NA" style="radio" class="horizontal" />
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label>LLINs Given to Baby:</label>
-                                                        <obs id="99881_{n}" conceptId="99881" answerConceptIds="99355,99355" answerLabels="Yes,No" style="radio" class="horizontal" />
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label>Conditon of Mother at Discharge:</label>
-                                                        <obs conceptId="99334" required="false" answerConceptIds="99333,99331,99332,162953,162954" answerLabels="AL - Live Baby,MSB - Macerated Still Bath,NND - Neonantal Death,FSB - Fresh Still Birth,BDF - Baby Born With Defect" style="dropdown" />
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label>Condition of Baby at Discharge:</label>
-                                                        <obs conceptId="99334" required="false" answerConceptIds="99327,99331,99332,162953,162954" answerLabels="D - Woman Discharged Alive,MSB - Macerated Still Bath,NND - Neonantal Death,FSB - Fresh Still Birth,BDF - Baby Born With Defect" style="dropdown" />
-                                                    </div>
+                                            </div>
 
-                                                </div>
-
-                                                <div class="row mt-3">
-                                                    <div class="col-md-12">
-                                                        <h4>Mother's Final Diagnosis:</h4>
-                                                    </div>
-                                                </div>
+                                            <div class="row">
+                                                <h4>Mother's Final Diagnosis:</h4>
                                                 <table id="final-diagnosis" class="table table-borderless">
                                                     <tbody>
 
@@ -502,52 +485,55 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                            </div>
 
-                                                <div class="row">
-                                                    <div class="col-md-3">
-                                                        <label>PNC at 24Hours:</label>
-                                                        <obs conceptId="99296" required="false" answerConceptIds="5526,99089,6046" answerLabels="Y - Attendance at 6Hrs,N - Attendance not in 6HRS,NA - Mothers from C-Section" style="dropdown" />
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label>IYCF:</label>
-                                                        <obs conceptId="99296" required="false" answerConceptIds="5526,99089,6046" answerLabels="EBF - Exclusive Breastfeeding,RF - Replacement Feeding,MF - Mixed Feeding" style="dropdown" />
-                                                        <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <label>Counseling at Discharge:</label>
-                                                        <obs conceptId="162938" required="false" answerConceptIds="162936,162937" answerLabels="C -  Counseled, NC - Not Counseled" style="dropdown" />
-                                                        <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <label>Transferred by:</label>
-                                                        <encounterProviderAndRole encounterRole="240b26f9-dd88-4172-823d-4a8bfeb7841f" id="delivered-by" required="false" />
-                                                    </div>
 
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <label>PNC at 24Hours:</label>
+                                                    <obs conceptId="99296" required="false" answerConceptIds="5526,99089,6046" answerLabels="Y - Attendance at 6Hrs,N - Attendance not in 6HRS,NA - Mothers from C-Section" style="dropdown" />
                                                 </div>
-
-                                                <div class="row mt-3">
-
-                                                    <div class="col-md-3">
-                                                        <label>Delivered By:</label>
-                                                        <encounterProviderAndRole encounterRole="240b26f9-dd88-4172-823d-4a8bfeb7841f" id="delivered-by" required="false" />
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label>Date of Discharge:</label>
-                                                        <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 35%;"></i>
-                                                        <obs id="90267" conceptId="90267" />
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label>Time of Discharge:</label>
-                                                        <obs conceptId="99543" required="false" />
-                                                    </div>
-                                                    <div class="col-md-3">
-                                                        <label>Dischraged by:</label>
-                                                        <encounterProviderAndRole encounterRole="240b26f9-dd88-4172-823d-4a8bfeb7841f" id="delivered-by" required="false" />
-                                                    </div>
-
+                                                <div class="col-md-3">
+                                                    <label>IYCF:</label>
+                                                    <obs conceptId="99296" required="false" answerConceptIds="5526,99089,6046" answerLabels="EBF - Exclusive Breastfeeding,RF - Replacement Feeding,MF - Mixed Feeding" style="dropdown" />
+                                                    <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Counseling at Discharge:</label>
+                                                    <obs conceptId="162938" required="false" answerConceptIds="162936,162937" answerLabels="C -  Counseled, NC - Not Counseled" style="dropdown" />
+                                                    <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Transferred by:</label>
+                                                    <encounterProviderAndRole encounterRole="240b26f9-dd88-4172-823d-4a8bfeb7841f" id="delivered-by" required="false" />
                                                 </div>
 
                                             </div>
+
+                                            <div class="row mt-3">
+
+                                                <div class="col-md-3">
+                                                    <label>Delivered By:</label>
+                                                    <encounterProviderAndRole encounterRole="240b26f9-dd88-4172-823d-4a8bfeb7841f" id="delivered-by" required="false" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Date of Discharge:</label>
+                                                    <i class="icon-calendar small right-addon-row position-absolute" style="right: 25%; top: 47%;"></i>
+                                                    <obs id="90267" conceptId="90267" />
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Time of Discharge:</label>
+                                                    <span class="time-box-horizontal">
+                                                        <obs conceptId="99543" required="false" />
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label>Dischraged by:</label>
+                                                    <encounterProviderAndRole encounterRole="240b26f9-dd88-4172-823d-4a8bfeb7841f" id="delivered-by" required="false" />
+                                                </div>
+
+                                            </div>
+
                                         </div>
                                     </section>
                                 </div>
