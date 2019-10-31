@@ -1,4 +1,16 @@
-<htmlform formName="HMIS-MCH-006-Maternity" formDescription="Admission into a clinic for a pregnant woman to give birth" formEncounterType="264daIZd-f80e-48fe-nba9-P37f2W1905Pv" formUuid="0b946c41-957c-4aeb-9b1a-da3983c0d163" formVersion="3.0.0" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="6" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; patient.person.gender=='F'" formDisplayStyle="Standard" formLabel="HMIS-MCH-006-Maternity Form">
+<htmlform 
+formName="HMIS-MCH-006-Maternity" 
+formDescription="Admission into a clinic for a pregnant woman to give birth" 
+formEncounterType="264daIZd-f80e-48fe-nba9-P37f2W1905Pv" 
+formUuid="0b946c41-957c-4aeb-9b1a-da3983c0d163" 
+formVersion="3.0.0" 
+formAddMetadata="yes" 
+formUILocation="patientDashboard.visitActions" 
+formOrder="6" 
+formIcon="icon-medkit" 
+formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; patient.person.gender=='F'" 
+formDisplayStyle="Standard" 
+formLabel="HMIS-MCH-006-Maternity Form">
 
 
     <div>
@@ -301,7 +313,7 @@
                                             </div>
 
                                         </div>
-                                        <div class="row mt-3">
+                                        <div class="row">
                                             <div class="col-md-3">
                                                 <label>Immediate Skin to Skin Contact:</label>
                                                 <obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
@@ -323,7 +335,7 @@
 
                                         </div>
 
-                                        <div class="row mt-3">
+                                        <div class="row">
                                             <div class="col-md-12">
                                                 <h4> Routine Medication: </h4>
                                             </div>
@@ -362,7 +374,7 @@
                                             </tbody>
                                         </table>
                                         <div class="col-md-12">
-                                            <div class="row mt-3">
+                                            <div class="row">
 
                                                 <div class="col-md-3">
                                                     <label>Immunisation (BCG/POLIO 0):</label>
@@ -376,7 +388,7 @@
                                         
                                     </div>
                                 </div>
-                                <div class="row mt-3">
+                                <div class="row">
                                         <div class="col-md-8"></div>
                                         <div class="col-md-2 float-right">
                                             <button type="button" class="btn btn-outline-info">Add Baby</button>
@@ -510,7 +522,7 @@
 
                                             </div>
 
-                                            <div class="row mt-3">
+                                            <div class="row">
 
                                                 <div class="col-md-3">
                                                     <label>Delivered By:</label>
