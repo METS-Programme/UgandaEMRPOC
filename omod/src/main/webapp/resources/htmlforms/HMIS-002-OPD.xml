@@ -112,10 +112,13 @@
 
     })
 
-    jq('.164433').find("input[type='checkbox']").change(function() {
-        if ($(this).is(':checked')) {
+    // Enable Malaria test results when a malaria test is selected.
+    // Disable the malaria test results if the selected option is Not done.
+    jq('#164433').find("input[type='radio']").change(function() {
+        if(this.checked &amp;&amp; this.value !=='1118' ){
             enable_fields(164434)
-        } else{
+        }
+        else{
             disable_fields(164434)
         }
     })   
@@ -179,6 +182,15 @@
             disableContainer("#164955")
         }
 
+    })
+
+    //Disable all Malaria tests if the option Not Done is checked.
+    jq('#1118').find("input[type='checkbox']").change(function() {
+        if(this.checked){
+            disableContainer("." + 164433)
+        }else{
+            enableContainer("." + 164433)
+        }
     })
 
     });
@@ -415,32 +427,20 @@
                                     Malaria Test
                     </div>
                     <div class="card-body">
+                        
                         <div class="row">
                             <div class="col-md-3">
                                 <label> Fever?</label>
                                 <obs conceptId="140238" style="radio" class="horizontal" answerLabels="Yes,No,Unknown" />
                             </div>
                             <div class="col-md-6">
-                                <label>Tests done:</label>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <obs conceptId="164433" answerConceptId="32" answerLabel="Malaria Smear test" style="checkbox" class="horizontal-layout-options 164433"/>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <obs conceptId="164433" answerConceptId="1643" answerLabel="Rapid Malaria test" style="checkbox" class="horizontal-layout-options 164433"/>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <obs conceptId="164433" answerConceptId="165360" answerLabel="B/S Microscopy" style="checkbox" class="horizontal-layout-options 164433"/>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <obs conceptId="164433" answerConceptId="1118" answerLabel="Not done" style="checkbox" class="horizontal-layout-options"/>
-                                    </div>
-                                </div>
+                                <label>Test done:</label>
+                                <obs conceptId="164433" id="164433" answerLabels="Rapid Diagnostic Test, Malaria Smear, B/S Microscopy, Not Done, " answerConceptIds="1643,32,165360,1118 " style="radio" class="horizontal" />
+                                
                             </div>
                             <div class="col-md">
                                 <obs conceptId="164434" id="164434" labelText="Result:" answerConceptIds="703, 664, 1118"/>
                             </div>
-
                         </div>
                     </div>
                 </div>
