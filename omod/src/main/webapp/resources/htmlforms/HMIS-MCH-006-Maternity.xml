@@ -9,8 +9,8 @@
 				//Block Multiple encounter entry on same date
 				blockEncounterOnSameDateEncounter(jq("#encounterDate").find("input[type=hidden]"),"block");
 
-		<!-- disable other field on Active Management of the 3rd stage of labour -->
-		jq('#99619').click(function () {
+		<!-- disable other field on Other Treatments Given -->
+		jq('#165169').click(function () {
                           if (getValue('165169.value') == 165125) {
                             enableContainer('#1646');
                           } else {
@@ -323,7 +323,7 @@
 												<obs conceptId="165169" answerConceptId="165125" answerLabel="3 - Mistoprotol" style="checkbox" />
 											</div>
 											<div class="col-md-6">
-												<obs conceptId="165169" answerConceptId="165125" answerLabel="4 - Other Treaments Given:" style="checkbox" />
+												<obs conceptId="165169" answerConceptId="165125" id="165169" answerLabel="4 - Other Treaments Given:" style="checkbox" />
 												<obs conceptId="1646" required="false" />
 											</div>
 										</div>
