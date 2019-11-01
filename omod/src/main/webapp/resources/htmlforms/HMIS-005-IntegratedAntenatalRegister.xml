@@ -1,19 +1,16 @@
 <htmlform formName="HMIS 005 Integrated Antenatal Register" formDescription="Entry form for patients enrolled for ANC services" formEncounterType="044daI6d-f80e-48fe-aba9-037f241905Pe" formUuid="362e296b-1315-48a9-8de6-5f4cc3cad314" formVersion="3.0.0" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="8" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.gender=='F' &amp;&amp; patient.person.age &gt; 9 &amp;&amp; patient.person.dead==false &amp;&amp; sessionLocation.uuid=='e9bc61b5-69ff-414b-9cf0-0c22d6dfca2b'" formDisplayStyle="Standard" formLabel="ANC Encounter Form">
     <script type="text/javascript">
-    //Disable encounter date field.
-            var disableEncounterDate = function() {
-                $encounterDateField = jq('#encounterDate').find('input[type="text"]');
-                $encounterDateField.addClass('disabled');
-                $encounterDateField.attr('disabled', 'disabled');
-            }
-
+        
      if (jQuery) {
         jq(document).ready(function () {
+            // Validate MUAC
+             var age  = <lookup complexExpression="$patient.age" />; 
+             getMUACCodeFromMUACScoreByAge(age);
+
             //Disable encounter date field
             disableEncounterDate();
 
             // Handle viral load
-            
             var disableViralLoadFields = function(){
                 jq('#viral-load').find('input[type="text"]').attr("disabled", "true");
                 jq('#viral-load').find('input[type="text"]').addClass('disabled');
@@ -28,6 +25,7 @@
             var enableViralLoadFields = function(){
                 jq('#viral-load').find('input[type="text"]').removeAttr("disabled");
                 jq('#viral-load').find('input[type="text"]').removeClass('disabled');
+                jq('#viral-load').parent().removeClass('html-form-entry-disabled-field');
 
                 jq('#viral-load-results').find('select').removeAttr("disabled");
                 jq('#viral-load-results').find('select').removeClass('disabled');
@@ -35,14 +33,12 @@
                 jq('#viral-load-status').find('select').removeAttr("disabled");
                 jq('#viral-load-status').find('select').removeClass('disabled');
             }
+            
             disableViralLoadFields();
-            jq('#163023').find('#w44').change(function($event){
-                console.log($event.target.value);
+            jq('#163023').find('input[type="hidden"]').change(function($event){
                 enableViralLoadFields();
-        });
+            });
       
-
-
         });
      }
     </script>
@@ -147,33 +143,38 @@
                                                 </div>
 
                                             </div>
-
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <obs conceptId="1343" labelText="MUAC(cm)" />
+                                                    <label>MUAC Score</label>
+                                                    <obs conceptId="CIEL:1343" id="muac-score" />
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label>MUAC Color Code</label>
-                                                    <includeIf velocityTest="$patient.age &lt; 5">
-                                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm" id="muac-qualitative" />
-                                                    </includeIf>
-                                                    <includeIf velocityTest="$patient.age &lt; 10 &amp;&amp; $patient.age &gt;=5">
-                                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm" id="muac-qualitative" />
-                                                    </includeIf>
-                                                    <includeIf velocityTest="$patient.age &lt; 18 &amp;&amp; $patient.age &gt;=10">
-                                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm" id="muac-qualitative" />
-                                                    </includeIf>
+                                                    <span class="muac">
+                                                        <includeIf velocityTest="$patient.age &lt; 5">
+                                                            <label>MUAC Code</label>
+                                                            <obs id="muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm" />
+                                                        </includeIf>
+                                                        <includeIf velocityTest="$patient.age &lt; 10 &amp;&amp; $patient.age &gt;=5">
+                                                            <label>MUAC</label>
+                                                            <obs id="muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm" />
+                                                        </includeIf>
+                                                        <includeIf velocityTest="$patient.age &lt; 18 &amp;&amp; $patient.age &gt;=10">
+                                                            <label>MUAC</label>
+                                                            <obs id="muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm" />
+                                                        </includeIf>
 
-                                                    <includeIf velocityTest="$patient.age &gt;=18">
-                                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm" id="muac-qualitative" />
-                                                    </includeIf>
+                                                        <includeIf velocityTest="$patient.age &gt;=18">
+                                                            <label>MUAC</label>
+                                                            <obs id="muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm" />
+                                                        </includeIf>
+                                                    </span>
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <obs conceptId="99733" labelText="INR No:" />
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <obs conceptId="99732" labelText="ANC 1 Timing" style="dropdown" />
-                                                </div>
+                                                <excludeIf velocityTest="$patient.age &gt; 11">
+                                                    <div class="col-md-3">
+                                                        <label>Z-Scores</label>
+                                                        <obs conceptId="99800" answerConceptIds="99803,99804,99805,99806,99807" answerLabels="&#60;-3,-3_&#60;-1,-1_1,&#62;1_3,&#62;3" />
+                                                    </div>
+                                                </excludeIf>
                                             </div>
                                         </div>
                                     </div>
@@ -220,7 +221,7 @@
                                                 <div class="col-md-3">
                                                     <obs conceptId="163023" id="163023" labelText="Viral Load Date" allowFutureDates="false" />
                                                 </div>
-                                                <div class="col-md-3">
+                                                <div class="col-md-3 html-form-entry-disabled-field">
                                                     <obs conceptId="856" labelText="Viral Load (copies/ml)" id="viral-load" />
                                                 </div>
                                                 <div class="col-md-3">
