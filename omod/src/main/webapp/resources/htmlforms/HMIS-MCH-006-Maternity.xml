@@ -5,6 +5,9 @@
 		if (jQuery) {
 			   jq(document).ready(function () {
 
+				var age      =  <lookup complexExpression="$patient.age"/>;
+
+				getMUACCodeFromMUACScoreByAge (age);
 					
 				//Block Multiple encounter entry on same date
 				blockEncounterOnSameDateEncounter(jq("#encounterDate").find("input[type=hidden]"),"block");
@@ -31,9 +34,6 @@
 						 $lastVisibleRow = $container.find('tr:visible:last');
 						 $lastVisibleRow.find('.add').show();
 					 };
-
-					 jq('.FamilyTrackingEnableDisable').change(function(){ });
-
 
 					 $firstRow = jq('table.multi tbody tr:first-of-type');
 					 $otherRows = jq('table.multi tbody tr:not(:first-of-type)');
@@ -324,7 +324,7 @@
 											</div>
 											<div class="col-md-6">
 												<obs conceptId="165169" answerConceptId="165125" id="165169" answerLabel="4 - Other Treaments Given:" style="checkbox" />
-												<obs conceptId="1646" required="false" />
+												<obs conceptId="1646" id="1646" required="false" />
 											</div>
 										</div>
 										<div class="row">
@@ -345,6 +345,45 @@
                                          Nutrition Assessment
                                      </div>
 									<div class="card-body">
+
+											<div class="row">
+													<div class="col-md-3">
+														<label>MUAC Score</label>
+														<obs conceptId="CIEL:1343" id="muac-score" />
+													</div>
+													<div class="col-md-3">
+														<span class="muac">
+															<includeIf velocityTest="$patient.age &lt; 5">
+																<label>MUAC Code</label>
+																<obs id="muac-code" conceptId="99030" answerConceptIds="99028,99029,99027"
+																	 answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm"/>
+															</includeIf>
+															<includeIf velocityTest="$patient.age &lt; 10 &amp;&amp; $patient.age &gt;=5">
+																<label>MUAC</label>
+																<obs id= "muac-code" conceptId="99030" answerConceptIds="99028,99029,99027"
+																	 answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm" />
+															</includeIf>
+															<includeIf velocityTest="$patient.age &lt; 18 &amp;&amp; $patient.age &gt;=10">
+																<label>MUAC</label>
+																<obs id= "muac-code" conceptId="99030" answerConceptIds="99028,99029,99027"
+																	 answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm" />
+															</includeIf>
+	
+															<includeIf velocityTest="$patient.age &gt;=18">
+																<label>MUAC</label>
+																<obs id= "muac-code" conceptId="99030" answerConceptIds="99028,99029,99027"
+																	 answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm" />
+															</includeIf>
+														</span>
+													</div>
+													<excludeIf velocityTest="$patient.age &gt; 11">
+														<div class="col-md-3">
+															<label>Z-Scores</label>
+															<obs conceptId="99800" answerConceptIds="99803,99804,99805,99806,99807"
+																 answerLabels="&#60;-3,-3_&#60;-1,-1_1,&#62;1_3,&#62;3"/>
+														</div>
+													</excludeIf>
+												</div>
 
 										<div class="row">
 											<div class="col-md-4">
