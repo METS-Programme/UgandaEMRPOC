@@ -1,16 +1,48 @@
 <htmlform formName="HMIS 005 Integrated Antenatal Register" formDescription="Entry form for patients enrolled for ANC services" formEncounterType="044daI6d-f80e-48fe-aba9-037f241905Pe" formUuid="362e296b-1315-48a9-8de6-5f4cc3cad314" formVersion="3.0.0" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="8" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.gender=='F' &amp;&amp; patient.person.age &gt; 9 &amp;&amp; patient.person.dead==false &amp;&amp; sessionLocation.uuid=='e9bc61b5-69ff-414b-9cf0-0c22d6dfca2b'" formDisplayStyle="Standard" formLabel="ANC Encounter Form">
-     <script type="text/javascript">
-   
-
-     if (jQuery) {
-        jq(document).ready(function () {
-            //Disable encounter date field.
+    <script type="text/javascript">
+    //Disable encounter date field.
             var disableEncounterDate = function() {
                 $encounterDateField = jq('#encounterDate').find('input[type="text"]');
                 $encounterDateField.addClass('disabled');
                 $encounterDateField.attr('disabled', 'disabled');
             }
+
+     if (jQuery) {
+        jq(document).ready(function () {
+            //Disable encounter date field
             disableEncounterDate();
+
+            // Handle viral load
+            
+            var disableViralLoadFields = function(){
+                jq('#viral-load').find('input[type="text"]').attr("disabled", "true");
+                jq('#viral-load').find('input[type="text"]').addClass('disabled');
+
+                jq('#viral-load-results').find('select').attr("disabled", "true");
+                jq('#viral-load-results').find('select').addClass('disabled');
+                
+                jq('#viral-load-status').find('select').attr("disabled", "true");
+                jq('#viral-load-status').find('select').addClass('disabled');
+            }
+
+            var enableViralLoadFields = function(){
+                jq('#viral-load').find('input[type="text"]').removeAttr("disabled");
+                jq('#viral-load').find('input[type="text"]').removeClass('disabled');
+
+                jq('#viral-load-results').find('select').removeAttr("disabled");
+                jq('#viral-load-results').find('select').removeClass('disabled');
+                
+                jq('#viral-load-status').find('select').removeAttr("disabled");
+                jq('#viral-load-status').find('select').removeClass('disabled');
+            }
+            disableViralLoadFields();
+            jq('#163023').find('#w44').change(function($event){
+                console.log($event.target.value);
+                enableViralLoadFields();
+        });
+      
+
+
         });
      }
     </script>
@@ -102,7 +134,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <obs conceptId="5596" labelText="Expected Date of Delivery" allowFutureDates="true"  />
+                                                    <obs conceptId="5596" labelText="Expected Date of Delivery" allowFutureDates="true" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="5089" labelText="Weight(kg)" />
@@ -158,7 +190,7 @@
 
                                             <div class="row ">
                                                 <div class="col-md-3">
-                                                    <obs conceptId="99317" answerConceptIds="99313,99734,99314,99315,164962,164963,99737,99738,99739,99736" answerLabels="C :Client was counselled but declined HIV testing,
+                                                    <obs conceptId="99317" answerConceptIds="99313,99734,99314,99315,164962,164963,99737,99738,99739,99736" answerLabels="C - Client was counselled but declined HIV testing,
                                                         T - Client was counselled and tested but didn't receive results,
                                                        TR - Client was counselled tested and results given - Client tested for the for the first time in ANC this pregnancy and she is HIV Negative,
                                                         TRR - Counselled tested and results given - Client tested for the first time in ANC this pregnacy  and she is HIV Positive,
@@ -186,7 +218,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <obs conceptId="163023" labelText="Viral Load Date" allowFutureDates="true" />
+                                                    <obs conceptId="163023" id="163023" labelText="Viral Load Date" allowFutureDates="false" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="856" labelText="Viral Load (copies/ml)" id="viral-load" />
