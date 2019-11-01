@@ -8,46 +8,7 @@
 					
 				//Block Multiple encounter entry on same date
 				blockEncounterOnSameDateEncounter(jq("#encounterDate").find("input[type=hidden]"),"block");
-	
-				const VIRAL_LOAD_RESULTS_CONCEPT_ID = 1305;
-				const VIRAL_LOAD_DETECTED_CONCEPT_ID = 1301;
-				const VIRAL_LOAD_NOT_DETECTED_CONCEPT_ID = 1306;
-				const VIRAL_LOAD_SAMPLE_REJECTED_CONCEPT_ID = 1304;
-	
-				const HIV_POSITIVE_CONCEPT_ID = 90166;
-				const HIV_NEGATIVE_CONCEPT_ID = 90167;
-	
-				const YES_CONCEPT_ID = 1065;
-				const NO_CONCEPT_ID = 1066;
-	
-				const 	TRRK_CONCEPT_ID = 99738,
-						TRR_TICK_CONCEPT_ID = 164963,
-						TRRP_CONCEPT_ID = 99736,
-						TRR_CONCEPT_ID = 99315;
-	
-				const HIV_INFORMATION_SECTION = '#hiv-information-section';
-				const ARVS_ADMINISTERED_TO_BABY_FIELD = '#arvs-administered-to-baby';
-				const IYCF_FIELD = '#iycf';
-	
-				const RED_CONCEPT_ID = 99028;
-				const GREEN_CONCEPT_ID = 99027;
-				const YELLOW_CONCEPT_ID = 99029;
-	
-	
-				var $viralLoadField = getField('viral-load.value');
-				var $viralLoadStatusField = getField('viral-load-status.value');
-				var $viralLoadResultsField = getField('viral-load-results.value');
-				var $iycfField = jq(IYCF_FIELD).find('input');
-				var $arvsToMotherField = getField('arvs-to-mother.value');
-				var $gestationWeeksField = getField('gestation-weeks.value');
-				var $diagnosisParentFields = $('span.parent-diagnosis').find('input[type=checkbox]');
-				var $diagnosisChildFields = $('span.child-diagnoses').find('input[type=checkbox]');
-				var $encounterDateField = jq('#encounterDate').find('input[type="hidden"]');
-				var $encounterDate = jq('#encounterDate').find('input[type="hidden"]').val();
-				var $muacQuantitativeField = getField('muac-quantitative.value');
-				var $muacQualitativeField = getField('muac-qualitative.value');
-				var $emtctCodeWomanField = getField('emtct-code-woman.value');
-				var $preArtNumberField = jq('span#pre-art-number').find('input[type="text"]');
+
 		<!-- disable other field on Active Management of the 3rd stage of labour -->
 		jq('#99619').click(function () {
                           if (getValue('165169.value') == 165125) {
