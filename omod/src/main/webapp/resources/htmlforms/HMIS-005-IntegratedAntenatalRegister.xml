@@ -42,14 +42,21 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
+                                                    <label>
+                                                        <span class="required">*</span>
+                                                        Attending Clinician:
+                                                    </label>
+                                                    <encounterProvider role="Provider" style="autocomplete" />
+                                                </div>
+                                                <div class="col-md-3">
                                                     <label>Encounter Date</label>
                                                     <encounterDate default="today" disallowMultipleEncountersOnDate="block" />
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <obs conceptId="1646" labelText="Serial Number" />
                                                 </div>
-                                                <div class="col-md-4">
+                                                <div class="col-md-3">
                                                     <obs conceptId="99727" labelText="Client Number" />
                                                 </div>
                                             </div>
@@ -101,9 +108,7 @@
                                                 <div class="col-md-3">
                                                     <label>MUAC Color Code</label>
                                                     <includeIf velocityTest="$patient.age &lt; 5">
-                                                        <obs conceptId="99030" 
-                                                        answerConceptIds="99028,99029,99027" 
-                                                        answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm" id="muac-qualitative" />
+                                                        <obs conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm" id="muac-qualitative" />
                                                     </includeIf>
                                                     <includeIf velocityTest="$patient.age &lt; 10 &amp;&amp; $patient.age &gt;=5">
                                                         <obs conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm" id="muac-qualitative" />
@@ -255,10 +260,9 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-md-3"> 
+                                                <div class="col-md-3">
                                                     <obs conceptId="90216" answerConceptIds="90079,90073,90078,90071" answerLabels="1. No Signs - No signs or symptoms of TB,
-                                                     2. Presumptive (Suspect) - TB refer or sputum sent,3. TB Diagnosed - Diagnosed with TB,4. TB Rx - Currently on TB treatment" 
-                                                     style="dropdown" class="long-value-select" labelText="TB Status" />
+                                                     2. Presumptive (Suspect) - TB refer or sputum sent,3. TB Diagnosed - Diagnosed with TB,4. TB Rx - Currently on TB treatment" style="dropdown" class="long-value-select" labelText="TB Status" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="717" labelText="WOA U/S Scan Done" />
@@ -402,16 +406,12 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label>GBV/Risk Type</label>
-                                                    <obs conceptId="165400" 
-                                                    answerConceptIds="1490,165262,165401,165186" 
-                                                    answerLabels="P: Physical Violence,SX: Sexual Violence,PSY: Psychological Violence,NIL: No History Signs and Symptoms of GBV" class="long-value-select" style="dropdown" id="viral-load-results" />
+                                                    <obs conceptId="165400" answerConceptIds="1490,165262,165401,165186" answerLabels="P: Physical Violence,SX: Sexual Violence,PSY: Psychological Violence,NIL: No History Signs and Symptoms of GBV" class="long-value-select" style="dropdown" id="viral-load-results" />
 
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label>Family Planing Counselling</label>
-                                                    <obs conceptId="99296" answerConceptIds="99294,99295" 
-                                                    answerLabels="C:Counselling Done,C/D:Counselling and Provided with Condoms" 
-                                                    class="long-value-select" style="dropdown" id="viral-load-results" />
+                                                    <obs conceptId="99296" answerConceptIds="99294,99295" answerLabels="C:Counselling Done,C/D:Counselling and Provided with Condoms" class="long-value-select" style="dropdown" id="viral-load-results" />
 
                                                 </div>
 
@@ -420,10 +420,7 @@
 
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <obs conceptId="99322" 
-                                                    answerConceptIds="99763,99764,99765,99766" 
-                                                    answerLabels="REFOUT - Referred Out,REF IN - Referred In,C/REF IN - Referred in from community,FSG - Referred to family support groups" 
-                                                    style="dropdown" id="referral" labelText="Referred In/Out" />
+                                                    <obs conceptId="99322" answerConceptIds="99763,99764,99765,99766" answerLabels="REFOUT - Referred Out,REF IN - Referred In,C/REF IN - Referred in from community,FSG - Referred to family support groups" style="dropdown" id="referral" labelText="Referred In/Out" />
 
                                                 </div>
 
