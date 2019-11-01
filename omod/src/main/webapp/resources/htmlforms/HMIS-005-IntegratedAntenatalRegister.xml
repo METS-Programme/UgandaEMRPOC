@@ -87,7 +87,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <obs conceptId="5596" labelText="Expected Date of Delivery" />
+                                                    <obs conceptId="5596" labelText="Expected Date of Delivery" allowFutureDates="true"  />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="5089" labelText="Weight(kg)" />
@@ -171,7 +171,7 @@
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <obs conceptId="163023" labelText="Viral Load Date" allowFutureDates="false" />
+                                                    <obs conceptId="163023" labelText="Viral Load Date" allowFutureDates="true" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="856" labelText="Viral Load (copies/ml)" id="viral-load" />
