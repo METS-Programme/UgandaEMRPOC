@@ -6,11 +6,13 @@
 		//Block Multiple encounter entry on same date
 		blockEncounterOnSameDateEncounter(jq("#encounterDate").find("input[type=hidden]"),"block");
 
+		<!-- Disable these fields when the form is first loaded -->
 		disableContainer('#90041');
 		disableContainer('#165398');
 		disableContainer('#164975');
 		disableContainer('#165399');
 
+		<!-- Section: Add and Remove FOllow Up section logic implementatiom -->
 		var $otherRows,
 			$firstRow,
 			$thisRow,
@@ -18,7 +20,6 @@
 			$lastVisibleRow;
 		var showAddButtonForLastVisibleRow = function($container) {
 			$lastVisibleRow = $container.find('div.follow-up:visible:last');
-			console.log($lastVisibleRow);
 			$lastVisibleRow.find('.add').show();
 		};
 
@@ -42,10 +43,10 @@
 		$nextRow.show('slow');
 		$thisRow.find('.add').hide();
 		}
-		
+
 		showAddButtonForLastVisibleRow($thisRow.parents('div.follow-up:first'));
 		});
-		
+
 		jq('.remove').click(function(e) { //Handle remove button event
 			e.preventDefault();
 			$thisRow = jq(this).parents('div.follow-up:first');
@@ -96,7 +97,7 @@
 		});
 		}
 	</script>
-	<div class="poc-page-frame">
+	<div>
 		<div class="row">
 			<div class="col-md-6">
 				<h3>
@@ -255,7 +256,7 @@
 															<br />
 															<!-- TO DO ADD STYLING TO THE DATE PICKER ICON -->
 															<obs id="165373_{n}" conceptId="165373" allowFutureDates="false" class="Vertical-layout-options">
-																<i class="icon-calendar small right-addon-row position-absolute" style="right: 50%; top: 39%;">
+																<i class="icon-calendar small right-addon-row position-absolute" style="right: 23%; top: 63%;">
 																</i>
 															</obs>
 														</div>
@@ -308,11 +309,11 @@
 														</div>
 														<div class="col-md-1">
 															<div class="text-nowrap">
-																<a href="#" class="add  add-more-link">
+																<a href="#" class="add  add-more-link" title="Add Follow Up">
 																	<i class="icon-plus-sign">
 																	</i>
 																</a>
-																<a href="#" class="remove remove-more-link required">
+																<a href="#" class="remove remove-more-link required" title="Remove Follow Up">
 																	<i class="icon-minus">
 																	</i>
 																</a>
@@ -357,7 +358,7 @@
 													</label>
 													<br />
 													<!-- TO DO ADD STYLING TO THE DATE PICKER ICON -->
-													<i class="icon-calendar small right-addon-row position-absolute" style="right: 50%; top: 39%;">
+													<i class="icon-calendar small right-addon-row position-absolute" style="right: 23%; top: 63%;">
 													</i>
 													<obs conceptId="165378" allowFutureDates="false" class="Vertical-layout-options" />
 												</div>
