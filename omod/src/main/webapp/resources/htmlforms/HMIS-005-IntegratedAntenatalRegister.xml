@@ -144,15 +144,15 @@
                                             <div class="row ">
                                                 <div class="col-md-3">
                                                     <obs conceptId="99317" answerConceptIds="99313,99734,99314,99315,164962,164963,99737,99738,99739,99736" answerLabels="C :Client was counselled but declined HIV testing,
-                                                        T :Client was counselled and tested but didn't receive results,
-                                                       TR : Client was counselled tested and results given - Client tested for the for the first time in ANC this pregnancy and she is HIV Negative,
-                                                        TRR : Counselled tested and results given - Client tested for the first time in ANC this pregnacy  and she is HIV Positive,
-                                                        TR&#8730; : ANC revisit clients with a known HIV Negative (HIV-) Test Result from a previous ANC attendance during this pregnancy,
-                                                        TRR&#8730; : ANC revisit clients with a known HIV Positive (HIV+) Test Result from a previous ANC attendance during this pregnancy,
-                                                        TRK: Clients with a documented HIV Negative (HIV-) test result conducted within 4 weeks prior to their ANC 1st Visit,
-                                                        TRRK: Clients with a documented HIV Positive (HIV+) test result conducted within 4 weeks prior to their ANC 1st Visit,
-                                                        TR+ : Tested HIV- on retest,
-                                                        TRR+ : Clients who tested HIV Positive on a re-test" class="long-value-select" labelText="Initial Result" style="dropdown" id="emtct-code-woman" />
+                                                        T - Client was counselled and tested but didn't receive results,
+                                                       TR - Client was counselled tested and results given - Client tested for the for the first time in ANC this pregnancy and she is HIV Negative,
+                                                        TRR - Counselled tested and results given - Client tested for the first time in ANC this pregnacy  and she is HIV Positive,
+                                                        TR&#8730; - ANC revisit clients with a known HIV Negative (HIV-) Test Result from a previous ANC attendance during this pregnancy,
+                                                        TRR&#8730; - ANC revisit clients with a known HIV Positive (HIV+) Test Result from a previous ANC attendance during this pregnancy,
+                                                        TRK - Clients with a documented HIV Negative (HIV-) test result conducted within 4 weeks prior to their ANC 1st Visit,
+                                                        TRRK - Clients with a documented HIV Positive (HIV+) test result conducted within 4 weeks prior to their ANC 1st Visit,
+                                                        TR+ - Tested HIV- on retest,
+                                                        TRR+ - Clients who tested HIV Positive on a re-test" class="long-value-select" labelText="Initial Result" style="dropdown" id="emtct-code-woman" />
                                                 </div>
 
                                                 <div class=" col-md-3">
@@ -231,8 +231,8 @@
                                             <div class="row">
 
                                                 <div class="col-md-3">
-                                                    <obs conceptId="99317" answerConceptIds="99315,99736" answerLabels="TRR : Counselled tested and results given - Client tested for the first time in ANC this pregnacy  and she is HIV Positive,
-                                                    TRR+ : Clients who tested HIV Positive on a re-test" labelText="TFV" style="dropdown" class="long-value-select" id="tfv-man" />
+                                                    <obs conceptId="99317" answerConceptIds="99315,99736" answerLabels="TRR - Counselled tested and results given - Client tested for the first time in ANC this pregnacy  and she is HIV Positive,
+                                                    TRR+ - Clients who tested HIV Positive on a re-test" labelText="TFV" style="dropdown" class="long-value-select" id="tfv-man" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="99081" labelText="Where" />
@@ -411,7 +411,7 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label>Family Planing Counselling</label>
-                                                    <obs conceptId="99296" answerConceptIds="99294,99295" answerLabels="C:Counselling Done,C/D:Counselling and Provided with Condoms" class="long-value-select" style="dropdown" id="viral-load-results" />
+                                                    <obs conceptId="99296" answerConceptIds="99294,99295" answerLabels="C - Counselling Done,C/D - Counselling and Provided with Condoms" class="long-value-select" style="dropdown" id="viral-load-results" />
 
                                                 </div>
 
