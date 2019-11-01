@@ -419,109 +419,11 @@
 							</div>
 
 							<div class="tab-pane" role="tabpanel" aria-leballebdy="nav-profile-tab" id="child-information-section">
-
-								<div class="card-header">Baby #1</div>
-								<div class="card-body">
-									<div class="row">
-										<div class="col-md-3">
-											<label>Apgar 1st Minute Score:</label>
-											<obs conceptId="1053" required="false" />
-										</div>
-										<div class="col-md-3">
-											<label>Apgar 5th Minute Score:</label>
-											<obs conceptId="90267" required="false" />
-										</div>
-										<div class="col-md-3">
-											<label>Sex:</label>
-											<obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Male,Female" style="radio" class="horizontal" />
-
-										</div>
-
-										<div class="col-md-3">
-											<label>Not Breathing at Birth:</label>
-											<obs conceptId="162935" required="false" answerConceptIds="1175,162934,162935,162936" answerLabels="SS,BM,BMD,NA" style="dropdown" />
-										</div>
-
-									</div>
-									<div class="row">
-										<div class="col-md-3">
-											<label>Immediate Skin to Skin Contact:</label>
-											<obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
-										</div>
-										<div class="col-md-4 ">
-											<label>Source of Warmth:</label>
-											<obs conceptId="162935" required="false" answerConceptIds="1175,162934,162935,162936" answerLabels="1-For Incubator, 2-Kangaro Mother Care, 3-Mothers warmth without consideration,4-Others(Specify)" style="dropdown" />
-										</div>
-
-										<div class="col-md-2">
-											<label>Weight (Kg):</label>
-											<obs conceptId="5624" required="false" />
-										</div>
-
-										<div class="col-md-3">
-											<label>Breast fed Less or Equal to 1 Hour:</label>
-											<obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
-										</div>
-
-									</div>
-
-									<div class="row">
-										<div class="col-md-12">
-											<h4> Routine Medication: </h4>
-										</div>
-									</div>
-
-									<table id="final-diagnosis" class="table table-borderless">
-										<tbody>
-											<tr>
-												<td>
-													<obs conceptId="165169" answerConceptId="165125" answerLabel="Tetracycline Eye Ointment" style="checkbox" />
-												</td>
-												<td>
-													<obs conceptId="165169" answerConceptId="165125" answerLabel="Vitamin K" style="checkbox" />
-												</td>
-												<td>
-													<obs conceptId="165169" answerConceptId="165125" answerLabel="Chlorhexidine" style="checkbox" />
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label>Risk Status:</label>
-													<obs conceptId="162935" required="false" answerConceptIds="1175,162934,162935,162936" answerLabels="High,Low,NA" style="dropdown" />
-
-												</td>
-												<td>
-													<label>ARVs Administered:</label>
-													<obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004,1175" answerLabels="Yes,No,NA" style="radio" class="horizontal" />
-												</td>
-												<td>
-													<label>Duration of Nevirapine syrup:</label>
-													<obs conceptId="5624" required="false" />
-												</td>
-
-											</tr>
-
-										</tbody>
-									</table>
-									<div class="col-md-12">
-										<div class="row">
-
-											<div class="col-md-3">
-												<label>Immunisation (BCG/POLIO 0):</label>
-												<obs id="99881_{n}" conceptId="99881" answerConceptIds="90003,90004" answerLabels="Yes,No" style="radio" class="horizontal" />
-											</div>
-
-										</div>
-
-									</div>
-
-
-								</div>
-
+							
 								<div class="row">
 									<div class="col-md-12">
 										<div class="card">
-											<div class="card-header">Child Information</div>
+											<div class="card-header">Baby #1</div>
 											<div class="card-body">
 												<table class="table table-striped multi table-borderless">
 													<tbody>
@@ -529,7 +431,7 @@
 															<template>
 																<obsgroup groupingConceptId="99075">
 																	<tr class="FamilyTrackingEnableDisable">
-																		<td>
+																		<td>																		
 																			<div class="row">
 																				<div class="col-md-3">
 																					<label>Apgar 1st Minute Score:</label>
