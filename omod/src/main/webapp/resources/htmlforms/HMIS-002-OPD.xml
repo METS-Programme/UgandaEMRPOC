@@ -111,9 +111,43 @@
                 }
 
     })
+    <ifMode mode="EDIT">
 
-    // Enable Malaria test results when a malaria test is selected.
-    // Disable the malaria test results if the selected option is Not done.
+        // In edit mode, enable the malaria test results if a test was done.
+        jq('#164433').find("input[type='radio']").each(function(){
+            if(this.checked &amp;&amp; this.value !=='1118' ){
+                enable_fields(164434)
+            }
+        })
+
+        // In edit mode, enable patient sent to the lab if a new presumed case option YES was initially checked.
+        // Also enable screened for  HIV
+        jq('#99498').find("input[type='radio']").each(function(){
+            if(this.checked &amp;&amp; this.value ==='1066' ){
+                enableContainer("#" + 165178)
+                enableContainer("#" + 99550)
+            }
+        })
+
+        // In edit mode, enable lab TB results field if patient sent to lab option is a YES
+         jq('#165178').find("input[type='radio']").each(function(){
+            if(this.checked &amp;&amp; this.value ==='90004' ){
+                enable_fields(165291)
+            }
+        })
+
+        // In edit mode, enable linked to TB clinic and Unit TB Number if lab TB results were initially positive
+        var labTBResultsValue = jq('#165291').find("select option:selected").val()
+        if(labTBResultsValue === "703"){
+            enableContainer("#" + 164435)
+            enable_fields(164955)
+        }
+        
+    </ifMode>
+
+    // Enable Malaria test results field when a malaria test is selected.
+    // Disable the malaria test results field if the selected option is Not done.
+
     jq('#164433').find("input[type='radio']").change(function() {
         if(this.checked &amp;&amp; this.value !=='1118' ){
             enable_fields(164434)
@@ -182,15 +216,6 @@
             disableContainer("#164955")
         }
 
-    })
-
-    //Disable all Malaria tests if the option Not Done is checked.
-    jq('#1118').find("input[type='checkbox']").change(function() {
-        if(this.checked){
-            disableContainer("." + 164433)
-        }else{
-            enableContainer("." + 164433)
-        }
     })
 
     });
