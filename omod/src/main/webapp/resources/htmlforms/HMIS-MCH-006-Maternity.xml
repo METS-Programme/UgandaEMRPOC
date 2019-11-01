@@ -422,16 +422,24 @@
 							
 								<div class="row">
 									<div class="col-md-12">
-										<div class="card">
-											<div class="card-header">Baby #1</div>
-											<div class="card-body">
 												<table class="table table-striped multi table-borderless">
 													<tbody>
 														<repeat>
 															<template>
 																<obsgroup groupingConceptId="99075">
 																	<tr class="FamilyTrackingEnableDisable">
-																		<td>																		
+																		<td>
+																				<div class="accordion col-md-12" id="followUpForm">
+																						<div class="card">
+																						<div class="card-header" id="{anchorId}" data-target="#{tag}" data-toggle="collapse" aria-controls="{tag}" aria-expanded="true">
+																							<h5 class="mb-0">
+																								{heading}:
+																							</h5>
+																						</div>
+		
+																						<div id="{tag}" class="collapse show" aria-labelledby="{anchorId}" data-parent="#followUpForm">
+																						<div class="card-body div-stripped">
+																																									
 																			<div class="row">
 																				<div class="col-md-3">
 																					<label>Apgar 1st Minute Score:</label>
@@ -521,6 +529,11 @@
 																				</div>
 
 																			</div>
+
+																		</div>
+																	</div>
+																	</div>
+																	</div>
 																		</td>
 
 																		<td class="text-nowrap">
@@ -534,19 +547,17 @@
 																	</tr>
 																</obsgroup>
 															</template>
-															<render n="1" />
-															<render n="2" />
-															<render n="3" />
-															<render n="4" />
-															<render n="5" />
-															<render n="6" />
+                                                            <render tag="followUp1" anchorId="followUpHeading1" heading="Baby #1"/>
+                                                            <render tag="followUp2" anchorId="followUpHeading2" heading="Baby #2"/>
+                                                            <render tag="followUp3" anchorId="followUpHeading3" heading="Baby #3"/>
+                                                            <render tag="followUp4" anchorId="followUpHeading4" heading="Baby #4"/>
+                                                            <render tag="followUp5" anchorId="followUpHeading5" heading="Baby #5"/>
+                                                            <render tag="followUp6" anchorId="followUpHeading6" heading="Baby #6"/>
 														</repeat>
 													</tbody>
 												</table>
-											</div>
 
 
-										</div>
 
 									</div>
 								</div>
