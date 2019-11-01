@@ -1,4 +1,19 @@
 <htmlform formName="HMIS 005 Integrated Antenatal Register" formDescription="Entry form for patients enrolled for ANC services" formEncounterType="044daI6d-f80e-48fe-aba9-037f241905Pe" formUuid="362e296b-1315-48a9-8de6-5f4cc3cad314" formVersion="3.0.0" formAddMetadata="yes" formUILocation="patientDashboard.visitActions" formOrder="8" formIcon="icon-medkit" formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.gender=='F' &amp;&amp; patient.person.age &gt; 9 &amp;&amp; patient.person.dead==false &amp;&amp; sessionLocation.uuid=='e9bc61b5-69ff-414b-9cf0-0c22d6dfca2b'" formDisplayStyle="Standard" formLabel="ANC Encounter Form">
+     <script type="text/javascript">
+   
+
+     if (jQuery) {
+        jq(document).ready(function () {
+            //Disable encounter date field.
+            var disableEncounterDate = function() {
+                $encounterDateField = jq('#encounterDate').find('input[type="text"]');
+                $encounterDateField.addClass('disabled');
+                $encounterDateField.attr('disabled', 'disabled');
+            }
+            disableEncounterDate();
+        });
+     }
+    </script>
 
     <span style="display:none;">
         <encounterLocation default="629d78e9-93e5-43b0-ad8a-48313fd99117" order="629d78e9-93e5-43b0-ad8a-48313fd99117" />
@@ -261,8 +276,8 @@
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <obs conceptId="90216" answerConceptIds="90079,90073,90078,90071" answerLabels="1. No Signs - No signs or symptoms of TB,
-                                                     2. Presumptive (Suspect) - TB refer or sputum sent,3. TB Diagnosed - Diagnosed with TB,4. TB Rx - Currently on TB treatment" style="dropdown" class="long-value-select" labelText="TB Status" />
+                                                    <obs conceptId="90216" answerConceptIds="90079,90073,90078,90071" answerLabels="1 - No Signs - No signs or symptoms of TB,
+                                                     2 - Presumptive (Suspect) - TB refer or sputum sent,3 - TB Diagnosed - Diagnosed with TB,4 - TB Rx - Currently on TB treatment" style="dropdown" class="long-value-select" labelText="TB Status" />
                                                 </div>
                                                 <div class="col-md-3">
                                                     <obs conceptId="717" labelText="WOA U/S Scan Done" />
