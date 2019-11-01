@@ -41,76 +41,9 @@
         jq("#99030").find("select").attr("style", "pointer-events: none;");
         
         
-       
-        jq("#99030").find("input[type$='text']").keyup(function() {
+       var age      =  <lookup complexExpression="$patient.age"/>;
+        getMUACCodeFromMUACScoreByAge(age)
 
-            var age      =  <lookup complexExpression="$patient.age"/>;
-
-            var muacScore = jq(this).val();
-
-            if(age &lt; 5) {
-
-                if(muacScore &lt; 11.5) {
-                    jq("#99030").find("select").val(99028).attr('selected', 'selected')
-                }
-
-                if(muacScore &gt;= 11.5 &amp;&amp; muacScore &lt; 12.5) {
-                    jq("#99030").find("select").val(99029).attr('selected', 'selected')
-                }
-
-                if(muacScore &gt;=12.5) {
-                        jq("#99030").find("select").val(99027).attr('selected', 'selected')
-                    }
-                }
-
-                if(age &gt;= 5 &amp;&amp; age &lt; 10) {
-
-                    if(muacScore &lt; 13.5) {
-                        jq("#99030").find("select").val(99028).attr('selected', 'selected')
-                    }
-
-                    if(muacScore &gt;=13.5 &amp;&amp; muacScore &lt; 14.5) {
-                        jq("#99030").find("select").val(99029).attr('selected', 'selected')
-                    }
-
-                    if(muacScore &gt;=14.5) {
-                        jq("#99030").find("select").val(99027).attr('selected', 'selected')
-                    }
-
-                }
-
-                if(age &gt;=10 &amp;&amp; age &lt; 18) {
-
-                    if(muacScore &lt; 16.5) {
-                        jq("#99030").find("select").val(99028).attr('selected', 'selected')
-                    }
-
-                    if(muacScore &gt;=16.5 &amp;&amp; muacScore &lt; 19) {
-                        jq("#99030").find("select").val(99029).attr('selected', 'selected')
-                    }
-
-                    if(muacScore &gt;=19) {
-                        jq("#99030").find("select").val(99027).attr('selected', 'selected')
-                    }
-
-                }
-
-                if(age &gt;=18) {
-
-                    if(muacScore &lt; 19) {
-                        jq("#99030").find("select").val(99028).attr('selected', 'selected')
-                    }
-
-                    if(muacScore &gt;=19 &amp;&amp; muacScore &lt; 22) {
-                        jq("#99030").find("select").val(99029).attr('selected', 'selected')
-                    }
-
-                    if(muacScore &gt;=22) {
-                        jq("#99030").find("select").val(99027).attr('selected', 'selected')
-                    }
-                }
-
-    })
     <ifMode mode="EDIT">
 
         // In edit mode, enable the malaria test results if a test was done.
@@ -295,27 +228,26 @@
                                 <div class="row">
                                     <div class="col-md-3">
                                         <label>MUAC Score</label>
-                                        <obs conceptId="CIEL:1343" id="muac_score" />
-                                        <!-- <obs conceptId="1343" labelText="M.U.A.C (cm):"/> -->
+                                        <obs conceptId="CIEL:1343" id="muac-score" />
                                     </div>
                                     <div class="col-md-3">
                                         <span class="muac">
                                             <includeIf velocityTest="$patient.age &lt; 5">
                                                 <label>MUAC Code</label>
-                                                <obs id="muac_code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm"/>
+                                                <obs id="muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm"/>
                                             </includeIf>
                                             <includeIf velocityTest="$patient.age &lt; 10 &amp;&amp; $patient.age &gt;=5">
                                                 <label>MUAC</label>
-                                                <obs id= "muac_code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm" />
+                                                <obs id= "muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm" />
                                             </includeIf>
                                             <includeIf velocityTest="$patient.age &lt; 18 &amp;&amp; $patient.age &gt;=10">
                                                 <label>MUAC</label>
-                                                <obs id= "muac_code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm" />
+                                                <obs id= "muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm" />
                                             </includeIf>
 
                                             <includeIf velocityTest="$patient.age &gt;=18">
                                                 <label>MUAC</label>
-                                                <obs id= "muac_code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm" />
+                                                <obs id= "muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm" />
                                             </includeIf>
                                         </span>
                                     </div>
