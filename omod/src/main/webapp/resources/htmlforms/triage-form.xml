@@ -429,7 +429,7 @@
                             <label>Refer To Next Location</label>
                         </div>
                         <div class="card-body">
-                            <uiInclude provider="ugandaemrpoc" fragment="referToNextProvider"/>
+                            <uiInclude provider="ugandaemrpoc" fragment="referToNextLocation"/>
                         </div>
                     </div>
                 </ifMode>
