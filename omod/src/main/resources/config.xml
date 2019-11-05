@@ -62,6 +62,12 @@
 		<description>Date format for ugandaemrpoc display and date pickers</description>
 	</globalProperty>
 
+	<globalProperty>
+		<property>order.testSpecimenSourcesConceptUuid</property>
+		<defaultValue>162476AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</defaultValue>
+		<description>Specifies the uuid of the concept set where its members represent the possible test specimen sources</description>
+	</globalProperty>
+
 	<aware_of_modules>
 		<aware_of_module>org.openmrs.module.legacyui</aware_of_module>
 	</aware_of_modules>
