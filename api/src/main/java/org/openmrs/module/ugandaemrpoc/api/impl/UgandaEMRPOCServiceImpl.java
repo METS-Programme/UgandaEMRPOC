@@ -619,23 +619,26 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
                 if (obs.getObsGroup() != null) {
                     obsGroupMembers.addAll((obs.getObsGroup().getGroupMembers()));
 
-                    for (Obs obs1 : obsGroupMembers) {
-                        switch (obs1.getConcept().getConceptId()) {
+                    for (Obs groupMember : obsGroupMembers) {
+                        switch (groupMember.getConcept().getConceptId()) {
                             case MEDICATION_QUANTITY_CONCEPT_ID:
-                                drugOrder.setDose(obs1.getValueNumeric());
-                                drugOrder.setQuantity(obs1.getValueNumeric());
+                            case ARV_MEDICATION_QUANTITY_CONCEPT_ID:
+                                drugOrder.setQuantity(groupMember.getValueNumeric());
+                                drugOrder.setDose(groupMember.getValueNumeric());
                                 break;
                             case MEDICATION_DURATION_CONCEPT_ID:
-                                drugOrder.setDuration(obs1.getValueNumeric().intValue());
+                            case ARV_MEDICATION_DURATION_CONCEPT_ID:
+                                drugOrder.setDuration(groupMember.getValueNumeric().intValue());
                                 break;
                             case MEDICATION_QUANTITY_UNIT_CONCEPT_ID:
-                                drugOrder.setDoseUnits(obs1.getConcept());
+                                drugOrder.setQuantityUnits(groupMember.getValueCoded());
+                                drugOrder.setDoseUnits(groupMember.getValueCoded());
                                 break;
                             case MEDICATION_DURATION_UNIT_CONCEPT_ID:
-                                drugOrder.setDurationUnits(obs1.getConcept());
+                                drugOrder.setDurationUnits(groupMember.getValueCoded());
                                 break;
                             case MEDICATION_COMMENT_CONCEPT_ID:
-                                drugOrder.setCommentToFulfiller(obs1.getValueText());
+                                drugOrder.setCommentToFulfiller(groupMember.getValueText());
                                 break;
                             default:
                         }
