@@ -1243,12 +1243,15 @@
                                                         <obs conceptId="1282" answerConceptSetIds="160021" style="radio"
                                                              answerConceptIds="78280" class="fullwidth"/>
                                                     </div>
-                                                    <div class="col-4">
-                                                        <label>No. of Pills:</label>
-                                                    </div>
 
                                                     <div class="col-4">
+                                                        <label>No. of Pills:</label>
                                                         <obs conceptId="160856"/>
+                                                    </div>
+
+                                                    <div class="col-4 duration">
+                                                        <label>No. of Days</label>
+                                                        <obs conceptId="159368"/>
                                                     </div>
                                                 </div>
 
@@ -1260,10 +1263,12 @@
                                                     </div>
                                                     <div class="col-4">
                                                         <label>No. of Pills:</label>
+                                                        <obs conceptId="160856"/>
                                                     </div>
 
-                                                    <div class="col-4">
-                                                        <obs conceptId="160856"/>
+                                                    <div class="col-4 duration">
+                                                        <label>No. of Days</label>
+                                                        <obs conceptId="159368"/>
                                                     </div>
                                                 </div>
 
