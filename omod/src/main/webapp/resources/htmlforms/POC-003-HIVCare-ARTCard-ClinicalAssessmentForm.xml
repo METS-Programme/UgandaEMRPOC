@@ -1,11 +1,11 @@
-<htmlform formName="HMIS 003 HIV Care ART Card - Clinical Assessment"
+<htmlform formName="HIV Clinical Assessment"
           formDescription="A visit for a client for clinical assessment "
           formEncounterType="8dbfc2d0-c2bf-4e74-85ea-8319dc326e38"
           formUuid="8dbfc2d0-c2bf-4e74-85ea-8319dc326e38"
           formVersion="3.0"
           formAddMetadata="yes"
           formUILocation="patientDashboard.visitActions"
-          formOrder="2"
+          formOrder="0"
           formIcon="icon-medkit"
           formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; sessionLocation.uuid=='86863db4-6101-4ecf-9a86-5e716d6504e4'"
           formDisplayStyle="Standard">
