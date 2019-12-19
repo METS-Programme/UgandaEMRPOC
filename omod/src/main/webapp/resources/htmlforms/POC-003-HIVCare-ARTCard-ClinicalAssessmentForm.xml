@@ -1,7 +1,7 @@
 <htmlform formName="HIV Clinical Assessment"
           formDescription="A visit for a client for clinical assessment "
           formEncounterType="8d5b2be0-c2cc-11de-8d13-0010c6dffd0f"
-          formUuid="fe9c1952-1f11-11ea-a5e8-2e728ce88125"
+          formUuid="12de5bc5-352e-4faf-9961-a2125085a75c"
           formVersion="3.0"
           formAddMetadata="yes"
           formUILocation="patientDashboard.visitActions"
@@ -1356,7 +1356,7 @@
                                     ARV - Regimens
                                 </div>
                                 <div class="card-body">
-                                    <obsgroup groupingConceptId="165419">
+                                    <obsgroup groupingConceptId="165430">
                                         <div class="row">
                                             <div class="col-6">
                                                 <obs id="90315" conceptId="90315" labelText="Regimen:"
