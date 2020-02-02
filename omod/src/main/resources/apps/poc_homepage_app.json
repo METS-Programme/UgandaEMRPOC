@@ -104,5 +104,24 @@
       "requiredPrivilege": "App: ugandaemrpoc.pharmacy"
     }
   ]
-}
+},{
+    "id": "ugandaemrpoc.findPatient",
+    "instanceOf": "coreapps.template.findPatient",
+    "description": "Basic patient search that goes to the patient dashboard",
+    "order": 0,
+    "extensions": [
+      {
+        "id": "ugandaemrpoc.findPatientLink",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "coreapps.findPatient.app.label",
+        "url": "ugandaemrpoc/findpatient/findPatient.page?app=ugandaemrpoc.findPatient",
+        "icon": "icon-search",
+        "requiredPrivilege": "App: ugandaemrpoc.findPatient"
+      }
+    ],
+    "config": {
+      "registrationAppLink": "registrationapp/registerPatient.page?appId=aijar.registrationapp.registerPatient"
+    }
+  }
 ]

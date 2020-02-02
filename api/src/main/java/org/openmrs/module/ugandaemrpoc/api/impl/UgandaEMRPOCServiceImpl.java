@@ -8,12 +8,15 @@ import org.openmrs.*;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.OrderService;
+import org.openmrs.api.AdministrationService;
+import org.openmrs.api.VisitService;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.htmlformentry.FormEntrySession;
 import org.openmrs.module.patientqueueing.api.PatientQueueingService;
 import org.openmrs.module.patientqueueing.mapper.PatientQueueMapper;
 import org.openmrs.module.patientqueueing.model.PatientQueue;
+import org.openmrs.module.ugandaemrpoc.api.PatientQueueVisitMapper;
 import org.openmrs.module.ugandaemrpoc.api.UgandaEMRPOCService;
 import org.openmrs.module.ugandaemrpoc.api.lab.mapper.LabQueueMapper;
 import org.openmrs.module.ugandaemrpoc.api.lab.mapper.OrderMapper;
@@ -23,6 +26,7 @@ import org.openmrs.module.ugandaemrpoc.pharmacy.mapper.DrugOrderMapper;
 import org.openmrs.module.ugandaemrpoc.pharmacy.mapper.PharmacyMapper;
 import org.openmrs.module.ugandaemrpoc.utils.DateFormatUtil;
 import org.openmrs.ui.framework.SimpleObject;
+import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 
 import java.io.IOException;
@@ -39,42 +43,47 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 
 
     @Override
-    public List<PatientQueueMapper> mapPatientQueueToMapper(List<PatientQueue> patientQueueList) {
-        List<PatientQueueMapper> patientQueueMappers = new ArrayList<>();
+    public List<PatientQueueVisitMapper> mapPatientQueueToMapper(List<PatientQueue> patientQueueList) {
+        List<PatientQueueVisitMapper> patientQueueMappers = new ArrayList<>();
 
         for (PatientQueue patientQueue : patientQueueList) {
             String names = patientQueue.getPatient().getFamilyName() + " " + patientQueue.getPatient().getGivenName() + " " + patientQueue.getPatient().getMiddleName();
-            PatientQueueMapper patientQueueMapper = new PatientQueueMapper();
-            patientQueueMapper.setId(patientQueue.getId());
-            patientQueueMapper.setPatientNames(names.replace("null", ""));
-            patientQueueMapper.setPatientId(patientQueue.getPatient().getPatientId());
-            patientQueueMapper.setLocationFrom(patientQueue.getLocationFrom().getName());
-            patientQueueMapper.setLocationTo(patientQueue.getLocationTo().getName());
-            patientQueueMapper.setVisitNumber(patientQueue.getVisitNumber());
+            PatientQueueVisitMapper patientQueueVisitMapper = new PatientQueueVisitMapper();
+            patientQueueVisitMapper.setId(patientQueue.getId());
+            patientQueueVisitMapper.setPatientNames(names.replace("null", ""));
+            patientQueueVisitMapper.setPatientId(patientQueue.getPatient().getPatientId());
+            patientQueueVisitMapper.setLocationFrom(patientQueue.getLocationFrom().getName());
+            patientQueueVisitMapper.setLocationTo(patientQueue.getLocationTo().getName());
+            patientQueueVisitMapper.setVisitNumber(patientQueue.getVisitNumber());
 
             if (patientQueue.getProvider() != null) {
-                patientQueueMapper.setProviderNames(patientQueue.getProvider().getName());
+                patientQueueVisitMapper.setProviderNames(patientQueue.getProvider().getName());
             }
 
             if (patientQueue.getCreator() != null) {
-                patientQueueMapper.setCreatorNames(patientQueue.getCreator().getDisplayString());
+                patientQueueVisitMapper.setCreatorNames(patientQueue.getCreator().getDisplayString());
             }
 
             if (patientQueue.getEncounter() != null) {
-                patientQueueMapper.setEncounterId(patientQueue.getEncounter().getEncounterId().toString());
+                patientQueueVisitMapper.setEncounterId(patientQueue.getEncounter().getEncounterId().toString());
             }
 
             if (patientQueue.getStatus() == PatientQueue.Status.PENDING && patientQueue.getLocationFrom().getUuid().equals(LAB_LOCATION_UUID)) {
-                patientQueueMapper.setStatus(QUEUE_STATUS_FROM_LAB);
+                patientQueueVisitMapper.setStatus(QUEUE_STATUS_FROM_LAB);
             } else {
-                patientQueueMapper.setStatus(patientQueue.getStatus().name());
+                patientQueueVisitMapper.setStatus(patientQueue.getStatus().name());
+            }
+
+            Visit visit = getPatientCurrentVisit(patientQueue.getPatient());
+            if (visit != null) {
+                patientQueueVisitMapper.setVisitId(visit.getVisitId());
             }
 
 
-            patientQueueMapper.setAge(patientQueue.getPatient().getAge().toString());
-            patientQueueMapper.setGender(patientQueue.getPatient().getGender());
-            patientQueueMapper.setDateCreated(patientQueue.getDateCreated().toString());
-            patientQueueMappers.add(patientQueueMapper);
+            patientQueueVisitMapper.setAge(patientQueue.getPatient().getAge().toString());
+            patientQueueVisitMapper.setGender(patientQueue.getPatient().getGender());
+            patientQueueVisitMapper.setDateCreated(patientQueue.getDateCreated().toString());
+            patientQueueMappers.add(patientQueueVisitMapper);
         }
         return patientQueueMappers;
     }
@@ -736,6 +745,17 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 
     private boolean isRetrospective(Encounter encounter) {
         return encounter.getEncounterDatetime().before(OpenmrsUtil.firstSecondOfDay(new Date()));
+    }
+
+
+    private Visit getPatientCurrentVisit(Patient patient) {
+        List<Visit> visitList = Context.getVisitService().getActiveVisitsByPatient(patient);
+        for (Visit visit : visitList) {
+            if (visit.getStartDatetime().after(OpenmrsUtil.firstSecondOfDay(new Date())) && visit.getStartDatetime().before(OpenmrsUtil.getLastMomentOfDay(new Date()))) {
+                return visit;
+            }
+        }
+        return null;
     }
 
 }
