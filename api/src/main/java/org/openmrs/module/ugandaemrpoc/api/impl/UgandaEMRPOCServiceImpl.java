@@ -748,6 +748,11 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
     }
 
 
+    /**
+     * This Method gets the latest current visit for a patient
+     * @param patient the patient whose current visit will be retrived.
+     * @return Visit the active visit for a patient.
+     */
     private Visit getPatientCurrentVisit(Patient patient) {
         List<Visit> visitList = Context.getVisitService().getActiveVisitsByPatient(patient);
         for (Visit visit : visitList) {
