@@ -8,8 +8,6 @@ import org.openmrs.*;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.OrderService;
-import org.openmrs.api.AdministrationService;
-import org.openmrs.api.VisitService;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.htmlformentry.FormEntrySession;
@@ -26,7 +24,6 @@ import org.openmrs.module.ugandaemrpoc.pharmacy.mapper.DrugOrderMapper;
 import org.openmrs.module.ugandaemrpoc.pharmacy.mapper.PharmacyMapper;
 import org.openmrs.module.ugandaemrpoc.utils.DateFormatUtil;
 import org.openmrs.ui.framework.SimpleObject;
-import org.openmrs.util.OpenmrsConstants;
 import org.openmrs.util.OpenmrsUtil;
 
 import java.io.IOException;

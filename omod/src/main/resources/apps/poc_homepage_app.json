@@ -104,7 +104,8 @@
       "requiredPrivilege": "App: ugandaemrpoc.pharmacy"
     }
   ]
-},{
+},
+  {
     "id": "ugandaemr.counseling.center.homepageLink",
     "description": "Linkages to the Counseling Center",
     "order": 1,
