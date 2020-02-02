@@ -105,23 +105,19 @@
     }
   ]
 },{
-    "id": "ugandaemrpoc.findPatient",
-    "instanceOf": "coreapps.template.findPatient",
-    "description": "Basic patient search that goes to the patient dashboard",
-    "order": 0,
+    "id": "ugandaemr.counseling.center.homepageLink",
+    "description": "Linkages to the Counseling Center",
+    "order": 1,
     "extensions": [
       {
-        "id": "ugandaemrpoc.findPatientLink",
+        "id": "ugandaemr.counseling.center.homepageLink",
         "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
         "type": "link",
-        "label": "coreapps.findPatient.app.label",
-        "url": "ugandaemrpoc/findpatient/findPatient.page?app=ugandaemrpoc.findPatient",
-        "icon": "icon-search",
-        "requiredPrivilege": "App: ugandaemrpoc.findPatient"
+        "label": "ugandaemrpoc.counseling.center.label",
+        "url": "patientqueueing/providerDashboard.page?locationId=7c231e1a-1db5-11ea-978f-2e728ce88125",
+        "icon": "fas fa-user-friends",
+        "requiredPrivilege": "App: ugandaemrpoc.counselingcenter"
       }
-    ],
-    "config": {
-      "registrationAppLink": "registrationapp/registerPatient.page?appId=aijar.registrationapp.registerPatient"
-    }
+    ]
   }
 ]
