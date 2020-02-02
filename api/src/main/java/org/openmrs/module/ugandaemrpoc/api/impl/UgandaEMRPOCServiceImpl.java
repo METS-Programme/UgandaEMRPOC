@@ -738,4 +738,15 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
         return encounter.getEncounterDatetime().before(OpenmrsUtil.firstSecondOfDay(new Date()));
     }
 
+
+    private Visit getPatientCurrentVisit(Patient patient) {
+        List<Visit> visitList = Context.getVisitService().getActiveVisitsByPatient(patient);
+        for (Visit visit : visitList) {
+            if (visit.getStartDatetime().after(OpenmrsUtil.firstSecondOfDay(new Date())) && visit.getStartDatetime().before(OpenmrsUtil.getLastMomentOfDay(new Date()))) {
+                return visit;
+            }
+        }
+        return null;
+    }
+
 }

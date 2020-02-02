@@ -157,4 +157,5 @@ public abstract interface UgandaEMRPOCService extends OpenmrsService {
 	 * @return
 	 */
 	public PatientQueue getPreviousQueue(Patient patient, Location location,PatientQueue.Status status);
+
 }
