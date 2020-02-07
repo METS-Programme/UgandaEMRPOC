@@ -157,4 +157,11 @@ public abstract interface UgandaEMRPOCService extends OpenmrsService {
 	 * @return
 	 */
 	public PatientQueue getPreviousQueue(Patient patient, Location location,PatientQueue.Status status);
+
+
+	/**
+	 * This Method completes all facility out patient active patient visits found.
+	 * @param patient the patient whose visits are to be completed
+	 */
+	public void completePatientActiveVisit(Patient patient);
 }

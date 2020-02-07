@@ -8,6 +8,7 @@ import org.openmrs.*;
 import org.openmrs.api.ConceptService;
 import org.openmrs.api.EncounterService;
 import org.openmrs.api.OrderService;
+import org.openmrs.api.VisitService;
 import org.openmrs.api.context.Context;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.htmlformentry.FormEntrySession;
@@ -459,24 +460,40 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
         List<PharmacyMapper> patientQueueMappers = new ArrayList<>();
 
         for (PatientQueue patientQueue : patientQueueList) {
-            if (patientQueue.getEncounter() != null && !patientQueue.getEncounter().getOrders().isEmpty()) {
-                String names = patientQueue.getPatient().getFamilyName() + " " + patientQueue.getPatient().getGivenName() + " " + patientQueue.getPatient().getMiddleName();
-                PharmacyMapper pharmacyMapper = new PharmacyMapper();
-                pharmacyMapper.setId(patientQueue.getId());
-                pharmacyMapper.setPatientNames(names.replace("null", ""));
-                pharmacyMapper.setPatientId(patientQueue.getPatient().getPatientId());
+            String names = patientQueue.getPatient().getFamilyName() + " " + patientQueue.getPatient().getGivenName() + " " + patientQueue.getPatient().getMiddleName();
+            PharmacyMapper pharmacyMapper = new PharmacyMapper();
+            pharmacyMapper.setId(patientQueue.getId());
+            pharmacyMapper.setPatientNames(names.replace("null", ""));
+            pharmacyMapper.setPatientId(patientQueue.getPatient().getPatientId());
+            pharmacyMapper.setVisitNumber(patientQueue.getVisitNumber());
+
+            if (patientQueue.getLocationFrom() != null) {
                 pharmacyMapper.setLocationFrom(patientQueue.getLocationFrom().getName());
-                pharmacyMapper.setLocationTo(patientQueue.getLocationTo().getName());
-                pharmacyMapper.setProviderNames(patientQueue.getProvider().getName());
-                pharmacyMapper.setStatus(patientQueue.getStatus().name());
-                pharmacyMapper.setAge(patientQueue.getPatient().getAge().toString());
-                pharmacyMapper.setDateCreated(patientQueue.getDateCreated().toString());
-                pharmacyMapper.setEncounterId(patientQueue.getEncounter().getEncounterId().toString());
-                if (patientQueue.getEncounter() != null) {
-                    pharmacyMapper.setDrugOrderMapper(processDrugOrders(patientQueue.getEncounter().getOrders()));
-                }
-                patientQueueMappers.add(pharmacyMapper);
             }
+
+            if (patientQueue.getLocationTo() != null) {
+                pharmacyMapper.setLocationTo(patientQueue.getLocationTo().getName());
+            }
+
+            if (patientQueue.getProvider() != null) {
+                pharmacyMapper.setProviderNames(patientQueue.getProvider().getName());
+            }
+
+            pharmacyMapper.setStatus(patientQueue.getStatus().name());
+            pharmacyMapper.setAge(patientQueue.getPatient().getAge().toString());
+            pharmacyMapper.setDateCreated(patientQueue.getDateCreated().toString());
+
+            Visit visit = getPatientCurrentVisit(patientQueue.getPatient());
+
+            if (visit != null) {
+                pharmacyMapper.setVisitId(visit.getVisitId());
+            }
+
+            if (patientQueue.getEncounter() != null) {
+                pharmacyMapper.setEncounterId(patientQueue.getEncounter().getEncounterId().toString());
+                pharmacyMapper.setDrugOrderMapper(processDrugOrders(patientQueue.getEncounter().getOrders()));
+            }
+            patientQueueMappers.add(pharmacyMapper);
         }
         return patientQueueMappers;
     }
@@ -747,6 +764,7 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 
     /**
      * This Method gets the latest current visit for a patient
+     *
      * @param patient the patient whose current visit will be retrived.
      * @return Visit the active visit for a patient.
      */
@@ -758,6 +776,20 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
             }
         }
         return null;
+    }
+
+    public void completePatientActiveVisit(Patient patient) {
+        VisitService visitService = Context.getVisitService();
+        List<Visit> activeVisitsByPatient = visitService.getActiveVisitsByPatient(patient);
+        for (Visit visit : activeVisitsByPatient) {
+            if (visit.getVisitType().equals(visitService.getVisitTypeByUuid("7b0f5697-27e3-40c4-8bae-f4049abfb4ed"))) {
+                try {
+                    visitService.endVisit(visit, OpenmrsUtil.getLastMomentOfDay(visit.getStartDatetime()));
+                } catch (Exception e) {
+                    log.error("Competition of Patient Visit #" + visit.getVisitId() + " failed.", e);
+                }
+            }
+        }
     }
 
 }
