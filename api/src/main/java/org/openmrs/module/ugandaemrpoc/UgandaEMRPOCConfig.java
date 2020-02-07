@@ -71,6 +71,7 @@ public class UgandaEMRPOCConfig {
 	public static final String ENCOUNTER_ROLE_PHARMACIST= "8da340f3-c690-439f-b21f-3a8367ff4057";
 
 	public  static final String ENCOUNTER_TYPE_DISPENSE_UUID="22902411-19c1-4a02-b19a-bf1a9c24fd51";
+	public  static final String DISPENSE_FORM_UUID="340fe8d8-4984-11ea-b77f-2e728ce88125";
 
 	public static final String CARE_SETTING_OPD = "Outpatient";
 
