@@ -21,9 +21,11 @@ import org.openmrs.module.ugandaemrpoc.api.lab.mapper.LabQueueMapper;
 import org.openmrs.module.ugandaemrpoc.api.lab.mapper.OrderMapper;
 import org.openmrs.module.ugandaemrpoc.api.lab.util.LaboratoryUtil;
 import org.openmrs.module.ugandaemrpoc.api.lab.util.TestResultModel;
+import org.openmrs.module.ugandaemrpoc.pharmacy.DispensingModelWrapper;
 import org.openmrs.module.ugandaemrpoc.pharmacy.mapper.DrugOrderMapper;
 import org.openmrs.module.ugandaemrpoc.pharmacy.mapper.PharmacyMapper;
 import org.openmrs.module.ugandaemrpoc.utils.DateFormatUtil;
+import org.openmrs.order.OrderUtil;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.util.OpenmrsUtil;
 
@@ -703,7 +705,9 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
                     drugOrder.setUrgency(Order.Urgency.STAT);
                     drugOrder.setCareSetting(careSetting);
                     drugOrder.setConcept(obs.getValueCoded());
+                    discontinueOverLappingDrugOrders(drugOrder);
                     orders.add(drugOrder);
+
                 }
             }
         }
@@ -792,4 +796,209 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
         }
     }
 
+    /**
+     * @see org.openmrs.module.ugandaemrpoc.api.UgandaEMRPOCService#dispenseMedication(org.openmrs.module.ugandaemrpoc.pharmacy.DispensingModelWrapper, org.openmrs.Provider, org.openmrs.Location)
+     */
+    public SimpleObject dispenseMedication(DispensingModelWrapper resultWrapper, Provider provider, Location location) {
+
+        EncounterService encounterService = Context.getEncounterService();
+        PatientQueueingService patientQueueingService = Context.getService(PatientQueueingService.class);
+
+        Encounter previousEncounter = encounterService.getEncounter(resultWrapper.getEncounterId());
+        PatientQueue patientQueue = patientQueueingService.getPatientQueueById(resultWrapper.getPatientQueueId());
+
+        Encounter encounter = new Encounter();
+        encounter.setEncounterType(encounterService.getEncounterTypeByUuid(ENCOUNTER_TYPE_DISPENSE_UUID));
+        encounter.setProvider(Context.getEncounterService().getEncounterRoleByUuid(ENCOUNTER_ROLE_PHARMACIST), provider);
+        encounter.setLocation(location);
+        encounter.setPatient(previousEncounter.getPatient());
+        encounter.setVisit(previousEncounter.getVisit());
+        encounter.setEncounterDatetime(previousEncounter.getEncounterDatetime());
+        encounter.setForm(Context.getFormService().getFormByUuid(DISPENSE_FORM_UUID));
+
+        List<DrugOrderMapper> referredOutPrescriptions = new ArrayList<>();
+        Set<Obs> obs = new HashSet<>();
+
+        for (DrugOrderMapper drugOrderMapper : resultWrapper.getDrugOrderMappers()) {
+            DrugOrder drugOrder = (DrugOrder) Context.getOrderService().getOrder(drugOrderMapper.getOrderId());
+
+            if (drugOrderMapper.getOrderReasonNonCoded() != null && drugOrderMapper.getOrderReasonNonCoded().equals("REFERREDOUT")) {
+                try {
+                    obs.addAll(processDispensingObservation(encounter, drugOrderMapper, false));
+                } catch (ParseException e) {
+                    log.error(e);
+                }
+                drugOrderMapper.setQuantity(calculatePrescriptionDispenseDifference(drugOrderMapper, drugOrder));
+                drugOrderMapper.setPatientAge(drugOrder.getPatient().getAge());
+                referredOutPrescriptions.add(drugOrderMapper);
+            } else {
+                try {
+                    obs.addAll(processDispensingObservation(encounter, drugOrderMapper, true));
+                } catch (ParseException e) {
+                    log.error(e);
+                }
+            }
+
+            try {
+                Context.getOrderService().discontinueOrder(drugOrder, "Completed", new Date(), provider, previousEncounter);
+            } catch (Exception e) {
+                log.error(e);
+            }
+
+            Context.getService(UgandaEMRPOCService.class).completePatientActiveVisit(patientQueue.getPatient());
+        }
+
+        encounter.setObs(obs);
+        encounterService.saveEncounter(encounter);
+
+        patientQueue.setEncounter(encounter);
+        patientQueueingService.savePatientQue(patientQueue);
+        patientQueueingService.completePatientQueue(patientQueue);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        SimpleObject simpleObject = new SimpleObject();
+
+        if (!referredOutPrescriptions.isEmpty()) {
+            try {
+                simpleObject.put("referredOutPrescriptions", objectMapper.writeValueAsString(referredOutPrescriptions));
+            } catch (IOException e) {
+                log.error(e);
+            }
+        } else {
+            simpleObject = SimpleObject.create("status", "success", "message", "Saved!");
+        }
+        return simpleObject;
+    }
+
+    /**
+     * This Method processes dispensing observations
+     *
+     * @param encounter          encounter where the obs will be saved
+     * @param drugOrderMapper    the data for the drugs that are being dispensed
+     * @param receivedAtFacility boolean to check if the drugs were dispensed at facility or not
+     * @return a set of drug dispensing observations
+     */
+    private Set<Obs> processDispensingObservation(Encounter encounter, DrugOrderMapper drugOrderMapper, Boolean receivedAtFacility) throws ParseException {
+
+        ConceptService conceptService = Context.getConceptService();
+        Set<Obs> obs = new HashSet<>();
+        Order order = null;
+        if (drugOrderMapper.getOrderId() != null) {
+            order = Context.getOrderService().getOrder(drugOrderMapper.getOrderId());
+        }
+        //Grouping Observation
+        Obs parentObs = createDispensingObs(encounter, conceptService.getConcept(MEDICATION_DISPENSE_SET), null, null, order);
+        obs.add(parentObs);
+
+        //Drug Observation
+        if (drugOrderMapper.getConcept() != null) {
+            Obs drug = createDispensingObs(encounter, conceptService.getConcept(MEDICATION_ORDER_CONCEPT_ID), drugOrderMapper.getConcept(), "coded", order);
+            parentObs.addGroupMember(drug);
+            obs.add(drug);
+        }
+
+        //Quantity Observation
+        if (drugOrderMapper.getQuantity() != null) {
+            Obs drugQuantity = createDispensingObs(encounter, conceptService.getConcept(MEDICATION_DISPENSE_UNITS), drugOrderMapper.getQuantity().toString(), "numeric", order);
+            parentObs.addGroupMember(drugQuantity);
+            obs.add(drugQuantity);
+        }
+
+        //Duration Observation
+        if (drugOrderMapper.getDuration() != null) {
+            Obs periodDispensed = createDispensingObs(encounter, conceptService.getConcept(MEDICATION_DURATION_CONCEPT_ID), drugOrderMapper.getDuration().toString(), "numeric", order);
+            parentObs.addGroupMember(periodDispensed);
+            obs.add(periodDispensed);
+        }
+
+
+        //Duration Observation
+        if (!drugOrderMapper.getStrength().equals("")) {
+            Obs drugStrength = createDispensingObs(encounter, conceptService.getConcept(MEDICATION_STRENGTH_CONCEPT_ID), drugOrderMapper.getStrength(), "string", order);
+            parentObs.addGroupMember(drugStrength);
+            obs.add(drugStrength);
+        }
+
+        //check if issued at facility
+
+        Obs dispensedAtFacility = createDispensingObs(encounter, conceptService.getConcept(MEDICATION_DISPENSE_RECEIVED_AT_VIST), null, null, order);
+        dispensedAtFacility.setValueBoolean(receivedAtFacility);
+        parentObs.addGroupMember(dispensedAtFacility);
+        obs.add(dispensedAtFacility);
+
+        return obs;
+    }
+
+    /**
+     * This method helps create an observation
+     *
+     * @param encounter observation encounter
+     * @param concept   question for observation
+     * @param value     value for the observation
+     * @param valueType datatype for the observation
+     * @param order     observation order
+     * @return an observation
+     * @throws ParseException
+     */
+    private Obs createDispensingObs(Encounter encounter, Concept concept, String value, String valueType, Order order) throws ParseException {
+        Obs obs = new Obs();
+        obs.setObsDatetime(encounter.getEncounterDatetime());
+        obs.setPerson(encounter.getPatient());
+        obs.setLocation(encounter.getLocation());
+        obs.setEncounter(encounter);
+        obs.setOrder(order);
+        obs.setConcept(concept);
+        if (valueType != null) {
+            if (valueType.equals("string")) {
+                obs.setValueAsString(value);
+            } else if (valueType.equals("numeric")) {
+                obs.setValueNumeric(Double.parseDouble(value));
+            } else if (valueType.equals("coded")) {
+                obs.setValueCoded(Context.getConceptService().getConcept(value));
+            } else if (valueType.equals("groupId")) {
+                obs.setValueGroupId(Integer.parseInt(value));
+            }
+        }
+        return obs;
+    }
+
+    /**
+     * Calculates the balance after dispensing medication to patient.
+     *
+     * @param drugOrderMapper the object that contains the data of dispensing
+     * @param drugOrder       the object that contains prescription data
+     * @return
+     */
+    private Double calculatePrescriptionDispenseDifference(DrugOrderMapper drugOrderMapper, DrugOrder drugOrder) {
+        Double quantityBalance = 0.0;
+        if (drugOrderMapper.getQuantity() != null && drugOrder.getQuantity() != null) {
+            quantityBalance = drugOrder.getQuantity() - drugOrderMapper.getQuantity();
+        } else if (drugOrder.getQuantity() != null && drugOrderMapper.getQuantity() == null) {
+            quantityBalance = drugOrder.getQuantity();
+        }
+        return quantityBalance;
+    }
+
+    /**
+     * Check if there is a similar active drug order and discontinues it.
+     *
+     * @param order the order to be checked if it is similar to any
+     */
+    private void discontinueOverLappingDrugOrders(Order order) {
+        OrderService orderService = Context.getOrderService();
+        List<Order> activeOrders = orderService.getActiveOrders(order.getPatient(), null, order.getCareSetting(), new Date());
+        for (Order activeOrder : activeOrders) {
+            if (order.hasSameOrderableAs(activeOrder)
+                    && !OpenmrsUtil.nullSafeEquals(order.getPreviousOrder(), activeOrder)
+                    && OrderUtil.checkScheduleOverlap(order, activeOrder) && activeOrder.getOrderType()
+                    .equals(Context.getOrderService().getOrderTypeByUuid(OrderType.DRUG_ORDER_TYPE_UUID))) {
+                try {
+                    orderService.discontinueOrder(activeOrder, "Incomplete with new similar order", OpenmrsUtil.getLastMomentOfDay(activeOrder.getDateActivated()), order.getOrderer(), activeOrder.getEncounter());
+                } catch (Exception e) {
+                    log.error("failed to discontinue order #" + activeOrder.getOrderId(), e);
+                }
+            }
+        }
+    }
 }

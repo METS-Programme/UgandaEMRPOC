@@ -34,7 +34,7 @@
         });
     });
 
-    function showEditPrescriptionForm(encounter,queueId, position) {
+    function showEditPrescriptionForm(encounter, queueId, position) {
         getEditPrescriptionTempLate(pharmacyData, encounter, position);
         editPrescriptionForm.find("#edit-prescription-id").val(encounter);
         editPrescriptionForm.find("#edit-queue-id").val(queueId);
@@ -73,7 +73,7 @@
                     editPrescriptionDialog.close();
                     window.location.reload();
                 } else if (data.referredOutPrescriptions !== "") {
-                    var dataToPrint= JSON.parse(data.referredOutPrescriptions);
+                    var dataToPrint = JSON.parse(data.referredOutPrescriptions);
                     printPrescription(dataToPrint);
                 }
             }
@@ -88,10 +88,15 @@
     function printPrescription(dataToPrint) {
         var divToPrint = document.getElementById("printSection");
         var newWin = window.open('', 'Print-Window');
-
+        var patientInformation = "<tr><td width='30%' style='text-align: center;'>" + dataToPrint[0].patient + "</td><td width='30%' style='text-align: center;'>_____________</td><td width='30%' style='text-align: center;'>" + new Date() + "</td></tr>";
+        var providerInformation = "<tr><td width='30%' style='text-align: center;'>" + dataToPrint[0].orderer + "</td><td width='50%' style='text-align: center;'>_______________________</td></tr>";
+        jq("#patient-names").append(dataToPrint[0].patient);
+        jq("#patient-age").append(dataToPrint[0].patientAge);
+        jq("#prescription-date").append("${ui.format(new Date())}");
+        jq("#prescribing-provider-info").append(providerInformation);
         jq.each(dataToPrint, function (index, dataToPrint) {
-          var rowToAppendToTable="<tr><td width='30%' style='text-align: center;'>"+dataToPrint.conceptName+"</td><td width='30%' style='text-align: center;'>"+dataToPrint.quantity+"</td><td width='30%' style='text-align: center;'>"+dataToPrint.duration+" "+dataToPrint.durationUnits+"</td></tr>";
-            jq("#containerToAppendRefferedOutPrescriptions").append(rowToAppendToTable);
+            var medicationInformation = "<tr><td width='50%' style='text-align: left;'>" + dataToPrint.conceptName + "</td><td width='50%' style='text-align: right;'>" + dataToPrint.quantity + "</td></tr>";
+            jq("#containerToAppendRefferedOutPrescriptions").append(medicationInformation);
         });
         newWin.document.open();
         newWin.document.write('<html><body onload="window.print()">' + divToPrint.innerHTML + '</body></html>');
@@ -251,6 +256,7 @@ form input {
                         <th>Drug Name</th>
                         <th>Prescribed Quantity</th>
                         <th>Prescription Period</th>
+                        <th>Strength</th>
                         <th>Dispense Quantity</th>
                         <th>Dispense Period</th>
                         <th>Refer Out</th>
@@ -353,6 +359,13 @@ form input {
                                     </span>
                                 </div>
                             </td>
+
+                            <td data-bind="">
+                                <div id="data">
+                                    <input class="prescription-text"
+                                           data-bind="attr : { 'type' : 'text', 'name' : 'wrap.drugOrderMappers[' + \$index() + '].strength', value : '' }">
+                                </div>
+                            </td>
                             <td data-bind="">
                                 <div id="data">
                                     <input class="prescription-text"
@@ -390,20 +403,51 @@ form input {
 <div id="printSection" class="print-only">
     <center>
         <div style="width: 60%">
-            <div><img width="150px" src="${ui.resourceLink("aijar", "images/moh_logo_large.png")}"/></div>
+            <div><img width="100px" src="${ui.resourceLink("aijar", "images/moh_logo_large.png")}"/></div>
 
-            <div><h3>PRESCRIPTION FROM : HEALTH CENTER NAME</h3></div>
-            <hr style="border: 1px solid red;"/>
+            <div><h1>${config.healthCenterName}</h1></div>
+
+            <div><h3>Prescription Note</h3></div>
+
+            <hr style="border: 2px double red;"/>
+
+            <div id="patient-info" align="left">
+                <table>
+                    <tbody>
+                    <tr>
+                        <th width="30%" style="text-align: left;">Patient Name:</th><td style="text-align: right;" width="70%" id="patient-names"></td>
+                    </tr>
+                    <tr>
+                        <th width="30%" style="text-align: left;">Age:</th><td  style="text-align: right;" width="70%" id="patient-age"></td>
+                    </tr>
+                    <tr><th width="30%" style="text-align: left;">Prescription Date:</th><td style="text-align: right;" width="70%" id="prescription-date"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <hr style="border: 1px dotted red;"/>
 
             <div id="prescription_receipt" align="left">
                 <table>
                     <thead>
-                    <th width="30%" style="text-align: center;">Drug Name</th>
-                    <th width="30%" style="text-align: center;">Prescribed Quantity</th>
-                    <th width="30%" style="text-align: center;">Prescription Period</th>
-
+                    <th width="50%" style="text-align: left;">Drug Name</th>
+                    <th width="50%" style="text-align: right;">Prescribed Quantity</th>
                     </thead>
                     <tbody id="containerToAppendRefferedOutPrescriptions">
+
+                    </tbody>
+                </table>
+            </div>
+
+            <hr style="border: 1px dotted red;"/>
+
+            <div align="left">
+                <table>
+                    <thead>
+                    <th width="30%" style="text-align: left;">Prescribed By</th>
+                    <th width="30%" style="text-align: right;">Sign</th>
+                    </thead>
+                    <tbody id="prescribing-provider-info">
 
                     </tbody>
                 </table>

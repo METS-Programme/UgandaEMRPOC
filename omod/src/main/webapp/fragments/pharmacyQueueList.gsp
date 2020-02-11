@@ -10,6 +10,9 @@ button, input {
     line-height: normal;
     width: 92px;
 }
+.fade:not(.show) {
+    opacity: 1;
+}
 </style>
 <script>
     jq(document).ready(function () {
@@ -100,7 +103,7 @@ button, input {
                     drugRefill += "<td>" + action + "</td>";
                     drugRefill += "</tr>";
                     drugRefillCount += 1;
-                } else {
+                } else if (patientQueueListElement.encounterId != null && patientQueueListElement.status === "COMPLETED") {
                     var editDispensingFormURL = "/" + OPENMRS_CONTEXT_PATH + "/htmlformentryui/htmlform/editHtmlFormWithStandardUi.page?patientId=" + patientQueueListElement.patientId + "&formUuid=340fe8d8-4984-11ea-b77f-2e728ce88125&encounterId=" + patientQueueListElement.encounterId + "&visitId=" + patientQueueListElement.visitId + "&returnUrl=" + "/" + OPENMRS_CONTEXT_PATH + "/patientqueueing/providerDashboard.page";
                     var action = "<i style=\"font-size: 25px;\" class=\"icon-edit edit-action\" title=\"Edit Medication Dispensed\" onclick=\" location.href = '" + editDispensingFormURL + "'\"></i>";
                     completed += "<tr>";
@@ -199,7 +202,7 @@ button, input {
                     <form method="get" id="patient-search-form" onsubmit="return false">
                         <input type="text" id="patient-pharmacy-search"
                                placeholder="${ui.message("coreapps.findPatient.search.placeholder")}"
-                               autocomplete="off"/><i
+                               autocomplete="off" class="provider-dashboard-patient-search"/><i
                             id="patient-search-clear-button" class="small icon-remove-sign"></i>
                     </form>
                 </div>
@@ -212,13 +215,14 @@ button, input {
             <li class="nav-item">
                 <a class="nav-item nav-link active" id="home-tab" data-toggle="tab" href="#pharmacy-pending" role="tab"
                    aria-controls="pharmacy-pending-tab" aria-selected="true">Prescriptions List <span style="color:red"
-                                                                                                 id="pharmacy-pending-number">0</span>
+                                                                                                      id="pharmacy-pending-number">0</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#pharmacy-drugrefill" role="tab"
-                   aria-controls="pharmacy-drugrefill-tab" aria-selected="false">Non Prescription List<span style="color:red"
-                                                                                                id="pharmacy-drugrefill-number">0</span>
+                   aria-controls="pharmacy-drugrefill-tab" aria-selected="false">Non Prescription List<span
+                        style="color:red"
+                        id="pharmacy-drugrefill-number">0</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -255,7 +259,7 @@ button, input {
         </div>
     </div>
 </div>
-${ui.includeFragment("ugandaemrpoc", "pharmacy/dispensingForm")}
+${ui.includeFragment("ugandaemrpoc", "pharmacy/dispensingForm",[healthCenterName:healthCenterName])}
 <% } %>
 
 
