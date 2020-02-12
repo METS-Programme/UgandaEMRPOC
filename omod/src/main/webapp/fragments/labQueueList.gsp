@@ -79,6 +79,10 @@
     left: 99%;
     top: 11%;
 }
+
+.fade:not(.show) {
+    opacity: 1;
+}
 </style>
 
 <script>

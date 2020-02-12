@@ -91,11 +91,15 @@
         var patientInformation = "<tr><td width='30%' style='text-align: center;'>" + dataToPrint[0].patient + "</td><td width='30%' style='text-align: center;'>_____________</td><td width='30%' style='text-align: center;'>" + new Date() + "</td></tr>";
         var providerInformation = "<tr><td width='30%' style='text-align: center;'>" + dataToPrint[0].orderer + "</td><td width='50%' style='text-align: center;'>_______________________</td></tr>";
         jq("#patient-names").append(dataToPrint[0].patient);
-        jq("#patient-age").append(dataToPrint[0].patientAge);
+        jq("#patient-age").append(dataToPrint[0].patientAge+" year(s)");
         jq("#prescription-date").append("${ui.format(new Date())}");
         jq("#prescribing-provider-info").append(providerInformation);
         jq.each(dataToPrint, function (index, dataToPrint) {
-            var medicationInformation = "<tr><td width='50%' style='text-align: left;'>" + dataToPrint.conceptName + "</td><td width='50%' style='text-align: right;'>" + dataToPrint.quantity + "</td></tr>";
+            var strength="";
+            if(dataToPrint.strength!==null && dataToPrint.strength!=="" ){
+                strength=dataToPrint.strength;
+            }
+            var medicationInformation = "<tr><td width='50%' style='text-align: left;'>" + dataToPrint.conceptName + " "+strength+"</td><td width='50%' style='text-align: right;'>" + dataToPrint.quantity + "</td></tr>";
             jq("#containerToAppendRefferedOutPrescriptions").append(medicationInformation);
         });
         newWin.document.open();
@@ -351,11 +355,11 @@ form input {
                             <td data-bind="">
                                 <div id="data">
                                     <span data-bind="if:drug && drug.toUpperCase() === 'WRITE COMMENT'">
-                                        <label data-bind="text: dose + ' (' + container+')'"></label>
+                                        <label data-bind="text: duration + ' (' + container+')'"></label>
                                     </span>
 
                                     <span data-bind="if:drug && drug.toUpperCase() !== 'WRITE COMMENT'">
-                                        <label data-bind="text: dose"></label>
+                                        <label data-bind="text: duration"></label>
                                     </span>
                                 </div>
                             </td>
