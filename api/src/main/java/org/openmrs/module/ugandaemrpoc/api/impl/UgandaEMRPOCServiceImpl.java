@@ -459,40 +459,24 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
         List<PharmacyMapper> patientQueueMappers = new ArrayList<>();
 
         for (PatientQueue patientQueue : patientQueueList) {
-            String names = patientQueue.getPatient().getFamilyName() + " " + patientQueue.getPatient().getGivenName() + " " + patientQueue.getPatient().getMiddleName();
-            PharmacyMapper pharmacyMapper = new PharmacyMapper();
-            pharmacyMapper.setId(patientQueue.getId());
-            pharmacyMapper.setPatientNames(names.replace("null", ""));
-            pharmacyMapper.setPatientId(patientQueue.getPatient().getPatientId());
-            pharmacyMapper.setVisitNumber(patientQueue.getVisitNumber());
-
-            if (patientQueue.getLocationFrom() != null) {
+            if (patientQueue.getEncounter() != null && !patientQueue.getEncounter().getOrders().isEmpty()) {
+                String names = patientQueue.getPatient().getFamilyName() + " " + patientQueue.getPatient().getGivenName() + " " + patientQueue.getPatient().getMiddleName();
+                PharmacyMapper pharmacyMapper = new PharmacyMapper();
+                pharmacyMapper.setId(patientQueue.getId());
+                pharmacyMapper.setPatientNames(names.replace("null", ""));
+                pharmacyMapper.setPatientId(patientQueue.getPatient().getPatientId());
                 pharmacyMapper.setLocationFrom(patientQueue.getLocationFrom().getName());
-            }
-
-            if (patientQueue.getLocationTo() != null) {
                 pharmacyMapper.setLocationTo(patientQueue.getLocationTo().getName());
-            }
-
-            if (patientQueue.getProvider() != null) {
                 pharmacyMapper.setProviderNames(patientQueue.getProvider().getName());
-            }
-
-            pharmacyMapper.setStatus(patientQueue.getStatus().name());
-            pharmacyMapper.setAge(patientQueue.getPatient().getAge().toString());
-            pharmacyMapper.setDateCreated(patientQueue.getDateCreated().toString());
-
-            Visit visit = getPatientCurrentVisit(patientQueue.getPatient());
-
-            if (visit != null) {
-                pharmacyMapper.setVisitId(visit.getVisitId());
-            }
-
-            if (patientQueue.getEncounter() != null) {
+                pharmacyMapper.setStatus(patientQueue.getStatus().name());
+                pharmacyMapper.setAge(patientQueue.getPatient().getAge().toString());
+                pharmacyMapper.setDateCreated(patientQueue.getDateCreated().toString());
                 pharmacyMapper.setEncounterId(patientQueue.getEncounter().getEncounterId().toString());
-                pharmacyMapper.setDrugOrderMapper(processDrugOrders(patientQueue.getEncounter().getOrders()));
+                if (patientQueue.getEncounter() != null) {
+                    pharmacyMapper.setDrugOrderMapper(processDrugOrders(patientQueue.getEncounter().getOrders()));
+                }
+                patientQueueMappers.add(pharmacyMapper);
             }
-            patientQueueMappers.add(pharmacyMapper);
         }
         return patientQueueMappers;
     }
@@ -702,9 +686,7 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
                     drugOrder.setUrgency(Order.Urgency.STAT);
                     drugOrder.setCareSetting(careSetting);
                     drugOrder.setConcept(obs.getValueCoded());
-                    discontinueOverLappingDrugOrders(drugOrder);
                     orders.add(drugOrder);
-
                 }
             }
         }
