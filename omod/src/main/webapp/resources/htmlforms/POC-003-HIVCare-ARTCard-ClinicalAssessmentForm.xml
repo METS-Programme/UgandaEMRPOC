@@ -1510,10 +1510,10 @@
                                                                      style="autocomplete" class="fullwidth"/>
                                                             </div>
                                                             <div class="col-2">
-                                                                <obs labelText="Units per dose" conceptId="160856"/>
+                                                                <obs labelText="Quantity" conceptId="160856"/>
                                                             </div>
                                                             <div class="col-2">
-                                                                <obs labelText="Doses per day" conceptId="160855"/>
+                                                                <obs labelText="Qty unit" conceptId="162402" answerConceptSetIds="162402,162384"/>
                                                             </div>
                                                             <div class="col-2 duration">
                                                                 <label>Duration</label>
@@ -1521,7 +1521,7 @@
                                                             </div>
                                                             <div class="col-2">
                                                                 <br/>
-                                                                <obs conceptId="1732"/>
+                                                                <obs conceptId="1732" labelText="Duration unit"/>
                                                             </div>
                                                             <div class="col-2">
                                                                 <div style="font-size: 25px;margin-top: 26px;">
