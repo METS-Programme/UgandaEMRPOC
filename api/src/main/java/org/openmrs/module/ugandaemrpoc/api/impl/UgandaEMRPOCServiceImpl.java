@@ -666,7 +666,6 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
                                 break;
                             case MEDICATION_QUANTITY_UNIT_CONCEPT_ID:
                                 drugOrder.setQuantityUnits(groupMember.getValueCoded());
-                                drugOrder.setDoseUnits(groupMember.getValueCoded());
                                 break;
                             case MEDICATION_DURATION_UNIT_CONCEPT_ID:
                                 drugOrder.setDurationUnits(groupMember.getValueCoded());
@@ -678,12 +677,16 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
                         }
                     }
 
-                    if (drugOrder.getRoute() == null) {
-                        drugOrder.setRoute(conceptService.getConcept(DEFALUT_ROUTE_CONCEPT_ID));
+                    if (drugOrder.getDose() == null) {
+                        drugOrder.setDose(0.0);
                     }
 
                     if (drugOrder.getDoseUnits() == null) {
                         drugOrder.setDoseUnits(conceptService.getConcept(DEFALUT_DOSE_UNIT_CONCEPT_ID));
+                    }
+
+                    if (drugOrder.getRoute() == null) {
+                        drugOrder.setRoute(conceptService.getConcept(DEFALUT_ROUTE_CONCEPT_ID));
                     }
 
                     if (drugOrder.getDurationUnits() == null) {
@@ -695,7 +698,7 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
                     }
 
                     if (drugOrder.getQuantityUnits() == null) {
-                        drugOrder.setQuantityUnits(conceptService.getConcept(DEFALUT_DOSE_UNIT_CONCEPT_ID));
+                        drugOrder.setQuantityUnits(conceptService.getConcept(DEFALUT_DISPENSING_UNIT_CONCEPT_ID));
                     }
 
                     drugOrder.setNumRefills(1);
@@ -899,7 +902,7 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
 
         //Quantity Observation
         if (drugOrderMapper.getQuantity() != null) {
-            Obs drugQuantity = createDispensingObs(encounter, conceptService.getConcept(MEDICATION_DISPENSE_UNITS), drugOrderMapper.getQuantity().toString(), "numeric", order);
+            Obs drugQuantity = createDispensingObs(encounter, conceptService.getConcept(MEDICATION_DISPENSE_QUANTITY), drugOrderMapper.getQuantity().toString(), "numeric", order);
             parentObs.addGroupMember(drugQuantity);
             obs.add(drugQuantity);
         }

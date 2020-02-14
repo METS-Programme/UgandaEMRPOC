@@ -95,8 +95,10 @@
         jq("#prescribing-provider-info").append(providerInformation);
         jq.each(dataToPrint, function (index, dataToPrint) {
             var strength="";
-            if(dataToPrint.)
-            var medicationInformation = "<tr><td width='50%' style='text-align: left;'>" + dataToPrint.conceptName + "</td><td width='50%' style='text-align: right;'>" + dataToPrint.quantity + "</td></tr>";
+            if(dataToPrint.strength!==null && dataToPrint.strength!=="" ){
+                strength=dataToPrint.strength;
+            }
+            var medicationInformation = "<tr><td width='50%' style='text-align: left;'>" + dataToPrint.conceptName + " "+strength+"</td><td width='50%' style='text-align: right;'>" + dataToPrint.quantity + "</td></tr>";
             jq("#containerToAppendRefferedOutPrescriptions").append(medicationInformation);
         });
         newWin.document.open();
