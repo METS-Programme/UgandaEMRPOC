@@ -13,8 +13,6 @@ public class OrderMapper implements Serializable {
 
 	private String patient;
 
-	private Integer patientAge;
-
 	private Integer patientId;
 
 	private String orderType;
@@ -227,13 +225,5 @@ public class OrderMapper implements Serializable {
 
 	public void setPatientId(int patientId) {
 		this.patientId = patientId;
-	}
-
-	public Integer getPatientAge() {
-		return patientAge;
-	}
-
-	public void setPatientAge(Integer patientAge) {
-		this.patientAge = patientAge;
 	}
 }
