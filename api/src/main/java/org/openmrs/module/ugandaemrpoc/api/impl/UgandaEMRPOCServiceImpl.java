@@ -23,6 +23,7 @@ import org.openmrs.module.ugandaemrpoc.api.lab.util.TestResultModel;
 import org.openmrs.module.ugandaemrpoc.pharmacy.mapper.DrugOrderMapper;
 import org.openmrs.module.ugandaemrpoc.pharmacy.mapper.PharmacyMapper;
 import org.openmrs.module.ugandaemrpoc.utils.DateFormatUtil;
+import org.openmrs.order.OrderUtil;
 import org.openmrs.ui.framework.SimpleObject;
 import org.openmrs.util.OpenmrsUtil;
 
@@ -152,11 +153,9 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
         OrderService orderService = Context.getOrderService();
 
         if (asOfDate != null) {
-            date = asOfDate;
-        } else {
-            date = new Date();
+            query = String.format(query, DateFormatUtil.dateFormtterString(asOfDate, DAY_START_TIME), DateFormatUtil.dateFormtterString(asOfDate, DAY_END_TIME));
         }
-        query = String.format(query, DateFormatUtil.dateFormtterString(date, DAY_START_TIME), DateFormatUtil.dateFormtterString(date, DAY_END_TIME));
+
 
         List list = Context.getAdministrationService().executeSQL(query, true);
         Set<Order> unProcesedOrderList = new HashSet<>();
