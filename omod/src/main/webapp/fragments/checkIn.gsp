@@ -51,8 +51,16 @@
     display: none;
 }
 
-hr.printhr {
+hr#printhr {
     border: 1px solid red;
+}
+
+#check_in_receipt {
+    font-size: 10px;
+}
+
+#check_in_receipt_body {
+    width: 30%;
 }
 </style>
 
@@ -162,13 +170,13 @@ hr.printhr {
 
 <div id="printSection" class="print-only">
     <center>
-        <div style="width: 60%">
-            <div><img src="${ui.resourceLink("aijar", "images/moh_logo_large.png")}"/></div>
+        <div id="check_in_receipt_body">
+            <div><img width="100px" src="${ui.resourceLink("aijar", "images/moh_logo_large.png")}"/></div>
 
-            <div><h1>HEALTH CENTER NAME</h1></div>
-            <hr style="border: 1px solid red;"/>
+            <div><h2>${healthCenterName}</h2></div>
+            <hr id="printhr"/>
 
-            <div><h2>Visit Registration Receipt</h2></div>
+            <div><h3>Visit Registration Receipt</h3></div>
 
             <div id="check_in_receipt" align="left">
             </div>
