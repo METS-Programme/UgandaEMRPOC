@@ -202,7 +202,7 @@ button, input {
                     <form method="get" id="patient-search-form" onsubmit="return false">
                         <input type="text" id="patient-pharmacy-search"
                                placeholder="${ui.message("coreapps.findPatient.search.placeholder")}"
-                               autocomplete="off class="provider-dashboard-patient-search"/>
+                               autocomplete="off" class="provider-dashboard-patient-search"/>
                     </form>
                 </div>
             </div>
