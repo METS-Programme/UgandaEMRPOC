@@ -172,8 +172,7 @@
                     <form method="get" id="patient-triage-search-form" onsubmit="return false">
                         <input id="patient-triage-search" name="patient-triage-search"
                                placeholder="${ui.message ( "coreapps.findPatient.search.placeholder" )}"
-                               autocomplete="off" class="provider-dashboard-patient-search"/><i
-                            id="patient-search-clear-button" class="small icon-remove-sign"></i>
+                               autocomplete="off" class="provider-dashboard-patient-search"/>
                     </form>
                 </div>
             </div>
