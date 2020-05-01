@@ -800,6 +800,24 @@
             <uiInclude provider="aijar" fragment="patientStability"/>
         </div>
     </restrictByRole>
+    <restrictByRole include="Organizational: System Administrator">
+        <script>
+            jq(function () {
+                jq().toastmessage('showErrorToast', "Your account has a role Organizational: System Administrator which is prohibited from data entry");
+                alert('Your account has a role Organizational: System Administrator which is prohibited from data entry');
+
+                var queryParameters = {}, queryString = location.search.substring(1),
+                    re = /([^&amp;=]+)=([^&amp;]*)/g, m;
+                // Creates a map with the query string parameters
+                while (m = re.exec(queryString)) {
+                    queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+                }''
+                location.href = window.location.protocol + "//" + window.location.host +
+                    '/' + OPENMRS_CONTEXT_PATH + '/coreapps/clinicianfacing/patient.page?patientId='
+                    + queryParameters['patientId']; // Causes page to reload
+            });
+        </script>
+    </restrictByRole>
 
     <!-- This section contains lookup tags that pick data from other forms-->
 
