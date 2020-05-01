@@ -900,7 +900,7 @@
                 complexExpression="#foreach($other_third_line_regimen in $fn.allObs(162989)) $other_first_second_line_regimen.valueText #end"/>
     </span>
 
-    <restrictByRole exclude="HIV Clinic,Organizational: System Administrator">
+    <restrictByRole exclude="HIV Clinic">
         <div>
             <div class="row">
                 <div class="col-md-6">
