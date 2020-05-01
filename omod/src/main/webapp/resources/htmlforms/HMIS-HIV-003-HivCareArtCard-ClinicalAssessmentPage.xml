@@ -1561,13 +1561,18 @@
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                             <br/>
-                                                            <obs conceptId="1282" class="horizontal"
+                                                            <obs id="99413" conceptId="99413" answerConceptIds="1065,1066" labelText="Given:
+" class="horizontal" style="radio"/>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <br/>
+                                                            <obs id="99413-target" conceptId="1282" class="horizontal"
                                                                  answerConceptSetIds="1157"
                                                                  answerConceptIds="92,90168"
                                                                  answerLabels="Dapsone,Cotrimoxazole"   style="radio"/>
                                                         </div>
-                                                        <div class="col-md-4">
-                                                            <obs labelText="Number of Pills" conceptId="160856"/>
+                                                        <div class="col-md-3">
+                                                            <obs labelText="Number of Pills" id="160856" conceptId="160856"/>
                                                         </div>
 
                                                         <div class="col-md-4 duration">
@@ -2766,37 +2771,40 @@
                                                         <obs conceptId="159368"/>
                                                     </div>
                                                 </div>
-                                            </obsgroup>
-                                        </div>
+                                        </obsgroup>
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            CTX/Dapsone (Anti-biotics)
-                                        </div>
-                                        <div class="card-body">
-                                            <obsgroup groupingConceptId="165304">
-                                                <div class="row">
-                                                    <div class="col-md-12">
-                                                        <br/>
-                                                        <obs conceptId="1282" class="horizontal"
-                                                             answerConceptSetIds="1157"
-                                                             answerConceptIds="92,90168"
-                                                             answerLabels="Dapsone,Cotrimoxazole" style="radio"/>
-                                                    </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        CTX/DAPSONE (ANTI-BIOTICS)
+                                    </div>
+                                    <div class="card-body">
+                                        <obsgroup groupingConceptId="165304">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <br/>
+                                                    <obs id="99413" conceptId="99413" class="horizontal" answerConceptIds="1065,1066" labelText="Given:
+" style="radio"/>
                                                 </div>
+                                                <div class="col-md-3">
+                                                    <br/>
+                                                    <obs id="99413-target" conceptId="1282" class="horizontal" answerConceptSetIds="1157"
+                                                         answerConceptIds="92,90168" style="radio"/>
+                                                </div>
+                                            </div>
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <obs labelText="Number of Pills" conceptId="160856"/>
+                                                        <obs labelText="Number of Pills" id="160856" conceptId="160856"/>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12 duration">
                                                         <label>Number of Days</label>
-                                                        <obs conceptId="159368"/>
+                                                        <obs id="159368" conceptId="159368"/>
                                                     </div>
                                                 </div>
                                             </obsgroup>
