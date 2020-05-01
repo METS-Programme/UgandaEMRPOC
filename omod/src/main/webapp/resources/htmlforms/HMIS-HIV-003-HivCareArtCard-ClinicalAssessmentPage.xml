@@ -185,6 +185,22 @@
                     }
                 });
 
+                disable_fields("99413-target");
+                disable_fields("160856");
+                disable_fields("159368");
+                jq("#99413").change(function () {
+                    if (jq(this).find("input[type='radio']:checked").val() == "1065") {
+                        enable_fields("99413-target");
+                        enable_fields("160856");
+                        enable_fields("159368");
+                    } else {
+                        jq("#99413-target").find("input[type='radio']:checked").val() == " ";
+                        disable_fields("99413-target");
+                        disable_fields("160856");
+                        disable_fields("159368");
+                    }
+                });
+
                 disable_fields("edd");
                 disable_fields("emtct");
                 disable_fields("age-in-months");
