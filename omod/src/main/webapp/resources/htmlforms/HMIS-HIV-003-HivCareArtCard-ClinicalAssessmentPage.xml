@@ -185,22 +185,6 @@
                     }
                 });
 
-                disable_fields("99413-target");
-                disable_fields("160856");
-                disable_fields("159368");
-                jq("#99413").change(function () {
-                    if (jq(this).find("input[type='radio']:checked").val() == "1065") {
-                        enable_fields("99413-target");
-                        enable_fields("160856");
-                        enable_fields("159368");
-                    } else {
-                        jq("#99413-target").find("input[type='radio']:checked").val() == " ";
-                        disable_fields("99413-target");
-                        disable_fields("160856");
-                        disable_fields("159368");
-                    }
-                });
-
                 disable_fields("edd");
                 disable_fields("emtct");
                 disable_fields("age-in-months");
@@ -795,6 +779,11 @@
         </includeIf>
 
     </script>
+    <restrictByRole exclude="Organizational: System Administrator">
+        <div class="hidden">
+            <uiInclude provider="aijar" fragment="patientStability"/>
+        </div>
+    </restrictByRole>
 
     <!-- This section contains lookup tags that pick data from other forms-->
 
@@ -895,7 +884,7 @@
                 complexExpression="#foreach($other_third_line_regimen in $fn.allObs(162989)) $other_first_second_line_regimen.valueText #end"/>
     </span>
 
-    <restrictByRole exclude="HIV Clinic">
+    <restrictByRole exclude="HIV Clinic,Organizational: System Administrator">
         <div>
             <div class="row">
                 <div class="col-md-6">
@@ -1556,23 +1545,18 @@
                                                     <div class="row">
                                                         <div class="col-md-3">
                                                             <br/>
-                                                            <obs id="99413" conceptId="99413" answerConceptIds="1065,1066" labelText="Given:
-" class="horizontal" style="radio"/>
-                                                        </div>
-                                                        <div class="col-md-3">
-                                                            <br/>
-                                                            <obs id="99413-target" conceptId="1282" class="horizontal"
+                                                            <obs conceptId="1282" class="horizontal"
                                                                  answerConceptSetIds="1157"
                                                                  answerConceptIds="92,90168"
                                                                  answerLabels="Dapsone,Cotrimoxazole"   style="radio"/>
                                                         </div>
-                                                        <div class="col-md-3">
-                                                            <obs labelText="Number of Pills" id="160856" conceptId="160856"/>
+                                                        <div class="col-md-4">
+                                                            <obs labelText="Number of Pills" conceptId="160856"/>
                                                         </div>
 
-                                                        <div class="col-3 duration">
+                                                        <div class="col-md-4 duration">
                                                             <label>Number of Days</label>
-                                                            <obs id="159368" conceptId="159368"/>
+                                                            <obs conceptId="159368"/>
                                                         </div>
                                                     </div>
                                                 </obsgroup>
@@ -1908,11 +1892,6 @@
                                             <div class="card-header">DSD Model</div>
                                             <div class="card-body">
                                                 <div class="row">
-                                                    <div class="hidden">
-                                                        <ifMode mode="VIEW,ENTER,EDIT" include="true">
-                                                             <uiInclude provider="aijar" fragment="patientStability"/>
-                                                        </ifMode>
-                                                    </div>
                                                     <div class="col-md-3">
                                                         <label>Duration on Current Regimen</label>
                                                         <obs id="duration-on-current-regimen" conceptId="99025"/>
@@ -1958,7 +1937,7 @@
         </div>
     </restrictByRole>
 
-    <restrictByRole exclude="Data Clerk,System Developer">
+    <restrictByRole exclude="Data Clerk,System Developer,Organizational: System Administrator">
     <div class="card poc-art-form">
         <div class="card-body">
             <div class="row">
@@ -2039,9 +2018,7 @@
                             <div class="tab-content">
 
                                 <div class="tab-pane fade show active" id="patient-vitals" >
-                                    <ifMode mode="VIEW,ENTER,EDIT" include="true">
-                                        <uiInclude provider="ugandaemrpoc" fragment="vitals"/>
-                                    </ifMode>
+                                    <uiInclude provider="ugandaemrpoc" fragment="vitals"/>
                                 </div>
                                 <div class="tab-pane fade" id="nav-family-planning" role="tabpanel" >
 
@@ -2499,9 +2476,7 @@
                          <div class="card-body">
                             <div class="tab-content" id="investigation-report-tab-tabContent">
                                 <div class="tab-pane fade show active" id="investigation-report-list">
-                                    <ifMode mode="VIEW,ENTER,EDIT" include="true">
-                                        <uiInclude provider="ugandaemrpoc" fragment="displayResultListOnEncounter"/>
-                                    </ifMode>
+                                    <uiInclude provider="ugandaemrpoc" fragment="displayResultListOnEncounter"/>
                                 </div>
                                 <div class="tab-pane fade" id="investigation-report-form">
                                     <div class="row">
@@ -2775,40 +2750,37 @@
                                                         <obs conceptId="159368"/>
                                                     </div>
                                                 </div>
-                                        </obsgroup>
+                                            </obsgroup>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="card">
-                                    <div class="card-header">
-                                        CTX/DAPSONE (ANTI-BIOTICS)
-                                    </div>
-                                    <div class="card-body">
-                                        <obsgroup groupingConceptId="165304">
-                                            <div class="row">
-                                                <div class="col-md-3">
-                                                    <br/>
-                                                    <obs id="99413" conceptId="99413" class="horizontal" answerConceptIds="1065,1066" labelText="Given:
-" style="radio"/>
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <br/>
-                                                    <obs id="99413-target" conceptId="1282" class="horizontal" answerConceptSetIds="1157"
-                                                         answerConceptIds="92,90168" style="radio"/>
-                                                </div>
-                                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            CTX/Dapsone (Anti-biotics)
+                                        </div>
+                                        <div class="card-body">
+                                            <obsgroup groupingConceptId="165304">
                                                 <div class="row">
                                                     <div class="col-md-12">
-                                                        <obs labelText="Number of Pills" id="160856" conceptId="160856"/>
+                                                        <br/>
+                                                        <obs conceptId="1282" class="horizontal"
+                                                             answerConceptSetIds="1157"
+                                                             answerConceptIds="92,90168"
+                                                             answerLabels="Dapsone,Cotrimoxazole" style="radio"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <obs labelText="Number of Pills" conceptId="160856"/>
                                                     </div>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-12 duration">
                                                         <label>Number of Days</label>
-                                                        <obs id="159368" conceptId="159368"/>
+                                                        <obs conceptId="159368"/>
                                                     </div>
                                                 </div>
                                             </obsgroup>
@@ -2910,11 +2882,6 @@
                             <label>DSDM</label>
                         </div>
                         <div class="card-body">
-                            <div class="hidden">
-                                <ifMode mode="VIEW,ENTER,EDIT" include="true">
-                                    <uiInclude provider="aijar" fragment="patientStability"/>
-                                </ifMode>
-                            </div>
                             <div class="row">
                                 <div class="col-md-4">
                                     <label>Patient categorisation</label>
