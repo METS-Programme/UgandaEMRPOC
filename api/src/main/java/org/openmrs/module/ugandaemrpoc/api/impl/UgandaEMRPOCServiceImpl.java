@@ -707,7 +707,11 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
                     drugOrder.setCareSetting(careSetting);
                     drugOrder.setConcept(obs.getValueCoded());
                     discontinueOverLappingDrugOrders(drugOrder);
-                    orders.add(drugOrder);
+
+                    if (isValidDrugOrder(drugOrder)) {
+                        orders.add(drugOrder);
+                    }
+
                 }
             }
         }
@@ -721,6 +725,19 @@ public class UgandaEMRPOCServiceImpl extends BaseOpenmrsService implements Ugand
             }
         }
         return encounter;
+    }
+
+    /**
+     * This Validates a drug order
+     * @param drugOrder the drug order to validate
+     * @return returns true or false basing on the validation
+     */
+    private boolean isValidDrugOrder(DrugOrder drugOrder) {
+        if (drugOrder.getDuration() == null || drugOrder.getQuantity() == null || drugOrder.getFrequency() == null || drugOrder.getQuantityUnits() == null || drugOrder.getRoute() == null || drugOrder.getDose() == null || drugOrder.getDoseUnits() == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public Provider getProviderFromEncounter(Encounter encounter) {
