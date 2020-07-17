@@ -2005,27 +2005,10 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!--here the implementation for other tests-->
                                             <div class="col-md-8">
                                                 <div class="card">
                                                     <div class="card-header">Other Investigations</div>
-                                                    <div class="card-body">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
-                                                                <obs conceptId="99114" style="textarea" rows="4" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <!--here the implementation for other tests-->
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="card">
-                                                    <div class="card-header">
-                                                        <label>Other Tests</label>
-                                                    </div>
                                                     <div class="card-body">
                                                         <div>
                                                             <repeat>
@@ -2063,6 +2046,7 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="card">
                                             <div class="card-header">DSD Model</div>
                                             <div class="card-body">
