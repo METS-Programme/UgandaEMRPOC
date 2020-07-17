@@ -2018,10 +2018,10 @@
                                                                             <div class="col-md-3">
                                                                                 <obs labelText="Test Name" conceptId="165875"/>
                                                                             </div>
-                                                                            <div class="col-md-2">
+                                                                            <div class="col-md-3">
                                                                                 <obs labelText="Results" conceptId="165876"/>
                                                                             </div>
-                                                                            <div class="col-md-1">
+                                                                            <div class="col-md-3">
                                                                                 <div class="add-entry3">
                                                                                     <a href="#" id="{id}-addEntry3" class="addEntry3 add-more-link"><i class="icon-plus-sign"></i></a>
                                                                                     <a href="#" class="removeEntry3 remove-more-link" id="{id}-removeEntry3"><i class="icon-minus"></i></a>
