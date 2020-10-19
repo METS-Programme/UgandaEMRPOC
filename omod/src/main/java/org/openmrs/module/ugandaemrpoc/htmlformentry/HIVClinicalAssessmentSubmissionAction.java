@@ -41,11 +41,13 @@ public class HIVClinicalAssessmentSubmissionAction implements CustomFormSubmissi
             return;
         }
 
-        ugandaEMRPOCService.processLabTestOrdersFromEncounterObs(session, true);
+        if (ugandaEMRPOCService.getPreviousQueue(session.getPatient(), session.getEncounter().getLocation(), PatientQueue.Status.PENDING) != null) {
+            ugandaEMRPOCService.processLabTestOrdersFromEncounterObs(session, true);
 
-        ugandaEMRPOCService.processDrugOrdersFromEncounterObs(session, true);
+            ugandaEMRPOCService.processDrugOrdersFromEncounterObs(session, true);
 
-        completeClinicianQueue(session.getEncounter());
+            completeClinicianQueue(session.getEncounter());
+        }
 
         Patient patient = session.getPatient();
         Set<Obs> obsList = session.getEncounter().getAllObs();
@@ -150,8 +152,6 @@ public class HIVClinicalAssessmentSubmissionAction implements CustomFormSubmissi
          * Create TransferOut encounter When Patient is Transferred Out
          */
         createTransferOutEncounter(session);
-
-
     }
 
     private PatientProgram createPatientProgram(Patient patient, Date enrollmentDate, Program program) {
@@ -273,12 +273,8 @@ public class HIVClinicalAssessmentSubmissionAction implements CustomFormSubmissi
             encounter.setEncounterType(encounterService.getEncounterTypeByUuid("e305d98a-d6a2-45ba-ba2a-682b497ce27c"));
             encounter.setLocation(formEntrySession.getEncounter().getLocation());
             encounter.setPatient(formEntrySession.getPatient());
-
-            if (getObsByConceptFromSet(formEntrySession.getEncounter().getAllObs(), 99165) != null) {
-                encounter.setEncounterDatetime(getObsByConceptFromSet(formEntrySession.getEncounter().getAllObs(), 99165).getValueDatetime());
-            } else {
-                encounter.setEncounterDatetime(new Date());
-            }
+            encounter.setVisit(formEntrySession.getEncounter().getVisit());
+            encounter.setEncounterDatetime(formEntrySession.getEncounter().getVisit().getDateCreated());
             encounter.setForm(Context.getFormService().getFormByUuid("45d9db68-e4b5-11e7-80c1-9a214cf093ae"));
 
             Obs transferOutToObs = aijarService.generateObsFromObs(formEntrySession.getEncounter().getAllObs(), 90211, 90211, encounter);

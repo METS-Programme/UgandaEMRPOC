@@ -1012,6 +1012,7 @@
 
                 var encounterDate = new Date((getValue('encounterDate.value')));
                 var appointment = new Date((getValue('returndate.value')));
+                var transferOutDate = new Date((getValue('transfer_out_date.value')));
 
                 if(getValue('provider.value')==""){
                      jq().toastmessage('showErrorToast', "Attending clinician is required");
@@ -1023,6 +1024,13 @@
                     jq().toastmessage('showErrorToast', "The return date must be after the date of this visit");
                     return false;
 
+                }
+
+                if(getValue('transfer_out_date.value') !== "" &amp;&amp; encounterDate.getTime() !== transferOutDate.getTime()){
+                    getField('transfer_out_date.error').html('The Transfer out date has to be exactly the same as the encounter date' +
+                        formatDateForDisplay(encounterDate)).show();
+                    jq().toastmessage('showErrorToast', "The Transfer out date has to be exactly the same as the encounter date");
+                    return false;
                 }
 
                 <!-- Check that the return date is before the transfer out date only if there is a transfer out date -->
@@ -1369,8 +1377,7 @@
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-1 submitButton">
-                    <postSubmissionAction
-                            class="org.openmrs.module.aijar.htmlformentry.DSDSProgramSubmissionAction"/>
+                    <postSubmissionAction class="org.openmrs.module.ugandaemrpoc.htmlformentry.HIVClinicalAssessmentSubmissionAction"/>
                     <submit class="confirm" submitLabel="Save"/>
                 </div>
             </div>
@@ -2485,6 +2492,26 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="card">
+                                            <div class="card-header">Transfer Out</div>
+                                            <div class="card-body">
+                                                <obsgroup groupingConceptId="99166">
+                                                <div class="row">
+                                                    <div class="col-md-4" id="final-out-come">
+                                                        <obs conceptId="90306" answerConceptId="90003"
+                                                             answerLabel="Transfer out"/>
+                                                    </div>
+                                                    <div class="col-md-4" id="disabled">
+                                                        <obs id="transfer_out_date" conceptId="99165" labelText="Date of Transfer"/>
+                                                    </div>
+                                                    <div class="col-md-4" id="disabled">
+                                                        <obs conceptId="90211" labelText="Where"/>
+                                                    </div>
+                                                </div>
+                                                </obsgroup>
+                                            </div>
+                                        </div>
                                     </section>
                                 </div>
                             </div>
@@ -3587,7 +3614,7 @@
                                                  answerLabel="Transfer out"/>
                                         </div>
                                         <div class="col-md-4" id="disabled">
-                                            <obs conceptId="99165" labelText="Date of Transfer"/>
+                                            <obs id="transfer_out_date" conceptId="99165" labelText="Date of Transfer"/>
                                         </div>
                                         <div class="col-md-4" id="disabled">
                                             <obs conceptId="90211" labelText="Where"/>
