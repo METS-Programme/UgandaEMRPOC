@@ -274,7 +274,7 @@ public class HIVClinicalAssessmentSubmissionAction implements CustomFormSubmissi
             encounter.setLocation(formEntrySession.getEncounter().getLocation());
             encounter.setPatient(formEntrySession.getPatient());
             encounter.setVisit(formEntrySession.getEncounter().getVisit());
-            encounter.setEncounterDatetime(formEntrySession.getEncounter().getVisit().getDateCreated());
+            encounter.setEncounterDatetime(formEntrySession.getEncounter().getEncounterDatetime());
             encounter.setForm(Context.getFormService().getFormByUuid("45d9db68-e4b5-11e7-80c1-9a214cf093ae"));
 
             Obs transferOutToObs = aijarService.generateObsFromObs(formEntrySession.getEncounter().getAllObs(), 90211, 90211, encounter);

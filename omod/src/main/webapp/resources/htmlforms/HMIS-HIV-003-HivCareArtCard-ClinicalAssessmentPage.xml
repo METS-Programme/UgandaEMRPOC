@@ -1046,9 +1046,9 @@
                 }
 
                 <!-- Check that the return date is before the transfer out date only if there is a transfer out date -->
-                if (jq('#transfer_out_date_id').html().replace(/\s+/, "").length > 0) {
+                if (getValue('returndate.value')!== "" &amp;&amp;  jq('#transfer_out_date_id').html().replace(/\s+/, "").length > 0) {
                     var transfer_out_date_id = new Date(jq('#transfer_out_date_id').html());
-                    if (getValue('returndate.value')!== "" &amp;&amp; appointment &gt;= transfer_out_date_id) {
+                    if (appointment &gt;= transfer_out_date_id) {
                         getField('returndate.error').html('The return date must be before the transfer out date of ' +
                             formatDateForDisplay(transfer_out_date_id)).show();
                     jq().toastmessage('showErrorToast', "The return date must be before the transfer out date");
