@@ -332,6 +332,7 @@
                 var stableArray = [];
 
                 var previousVl = jq("#vl").text().trim();
+                var previousVlDate = jq("#vlDate").text().trim();
                 var currentRegimen = jq("#regimen").text().trim();
                 var regimenBeforeDTG = jq("#regimen_before_dtg").text().trim();
                 var onThirdLine = jq("#on_third_line").text().trim();
@@ -364,8 +365,13 @@
                     durationOnCurrentRegimen = periodBetweenDates(new Date(currentRegimenStartDate), new Date(jq("#encounterDate").find("input[type=hidden]").val()));
                     jq("#duration-on-current-regimen input").val(durationOnCurrentRegimen);
                 }
+                var allowClinicanToOverrideDSDMStabilityDecision = <lookup expression="fn.globalProperty('ugandaemr.dsdm.allowClinicalOverrideDSDMPatientStability')"/>;
 
-                disableContainer("#patient-categorization");
+                if(allowClinicanToOverrideDSDMStabilityDecision !== true){
+                    disableContainer("#patient-categorization");
+                }
+
+
 
                 DSDMStabilityCheck();
 
@@ -490,6 +496,8 @@
                  disable_fields("99413-target");
                  disable_fields("160856");
                  disable_fields("159368");
+                 disable_fields("transfer_out_date");
+                 disable_fields("transfer_out_location");
                 </ifMode>
 
                 <ifMode mode="EDIT">
@@ -590,6 +598,7 @@
                    disable_enable_on_edit_mode("99413-target");
                    disable_enable_on_edit_mode("160856");
                    disable_enable_on_edit_mode("159368");
+                   jq('.tpt-without-inh').show();
                 </ifMode>
 
                 /* enable the edd,emtct,age in months and ANC no. fields in case the client is pregnant */
@@ -608,6 +617,26 @@
                     }
                 });
 
+                jq("#transfer_out").change(function () {
+                    if (jq(this).find(':checkbox').prop('checked')) {
+                        enable_fields("transfer_out_date");
+                        enable_fields("transfer_out_location");
+                    } else {
+                        disable_fields("transfer_out_date");
+                        disable_fields("transfer_out_location");
+                    }
+                });
+
+                jq(".pregnancy").change(function () {
+                    if (jq(this).find('#breast-feeding').find(':checkbox').prop('checked')) {
+                        enable_fields("emtct");
+                    } else if(jq(this).find('#pregnant').find(':checkbox').prop('checked')){
+                        enable_fields("emtct");
+                    }else{
+                        disable_fields("emtct");
+                    }
+                });
+
                 jq(".pregnancy").change(function () {
                     if (jq(this).find('#not-pregnant-not-breast-feeding').find(':checkbox').prop('checked')) {
                         jq("#pregnant").find("input[type$='checkbox']").prop("checked", false);
@@ -617,6 +646,7 @@
                         disable_fields("162983");
                         disable_fields("anc_no");
                         disable_fields("162983");
+                        disable_fields("age-in-months");
                     }
                 });
 
@@ -658,8 +688,6 @@
                     }
                 });
 
-
-
                 //enable start date and district number if client is on TbRx
                 jq("#tb-status").change(function () {
                     if (jq(this).find("select").find(":selected").val() == "90071" || jq(this).find("select").find(":selected").val() == "165295" || jq(this).find("select").find(":selected").val() == "165296" || jq(this).find("select").find(":selected").val() == "165297" || jq(this).find("select").find(":selected").val() == "165298" || jq(this).find("select").find(":selected").val() == "165299" || jq(this).find("select").find(":selected").val() == "165300" ) {
@@ -680,7 +708,22 @@
                     }
                 });
 
+                //enable tpt treatment if patient is has no signs of TB
+                jq("#tb-status").change(function () {
+                    if (jq(this).find("select").find(":selected").val() == "90079") {
+                        jq("#tpt-status").find('select option:nth-child(3)').show();
+                    } else {
+                        jq("#tpt-status").find('select option:nth-child(3)').hide();
+                    }
+                });
 
+                jq("#tb-status").each(function () {
+                    if (jq(this).find("select").find(":selected").val() == "90079") {
+                        jq("#tpt-status").find('select option:nth-child(3)').show();
+                    } else {
+                        jq("#tpt-status").find('select option:nth-child(3)').hide();
+                    }
+                });
 
                 jq("#tpt-status").change(function () {
                     if (jq(this).find("select").find(":selected").val() == "90072") {
@@ -870,12 +913,26 @@
 
                     stableArray = [];
                     instabilityCause = "";
+                    var pageCurrentRegimen = jq("#art-regimen").find("select").find(":selected").val();
+                    var pageEncounterDate = jq("#encounterDate").find("input[type=hidden]").val();
+                    var dsdmRegimenCoceptsIds = "164976,164977,164978,164979";
 
-                    if (previousVl !== "" &amp;&amp; previousVl &lt;= 1000) {
-                        stableArray.push(true);
-                    } else {
+                    var allowedCurrentRegimenDuration = <lookup expression="fn.globalProperty('ugandaemr.dsdm.currentRegimenDurationRequirementInMonths')"/>;
+                    var allowedDurationOnTB = <lookup expression="fn.globalProperty('ugandaemr.dsdm.minmunNoOfMonthsOnTBTreatmentRequired')"/>;
+                    var viralLoadSuppressionCopies = <lookup expression="fn.globalProperty('ugandaemr.dsdm.viralloadSuppressionCopies')"/>;
+                    var validPeriodInMothsForViralLoad = <lookup expression="fn.globalProperty('ugandaemr.dsdm.validPeriodInMothsForViralLoad')"/>;
+
+                    if(previousVl === ""){
                         stableArray.push(false);
-                        instabilityCause = instabilityCause + "Viral Load is Not Suppressed \n ";
+                        instabilityCause = instabilityCause + "Patient does not have any Viral Load Record found\n ";
+                    } else if (previousVl !== "" &amp;&amp; periodBetweenDates(new Date(pageEncounterDate), new Date(previousVlDate)) &gt; validPeriodInMothsForViralLoad){
+                        stableArray.push(false);
+                        instabilityCause = instabilityCause + "Patient does not have any Viral Load Record found. The last Viral Load was collected on "+(new Date(previousVlDate)) +"\n";
+                    }else if(previousVl !== "" &amp;&amp; periodBetweenDates(new Date(pageEncounterDate), new Date(previousVlDate)) &lt; validPeriodInMothsForViralLoad &amp;&amp; previousVl &gt; viralLoadSuppressionCopies){
+                        stableArray.push(false);
+                        instabilityCause = instabilityCause + "The patient has a viral load of "+previousVl+" copies per mil which is regarded as non suppressed.\n ";
+                    }else if (previousVl !== "" &amp;&amp; previousVl &lt;= viralLoadSuppressionCopies &amp;&amp; periodBetweenDates(new Date(pageEncounterDate), new Date(previousVlDate)) &lt;= validPeriodInMothsForViralLoad) {
+                        stableArray.push(true);
                     }
 
                     /* Third Line*/
@@ -901,19 +958,17 @@
                         stableArray.push(false);
                         instabilityCause += "Clinic stage is neither 1 or 2 \n";
                     }
-                    var pageCurrentRegimen = jq("#art-regimen").find("select").find(":selected").val();
-                    var pageEncounterDate = jq("#encounterDate").find("input[type=hidden]").val();
-                    var dsdmRegimenCoceptsIds = "164976,164977,164978,164979";
 
-                    if (currentRegimen !== "" &amp;&amp; (currentRegimen === pageCurrentRegimen || dsdmRegimenCoceptsIds.trim().includes(pageCurrentRegimen)) &amp;&amp; periodBetweenDates(new Date(pageEncounterDate), new Date(regimenStartedDate)) &gt; 12) {
+
+                    if (currentRegimen !== "" &amp;&amp; (currentRegimen === pageCurrentRegimen || dsdmRegimenCoceptsIds.trim().includes(pageCurrentRegimen)) &amp;&amp; periodBetweenDates(new Date(pageEncounterDate), new Date(regimenStartedDate)) &gt; allowedCurrentRegimenDuration) {
 
                         stableArray.push(true);
                     } else {
                         stableArray.push(false);
-                        instabilityCause += "Patient has not spent more than 12 moths on current Regiment \n "
+                        instabilityCause += "Patient has not spent more than"+ allowedCurrentRegimenDuration +" months on current Regimen \n "
                     }
 
-                    if (sputumValue !== "" &amp;&amp; sputumValue !== "664" &amp;&amp; periodBetweenDates(new Date(jq("#encounterDate").find("input[type=hidden]").val()), new Date(teatmentStartDate)) &lt; 2) {
+                    if (sputumValue !== "" &amp;&amp; sputumValue !== "664" &amp;&amp; periodBetweenDates(new Date(jq("#encounterDate").find("input[type=hidden]").val()), new Date(teatmentStartDate)) &lt; allowedDurationOnTB) {
                         stableArray.push(false);
                         instabilityCause += "Patient has not been on treatment for TB for at least 2 months"
                     } else {
@@ -1051,6 +1106,7 @@
 
                 var encounterDate = new Date((getValue('encounterDate.value')));
                 var appointment = new Date((jq("#returndate").find('input[type=hidden]').val()));
+                var transferOutDate = new Date((getValue('transfer_out_date.value')));
 
                 if(getValue('provider.value')==""){
                      jq().toastmessage('showErrorToast', "Attending clinician is required");
@@ -1064,6 +1120,13 @@
 
                 }
 
+                if(getValue('transfer_out_date.value') !== "" &amp;&amp; encounterDate.getTime() !== transferOutDate.getTime()){
+                    getField('transfer_out_date.error').html('The Transfer out date has to be exactly the same as the encounter date' +
+                        formatDateForDisplay(encounterDate)).show();
+                    jq().toastmessage('showErrorToast', "The Transfer out date has to be exactly the same as the encounter date");
+                    return false;
+                }
+
                 <!-- Check that the encounter date is not greater than the transfer out date if patient is transfered out -->
                 if(isPatientTransferedOut(latestTransferInEncounter, latestTransferOutEncounter) &amp;&amp; (new Date(encounterDate)) &gt; (new Date(latestTransferOutEncounter.encounterDatetime))){
                     jq().toastmessage('showErrorToast', "This Patient is a "+latestTransferOutEncounter.display+" The Visit Date Must be before the transfer out date");
@@ -1071,7 +1134,8 @@
                 }
 
                 <!-- Check that the return date is before the transfer out date only if there is a transfer out date -->
-                if (isPatientTransferedOut(latestTransferInEncounter, latestTransferOutEncounter) &amp;&amp; appointment &gt;= (new Date(latestTransferOutEncounter.encounterDatetime))) {
+                if (getValue('returndate.value')!== "" &amp;&amp;  isPatientTransferedOut(latestTransferInEncounter, latestTransferOutEncounter) &amp;&amp; appointment &gt;= (new Date(latestTransferOutEncounter.encounterDatetime))) {
+                    getField('returndate.error').html('The return date must be before the transfer out date of ' + formatDateForDisplay(transfer_out_date_id)).show();
                     jq().toastmessage('showErrorToast', "The return date must be before the transfer out date of "+(new Date(latestTransferOutEncounter.encounterDatetime)));
                         return false;
                 }
@@ -1412,8 +1476,7 @@
                 </div>
                 <div class="col-md-5"></div>
                 <div class="col-md-1 submitButton">
-                    <postSubmissionAction
-                            class="org.openmrs.module.aijar.htmlformentry.DSDSProgramSubmissionAction"/>
+                    <postSubmissionAction class="org.openmrs.module.ugandaemrpoc.htmlformentry.HIVClinicalAssessmentSubmissionAction"/>
                     <submit class="confirm" submitLabel="Save"/>
                 </div>
             </div>
@@ -1791,10 +1854,10 @@
                                             <div class="card-body">
                                                 <div class="row">
                                                     <div class="col-md-3">
-                                                        <label>Tb Status</label>
-                                                        <obs id="tb-status" class="long-value-select" conceptId="90216"
-                                                             answerConceptIds="90079,90073, 165295, 165296, 165297, 165298, 165299,165300,90071,99421"
-                                                             answerLabels="1 - No signs,2 - Presumptive, 3C - TB Diagnosed - Clinically diagnosed,  3G - TB Diagnosed - Gene Xpert, 3L - TB Diagnosed - TB LAM,3M - TB Diagnosed -TB Microscopy, 3X - TB Diagnosed - Chest Xray, 3O - TB Diagnosed - Others, 4 - Tb Rx - Currently on TB treatment, 5 - Completed TB Treatment"/>
+                                                    <label>Tb Status</label>
+                                                    <obs id="tb-status" class="long-value-select" conceptId="90216"
+                                                         answerConceptIds="90079,90073, 165295, 165296, 165297, 165298, 165299,165300,90071,99421"
+                                                         answerLabels="1 - No signs,2 - Presumptive, 3C - TB Diagnosed - Clinically diagnosed,  3G - TB Diagnosed - Gene Xpert, 3L - TB Diagnosed - TB LAM,3M - TB Diagnosed -TB Microscopy, 3X - TB Diagnosed - Chest Xray, 3O - TB Diagnosed - Others, 4 - Tb Rx - Currently on TB treatment, 5 - Completed TB Treatment"/>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label>TB Start Date</label>
@@ -1814,10 +1877,10 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-md-3">
-                                                        <label>TPT Status</label>
-                                                    <obs id="tpt-status" conceptId="165288"
-                                                         answerConceptIds="1090,90072,165307,90040,160035"
-                                                         answerLabels="H0-Never Initiated,H1-On INH,H2-Defaulted,H3-Taken off due to side effects,H4-Completed"/>
+                                                    <label>TPT Status</label>
+                                                        <obs id="tpt-status" conceptId="165288"
+                                                             answerConceptIds="1090,90072,165307,90040,160035"
+                                                             answerLabels="H0-Never Initiated,H1-On INH,H2-Defaulted,H3-Taken off due to side effects,H4-Completed"/>
                                                     </div>
                                                     <div class="col-md-3">
                                                         <label>TPT Date Initiated</label>
@@ -2528,6 +2591,26 @@
                                                 </div>
                                             </div>
                                         </div>
+
+                                        <div class="card">
+                                            <div class="card-header">Transfer Out</div>
+                                            <div class="card-body">
+                                                <obsgroup groupingConceptId="99166">
+                                                <div class="row">
+                                                    <div class="col-md-4" id="final-out-come">
+                                                        <obs id="transfer_out" conceptId="90306" answerConceptId="90003"
+                                                             answerLabel="Transfer out"/>
+                                                    </div>
+                                                    <div class="col-md-4" id="disabled">
+                                                        <obs id="transfer_out_date" conceptId="99165" labelText="Date of Transfer"/>
+                                                    </div>
+                                                    <div class="col-md-4" id="disabled">
+                                                        <obs id="transfer_out_location" conceptId="90211" labelText="Where"/>
+                                                    </div>
+                                                </div>
+                                                </obsgroup>
+                                            </div>
+                                        </div>
                                     </section>
                                 </div>
                             </div>
@@ -2972,7 +3055,7 @@
                                                             <div class="col-md-7">
                                                                 <obs id="tpt-status" conceptId="165288"
                                                                      answerConceptIds="1090,90072,165307,90040,160035"
-                                                                     answerLabels="Never Initiated,On INH,Defaulted,Taken off due to side effects,Completed"/>
+                                                                     answerLabels="H0-Never Initiated,H1-On INH,H2-Defaulted,H3-Taken off due to side effects,H4-Completed"/>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -2980,7 +3063,7 @@
                                                                 <label>TPT Date Initiated</label>
                                                             </div>
                                                             <div class="col-md-7">
-                                                                <obs conceptId="165226"/>
+                                                                <obs id="tpt-initiation-date" conceptId="165226"/>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -2988,7 +3071,7 @@
                                                                 <label>TPT Date Completed</label>
                                                             </div>
                                                             <div class="col-md-7">
-                                                                <obs conceptId="165227"/>
+                                                                <obs id="tpt-completion-date" conceptId="165227"/>
                                                             </div>
                                                         </div>
                                                         <div class="row">
@@ -2996,7 +3079,7 @@
                                                                 <label>TPT Side Effects</label>
                                                             </div>
                                                             <div class="col-md-7">
-                                                                <obs conceptId="165792"/>
+                                                                <obs id="tpt-side-effects" conceptId="165792"/>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -3626,14 +3709,14 @@
                                 <obsgroup groupingConceptId="99166">
                                     <div class="row">
                                         <div class="col-md-4" id="final-out-come">
-                                            <obs conceptId="90306" answerConceptId="90003"
+                                            <obs id="transfer_out" conceptId="90306" answerConceptId="90003"
                                                  answerLabel="Transfer out"/>
                                         </div>
                                         <div class="col-md-4" id="disabled">
-                                            <obs conceptId="99165" labelText="Date of Transfer"/>
+                                            <obs id="transfer_out_date" conceptId="99165" labelText="Date of Transfer"/>
                                         </div>
                                         <div class="col-md-4" id="disabled">
-                                            <obs conceptId="90211" labelText="Where"/>
+                                            <obs id="transfer_out_location" conceptId="90211" labelText="Where"/>
                                         </div>
                                     </div>
                                 </obsgroup>
