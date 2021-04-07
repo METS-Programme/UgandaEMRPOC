@@ -1,0 +1,227 @@
+<htmlform
+        formName="HMIS-EPI-Child_Register"
+        formDescription="A visit for a child immunization"
+        formEncounterType="4f345c06-c9db-461b-9532-e5bfbd984763"
+        formUuid="df59d636-2ef8-11eb-adc1-0242ac120002"
+        formVersion="1.0"
+        formAddMetadata="yes"
+        formUILocation="patientDashboard.visitActions"
+        formOrder="4"
+        formIcon="icon-medkit"
+        formShowIf="(visit.active || !visit.active) &amp;&amp; patient.person.dead==false &amp;&amp; patient.person.age &lt; 6 &amp;&amp; sessionLocation.uuid=='e9bc61b5-69ff-414b-9cf0-0c22d6dfca2b'"
+        formDisplayStyle="Standard">
+
+    <div>
+        <div class="row">
+            <div class="col-md-9">
+                <H1>HMIS EPI 007 Child Register</H1>
+            </div>
+            <div class="col-md-2"></div>
+            <div>
+                <div class="col-md-1">
+                    <submit class="confirm" submitLabel="Save" submitStyle="customSubmit" />
+                </div>
+            </div>
+        </div>
+       <div class="card">
+        <div class="card-header">
+            <ul class="nav nav-tabs nav-fill card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#child-summary-section">Child Summary/Nutrition Assessment</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#vaccine-details-section">Vaccines/Screening</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#medication-remarks-section">Medication/Remarks</a>
+                </li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content">
+
+                <div class="tab-pane active" id="child-summary-section">
+                    <div class="card">
+                        <div class="card-header">Child Summary</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-4">
+                                    <label>Child No.</label>
+                                    <obs conceptId="165028" size="1" />
+                                </div>
+                                <div class="col-4">
+                                    <label>Protection At Birth (PAB)</label>
+                                    <obs conceptId="164826" size="1"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">Nutrition Assessment</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <span class="hidden">
+                                    <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
+                                </span>
+                                <div class="col-4">
+                                    <label>INR No.</label>
+                                    <obs conceptId="164942" size="1"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Weight (kg)</label>
+                                    <obs conceptId="CIEL:5089" id="weight" absoluteMinimum="5" absoluteMaximum="30"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Height (cm)</label>
+                                    <obs conceptId="CIEL:5090" id="height" absoluteMinimum="10" absoluteMaximum="100"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <!-- only show BMI if patient is more than 5 years old (on the encounterDate) -->
+                                    <includeIf
+                                            velocityTest="$patient.getAge($encounter.getEncounterDatetime()) > 5">
+                                        <label>BMI (Calculated)</label>
+                                        <span id="calculated-bmi-wrapper">
+                                            <ifMode mode="VIEW" include="false">
+                                                <span id='calculated-bmi'></span>
+                                            </ifMode>
+                                        </span>
+                                        <p id="calculated-bmi-continue">
+                                            <input type="hidden" name="focus-in-bmi-question"
+                                                   id="hidden-calculated-bmi"/>
+                                        </p>
+                                    </includeIf>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>MUAC (Cm)</label>
+                                    <obs conceptId="CIEL:1343" id="muac-score" />
+                                </div>
+                                <div class="col-md-4">
+                                    <span class="muac">
+                                        <includeIf velocityTest="$patient.age &lt; 5">
+                                            <label>MUAC Code</label>
+                                            <obs id="muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 11.5cm, Yellow 11.5cm - &lt;12.5cm,Green &gt;= 12.5cm" />
+                                        </includeIf>
+                                        <includeIf velocityTest="$patient.age &lt; 10 &amp;&amp; $patient.age &gt;=5">
+                                            <label>MUAC Code</label>
+                                            <obs id="muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 13.5cm,Yellow 13.5cm - &lt;14.5cm,Green &gt;=14.5cm" />
+                                        </includeIf>
+                                        <includeIf velocityTest="$patient.age &lt; 18 &amp;&amp; $patient.age &gt;=10">
+                                            <label>MUAC Code</label>
+                                            <obs id="muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt; 16.5cm, Yellow 16.5cm - &lt;19.0cm,Green &gt;=19.0cm" />
+                                        </includeIf>
+                                        <includeIf velocityTest="$patient.age &gt;=18">
+                                            <label>MUAC Code</label>
+                                            <obs id="muac-code" conceptId="99030" answerConceptIds="99028,99029,99027" answerLabels="Red &lt;19.0cm , Yellow 19.0cm - &lt;22.0cm,Green &gt;=22.0cm" />
+                                        </includeIf>
+                                    </span>
+                                </div>
+                                <excludeIf velocityTest="$patient.age &gt; 11">
+                                    <div class="col-md-4">
+                                        <label>Z-Scores</label>
+                                        <obs conceptId="99800" answerConceptIds="99803,99804,99805,99806,99807"
+                                             answerLabels="&#60;-3,-3_&#60;-1,-1_1,&#62;1_3,&#62;3" />
+                                    </div>
+                                </excludeIf>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">Malaria Prevention</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <span class="hidden">
+                                    <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
+                                </span>
+                                <div class="col-4">
+                                    <label>Received LLIN</label>
+                                    <obs conceptId="165025" style="checkbox"/>
+                                </div>
+                                <div class="col-md-4">
+                                    <label>Date LLIN Received</label>
+                                    <encounterDate default="today" disallowMultipleEncountersOnDate="block"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                        <div class="tab-pane" id="vaccine-details-section">
+                            <div class="card">
+                                <div class="card-header">
+                                    Vaccines
+                                </div>
+                                <div class="card-body">
+                                <div>
+                                    <repeat>
+                                        <template>
+                                            <obsgroup groupingConceptId="160741">
+                                                <div class="row multi-drug" id="{id}-toggleContainer">
+                                                    <div class="col-2">
+                                                        <obs labelText="Vaccine"  id="{id}-drug" conceptId="1282" answerConceptIds="162586" style="autocomplete" class="fullwidth"/>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <obs labelText="Quantity" conceptId="160856"/>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <obs labelText="Qty unit" conceptId="165791" answerConceptSetIds="162402,162384"/>
+                                                    </div>
+                                                    <div class="col-2 duration">
+                                                        <label>Duration</label>
+                                                        <obs conceptId="159368"/>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <obs conceptId="1732" labelText="Duration unit"/>
+                                                    </div>
+                                                    <div class="col-2">
+                                                        <div class="add-entry">
+                                                            <a href="#" id="{id}-addEntry" class="addEntry add-more-link"><i class="icon-plus-sign"></i></a>
+                                                            <a href="#" class="removeEntry remove-more-link" id="{id}-removeEntry"><i class="icon-minus"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </obsgroup>
+                                        </template>
+                                        <render id="1"/>
+                                        <render id="2"/>
+                                        <render id="3"/>
+                                        <render id="4"/>
+                                        <render id="5"/>
+                                        <render id="6"/>
+                                        <render id="7"/>
+                                        <render id="8"/>
+                                        <render id="9"/>
+                                        <render id="10"/>
+                                    </repeat>
+                                </div>
+                                </div>
+                                <div class="card">
+                                    <div class="card-header">Screened for HIV Exposure</div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <label>During DPT-HepB-Hib</label>
+                                                <obs conceptId="165028" size="1" />
+                                            </div>
+                                            <div class="col-4">
+                                                <label>During Rubella (MR2)</label>
+                                                <obs conceptId="164826" size="1"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                <div class="tab-pane" id="medication-remarks-section"></div>
+
+
+        </div>
+        </div>
+       </div></div>
+    <postSubmissionAction class="org.openmrs.module.ugandaemrpoc.htmlformentry.LabOrderSubmissionAction"/>
+</htmlform>
